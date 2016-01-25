@@ -8,9 +8,9 @@ This report is used for package distribution while we walk thought BioConductor 
 
 ## Package' Status
 
- * Version: 0.99.0
- * Authors: Alba Gutierrez-Sacristan (GRIB-UPF), Carles Hernandez-Ferrer (CREAL)
- * Maintainer: Alba Gutierrez-Sacristan (GRIB-UPF)
+ * __Version__: 0.99.0
+ * __Authors__: Alba Gutierrez-Sacristan (GRIB-UPF), Carles Hernandez-Ferrer (CREAL)
+ * __Maintainer__: Alba Gutierrez-Sacristan (GRIB-UPF)
 
 ## How to start
 
@@ -20,29 +20,29 @@ While BioCondutor finish validating the package, `psygenet2r` can be installed u
 
 ```R
 library(devtools)
-install_bitbucket("psygenet2r", "albags")
+install_bitbucket("albags/psygenet2r")
 ```
 
 ### Querying PsyGeNET:
 
 The following lines show two examples of how PsyGeNET can be queried using `psygenet2r`:
 
- * Gene Query
+ * __Gene Query__
 
 ```R
 library(psygeent2r)
 qg <- psygenetGene(gene = 4852, 
-                   database = "ALL", 
-                   check = FALSE
+    database = "ALL", 
+    check = FALSE
 )
 ```
 
- * Disease Query
+ * __Disease Query__
 
 ```R
 library(psygeent2r)
 qd <- psygenetDisease(disease = "Single Major Depressive Episode", 
-                      database = "ALL",
-                      score    = c('>', 0.5 ) 
+    database = "ALL",
+    score = c('>', 0.5) 
 )
 ```
