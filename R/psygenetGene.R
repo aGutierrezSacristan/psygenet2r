@@ -26,7 +26,7 @@
 #' the warnings.
 #' @return An object of class \code{DataGeNET.Psy}
 #' @examples
-#' d.alch <- psygenetGene( "Alcoholism", "CURATED" )
+#' d.alch <- psygenetGene( "ALDH2", "CURATED" )
 #' @export psygenetGene
 psygenetGene <- function( gene, database = "CURATED", score=c('>', 0), check = TRUE, verbose = FALSE, warnings = TRUE ) {
   check_database( database )

@@ -101,7 +101,7 @@ psygenetDiseaseSentences <- function( diseaseList, database, verbose = FALSE ) {
   }
   
   if (length(wDiseases) != 0) {
-    genes <- paste( wDiseases, collapse = ", " )
+    diseases <- paste( wDiseases, collapse = ", " )
     warning( "One or more of the given diseases is not in PsyGeNET ( '", database, "' ). Diseases: ", diseases )
   }
   
