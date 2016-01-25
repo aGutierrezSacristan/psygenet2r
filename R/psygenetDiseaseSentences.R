@@ -21,7 +21,7 @@
 #' @examples
 #' diseasesOfInterest <- c( "Bipolar Disorder","Depressive Disorder, Major" )
 #' psyDisSen <- psygenetDiseaseSentences( diseaseList = diseasesOfInterest,
-#'                                        database = "ALL")
+#'                                        database = "ALL" )
 #' @export psygenetDiseaseSentences
 psygenetDiseaseSentences <- function( diseaseList, database, verbose = FALSE ) {
   
@@ -49,45 +49,45 @@ psygenetDiseaseSentences <- function( diseaseList, database, verbose = FALSE ) {
   c3 = 'DTB'
   )" 
 
-  
-  
-  
   wDiseases <- vector()
   eDiseases <- vector()
   data <- data.frame()
   present <- 0
   
-  for (i in 1:length(unique(diseaseList))){     
-    
-    if( substr ( diseaseList[ i ] , 1, 4 ) != "umls" ){
-      table <- psyGenDisId( database, "Diseases" )
-      table [ , 2 ] <- as.character ( table [ , 2 ] )
-      disease_r <- diseaseList[ i ]
-      
-      if( diseaseList[i] %in% table[,2]){
-        diseaseList[i]  <- as.character( table[ table[ , 2 ] == diseaseList[i], 1 ] ) 
-        eDiseases <- c( eDiseases, disease_r )
+  table <- psyGenDisId( database, "Diseases" )
+  table[ , 1] <- as.character ( table[ , 1] )
+  table[ , 2] <- as.character ( table[ , 2] )
+  table[ , 3] <- as.character ( table[ , 3] )
+  
+  for(disease in diseaseList) {
+    if( disease %in% table[ , 1] ) { #umls
+        eDiseases <- c( eDiseases, disease )
         present <- 1
-      }
-      else{
-        wDiseases <- c(wDiseases, diseaseList[i])
-        eDiseases <- c( eDiseases, disease_r ) 
+    } else if( disease %in% table[ , 2] ) { #code
+        disease  <- table[table[ , 2] == disease, 1]
+        eDiseases <- c( eDiseases, disease )
+        present <- 1
+    } else if( disease %in% table[ , 3] ) { #name
+        disease  <- table[table[ , 3] == disease, 1] 
+        eDiseases <- c( eDiseases, disease )
+        present <- 1
+    } else {
+        wDiseases <- c( wDiseases, disease )
         present   <- 0
-      }
     }
     
-    if( present != 0){
+    if( present != 0 ){
       oql2 <- stringr::str_replace(
         string      = oql,
         pattern     = "DISEASE",
-        replacement = diseaseList[i] 
+        replacement = disease
       )
       oql2 <- stringr::str_replace(
         string      = oql2,
         pattern     = "DTB",
         replacement = database 
       )
-      dataTsv <- Rcurl::getURLContent(
+      dataTsv <- RCurl::getURLContent(
         getUrlPsi(), 
         readfunction  = charToRaw(oql2), 
         upload        = TRUE, 
@@ -97,7 +97,6 @@ psygenetDiseaseSentences <- function( diseaseList, database, verbose = FALSE ) {
       dataNew <- read.csv( textConnection( dataTsv ), header = TRUE, sep="\t" ) 
       data <- rbind( data, dataNew )
     }
-    
   }
   
   if (length(wDiseases) != 0) {
@@ -110,8 +109,7 @@ psygenetDiseaseSentences <- function( diseaseList, database, verbose = FALSE ) {
                  search   = "list", 
                  term     = as.character( eDiseases ), 
                  database = database, 
-                 qresult  = data,
-                 tag      = "PsyGeNET"
+                 qresult  = data
   )
   return( result )
 }
