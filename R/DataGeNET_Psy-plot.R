@@ -351,15 +351,13 @@ plot_pmids_barplot <- function ( table, class, name, type, search, verbose ) {
   if(class=="disease") {
     if( substr ( name, 1, 4 ) == "umls" ) {
       if( name %in% table$c2.Disease_Id ) {
-        name <- as.character( table[ table$c2.Disease_Id == name, 6 ][ 1 ] )
+        name <- as.character( table[table$c2.Disease_Id == name, 6][1] )
       } else {
         stop( paste0( "'", name, "' is not present in this DataGeNET.Psy object." ) )
       }
-    }
-    
-    if( substr ( name, 1, 1 ) == "C" & ( nchar( name ) == 8 ) ) {
+    } else if( substr ( name, 1, 1 ) == "C" & ( nchar( name ) == 8 ) ) {
       if( name %in% table$c2.Disease_code ){
-        name <- as.character(table[table$c2.Disease_code==name,6][1])
+        name <- as.character( table[table$c2.Disease_code==name, 6][1] )
       } else {
         stop( paste0( "'", name, "' is not present in this DataGeNET.Psy object." ) )
       }
