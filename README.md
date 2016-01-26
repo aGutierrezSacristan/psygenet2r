@@ -30,7 +30,7 @@ The following lines show two examples of how PsyGeNET can be queried using `psyg
  * __Gene Query__
 
 ```R
-library(psygeent2r)
+library(psygenet2r)
 qg <- psygenetGene(gene = 4852, 
     database = "ALL", 
     check = FALSE
@@ -40,7 +40,7 @@ qg <- psygenetGene(gene = 4852,
  * __Disease Query__
 
 ```R
-library(psygeent2r)
+library(psygenet2r)
 qd <- psygenetDisease(disease = "Single Major Depressive Episode", 
     database = "ALL",
     score = c('>', 0.5) 
