@@ -3,16 +3,30 @@ Title: Query PsyGeNET databse and comorbidity studies
 Version: 0.99.0
 Authors@R: c(person("Alba", "Gutierrez-Sacristan", "alba.gutierrez@upf.edu", role = c("aut", "cre")),
   person("Carles", "Hernandez-Ferrer", "chernandez@creal.cat", role = "aut"))
-Description: Package to retreive data from PsyGeNET database (www.psygenet.org) and to perform comorbidity studies with PsyGeNET's and user's data.
-Depends: R (>= 3.2), VennDiagram
+Description: Package to retreive data from PsyGeNET database (www.psygenet.org)
+    and to perform comorbidity studies with PsyGeNET's and user's data.
+Depends:
+    R (>= 3.2),
+    VennDiagram
 License: MIT + file LICENSE
 LazyData: true
-Suggests: testthat
-Imports: stringr, RCurl, igraph, bvenn, ggplot2, reshape2,
-        grid, parallel, biomaRt
+Suggests:
+    testthat
+Imports:
+    stringr,
+    RCurl,
+    igraph,
+    bvenn,
+    ggplot2,
+    reshape2,
+    grid,
+    parallel,
+    biomaRt
 NeedsCompilation: no
 Packaged: 2015-11-02 09:20:26 UTC; chernandez
 Author: Alba Gutierrez-Sacristan [aut],
-  Carles Hernandez-Ferrer [cre]
+    Carles Hernandez-Ferrer [cre]
 Maintainer: Alba Gutierrez-Sacristan <alba.gutierrez@upf.edu>
-biocViews: Software, BiomedicalInformatics, Genetics, Infrastructure, DataImport, DataRepresentation
+biocViews: Software, BiomedicalInformatics, Genetics, Infrastructure,
+    DataImport, DataRepresentation
+RoxygenNote: 5.0.1
