@@ -348,75 +348,69 @@ plot_psy_heatmapDisease <- function( search, table, score, verbose ) {
 }
 
 plot_pmids_barplot <- function ( table, class, name, type, search, verbose ) {
-  if(class=="disease") {
+    ## Transform input table to character
+    table$c1.Gene_Symbol <- as.character(table$c1.Gene_Symbol)
+    table$c1.Gene_Id <- as.character(table$c1.Gene_Id)
+    table$c2.Disease_Id <- as.character(table$c2.Disease_Id)
+    table$c2.Disease_code <- as.character(table$c2.Disease_code)
+    table$c2.DiseaseName <- as.character(table$c2.DiseaseName)
+    ## /
+    
+    inTable <- list( status = FALSE, ncol = 0, look = "" )
+    ## Check for disease
     if( substr ( name, 1, 4 ) == "umls" ) {
-      if( name %in% table$c2.Disease_Id ) {
-        name <- as.character( table[table$c2.Disease_Id == name, 6][1] )
-      } else {
-        stop( paste0( "'", name, "' is not present in this DataGeNET.Psy object." ) )
-      }
+        if( name %in% table$c2.Disease_Id ) {
+            inTable <- list( status = TRUE, ncol = 4, look = "disease" )
+        }
     } else if( substr ( name, 1, 1 ) == "C" & ( nchar( name ) == 8 ) ) {
-      if( name %in% table$c2.Disease_code ){
-        name <- as.character( table[table$c2.Disease_code==name, 6][1] )
-      } else {
+        if( name %in% table$c2.Disease_code ){
+            inTable <- list( status = TRUE, ncol = 5, look = "disease" )
+        }
+    } else if( name %in% table$c2.DiseaseName ){
+        inTable <- list( status = TRUE, ncol = 6, look = "disease" )
+    }
+    ## /
+    
+    ## Check for gene
+    if( name %in% table$c1.Gene_Symbol ) {
+        inTable <- list( status = TRUE, ncol = 1, look = "gene" )
+    } else if ( name %in% table$c1.Gene_Id ) {
+        inTable <- list( status = TRUE, ncol = 2, look = "gene" )
+    }
+    ## /
+        
+    if( !inTable$status ) {
         stop( paste0( "'", name, "' is not present in this DataGeNET.Psy object." ) )
-      }
+    }
+    if( inTable$look == class ) {
+        stop( "Invalid type of plot. Only accepted disease-gene associations." )
+    }
+    
+    ## Create and order table to plot and set X axis
+    input <<- table[ table[ , inTable$ncol ] == name, ]
+    if( class == "disease" ) {
+        orderedPubmed <- input[order( -input["c0.Number_of_Abstracts"] ), "c2.Disease_code"]
+        input$c2.Disease_code <- factor( input$c2.Disease_code, levels = as.factor( unique( orderedPubmed ) ), ordered = TRUE )
+        p <- ggplot2::ggplot(input, ggplot2::aes ( x = c2.Disease_code, y = c0.Number_of_Abstracts ), order = as.numeric(c0.Number_of_Abstracts) )
+        x <- "diseases"
     } else {
-      if( name %in% table$c2.DiseaseName ){
-        name <- name
-      } else {
-        stop( paste0( "'", name, "' is not present in this DataGeNET.Psy object." ) )
-      }
-      
+        orderedPubmed <- input[order( -input["c0.Number_of_Abstracts"] ), "c1.Gene_Symbol"]
+        input$c1.Gene_Symbol <- factor( input$c1.Gene_Symbol, levels = as.factor( unique( orderedPubmed ) ), ordered = TRUE )
+        p <- ggplot2::ggplot(input, ggplot2::aes ( x = c1.Gene_Symbol, y = c0.Number_of_Abstracts ), order = as.numeric(c0.Number_of_Abstracts) )
+        x <- "genes"
     }
-    
-    input <- table[table$c2.DiseaseName == name, ]
-    orderedPubmed <- input[order(-input["c0.Number_of_Abstracts"]), "c1.Gene_Symbol" ]
-    input$c1.Gene_Symbol <- factor(input$c1.Gene_Symbol, levels= as.factor(orderedPubmed))
-    
-    
-    
-    p <- ggplot2::ggplot(input, ggplot2::aes ( x = c1.Gene_Symbol, y = c0.Number_of_Abstracts ), order = as.numeric(c0.Number_of_Abstracts) ) +
-      ggplot2::geom_bar ( stat = "identity", fill = "grey" ) +
-      ggplot2::labs ( title = " ", x = "genes", y = "# of pmids") +
+    ## /
+        
+    ## Draw the plot
+    p <- p + ggplot2::geom_bar ( stat = "identity", fill = "grey" ) +
+      ggplot2::labs ( title = " ", x = x, y = "# of pmids") +
       ggplot2::theme_classic( ) + 
       ggplot2::theme( plot.margin = grid::unit ( x = c ( 5, 15, 5, 15 ), units = "mm" ),
-                      axis.line = ggplot2::element_line ( size = 0.7, color = "black" ), text = ggplot2::element_text ( size = 14 ) ,
+                      axis.line = ggplot2::element_line ( size = 0.7, color = "black" ), 
+                      text = ggplot2::element_text ( size = 14 ) ,
                       axis.text.x = ggplot2::element_text ( angle = 45, size = 9, hjust = 1 ) )
-  
-  }
-  if(class=="gene"){
-    
-    if( class( name ) == "character" ){
-      if( name %in% table$c1.Gene_Symbol){
-        name <- name
-      } else {
-        message( paste0(name, " NOT PRESENT IN THIS DATAGENET OBJECT **" ))
-      }
-    } else if( class( name ) == "numeric" ){
-      if( name %in% table$c1.Gene_Id ){
-        name <- as.character(table[table$c1.Gene_Id==name, 1][1])
-      }else {
-        message( paste0(name, " NOT PRESENT IN THIS DATAGENET OBJECT **" ))
-      }
-    }
-    
-    input <- table[table$c1.Gene_Symbol == name, ]
-    orderedPubmed <- input[order(-input["c0.Number_of_Abstracts"]), "c2.Disease_code" ]
-    input$c2.Disease_code <- factor(input$c2.Disease_code, levels= as.factor(orderedPubmed))
-    
-    
-    
-    p <- ggplot2::ggplot(input, ggplot2::aes ( x = c2.Disease_code, y = c0.Number_of_Abstracts ), order = as.numeric(c0.Number_of_Abstracts) ) +
-      ggplot2::geom_bar ( stat = "identity", fill = "grey" ) +
-      ggplot2::labs ( title = " ", x = "diseases", y = "# of pmids") +
-      ggplot2::theme_classic( ) + 
-      ggplot2::theme( plot.margin = grid::unit ( x = c ( 5, 15, 5, 15 ), units = "mm" ),
-                      axis.line = ggplot2::element_line ( size = 0.7, color = "black" ), text = ggplot2::element_text ( size = 14 ) ,
-                      axis.text.x = ggplot2::element_text ( angle = 45, size = 9, hjust = 1 ) )
-    
-  }
-  p
+    return(p)
+    ## /
 
 }
 ####
