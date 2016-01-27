@@ -31,7 +31,7 @@ setMethod(
     }
 )
 
-
+#####
 plot_datagenet_psy <- function( object, 
     layout = igraph::layout.fruchterman.reingold, 
     type = "disease", verbose = FALSE, ... ) {
@@ -78,8 +78,9 @@ plot_datagenet_psy <- function( object,
         "'psychiatric', 'venn', 'vennA' and 'heatmap'." ) )
     }
 }
+#####
 
-
+#####
 plot_psy_disease <- function( search, table, layout, verbose, inc = 5, 
                               cutOff=FALSE ) {
   
@@ -117,7 +118,9 @@ plot_psy_disease <- function( search, table, layout, verbose, inc = 5,
         main               = ttl
   )
 }
+#####
 
+#####
 plot_psy_psychiatric <- function( search, table, layout, verbose, inc = 5 ) {
   
     edges <- as.data.frame( table( data.frame( table[ , 1 ], table[ , 7 ], 
@@ -191,7 +194,9 @@ plot_psy_psychiatric <- function( search, table, layout, verbose, inc = 5 ) {
         )
     }
 }
+#####
 
+#####
 plot_psy_venn <- function( search, table, verbose ) {
     
     if( length(search) == 1 ) {
@@ -222,8 +227,9 @@ plot_psy_venn <- function( search, table, verbose ) {
         fill = c( "#3F994B", "#715699", "#EDC832" )
     )
 }
+#####
 
-
+#####
 plot_psy_vennAlternative <- function( search, table, verbose ) {
     
     if( length(search) == 1 ) {
@@ -244,8 +250,9 @@ plot_psy_vennAlternative <- function( search, table, verbose ) {
         ),
     scale=0.8)
 }
+#####
 
-
+#####
 plot_psy_heatmap <- function( search, table, verbose ) {
     
     if( length(search) == 1 ) {
@@ -280,8 +287,9 @@ plot_psy_heatmap <- function( search, table, verbose ) {
     p <- p + ggplot2::guides(fill=ggplot2::guide_legend(title="%"))
     return(p)
 }
+#####
 
-
+#####
 plot_psy_heatmapGenes <- function( search, table, cutOff=0, verbose ) {
     
     if( length(search) == 1 ) {
@@ -320,8 +328,9 @@ plot_psy_heatmapGenes <- function( search, table, cutOff=0, verbose ) {
         return(p)
     }
 }
+#####
 
-
+#####
 plot_psy_heatmapDisease <- function( search, table, score, verbose ) {
     
     if( length(search) == 1 ) {
@@ -346,7 +355,9 @@ plot_psy_heatmapDisease <- function( search, table, score, verbose ) {
                 axis.text.x = ggplot2::element_text(angle=45,size=9,hjust=1)) + 
         ggplot2::guides(fill=ggplot2::guide_legend(title="Score"))
 }
+#####
 
+#####
 plot_pmids_barplot <- function ( table, class, name, type, search, verbose ) {
     ## Transform input table to character
     table$c1.Gene_Symbol <- as.character(table$c1.Gene_Symbol)
@@ -415,13 +426,11 @@ plot_pmids_barplot <- function ( table, class, name, type, search, verbose ) {
     ## /
 
 }
-####
-#######
+#####
   
 
 
 #####
-
 plot_psy_heatmapScore <- function( search, table, verbose, cutOff=0 ) {
   
   if( length(search) == 1 ) {
@@ -448,3 +457,4 @@ plot_psy_heatmapScore <- function( search, table, verbose, cutOff=0 ) {
   p
   return(p)
 }
+#####
