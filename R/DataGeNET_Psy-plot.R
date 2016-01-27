@@ -382,25 +382,27 @@ plot_pmids_barplot <- function ( table, class, name, type, search, verbose ) {
     if( !inTable$status ) {
         stop( paste0( "'", name, "' is not present in this DataGeNET.Psy object." ) )
     }
-    if( inTable$look == class ) {
-        stop( "Invalid type of plot. Only accepted disease-gene associations." )
-    }
     
     ## Create and order table to plot and set X axis
-    input <<- table[ table[ , inTable$ncol ] == name, ]
-    if( class == "disease" ) {
+    input <- table[ table[ , inTable$ncol ] == name, ]
+
+    #   Show diseases that have given gene
+    if( ( class == "gene" & inTable$look == "gene" ) | ( class == "disease" & inTable$look == "gene" ) ) {
         orderedPubmed <- input[order( -input["c0.Number_of_Abstracts"] ), "c2.Disease_code"]
         input$c2.Disease_code <- factor( input$c2.Disease_code, levels = as.factor( unique( orderedPubmed ) ), ordered = TRUE )
         p <- ggplot2::ggplot(input, ggplot2::aes ( x = c2.Disease_code, y = c0.Number_of_Abstracts ), order = as.numeric(c0.Number_of_Abstracts) )
         x <- "diseases"
-    } else {
+    }
+    
+    #   Show genes with given disease
+    if( ( class == "disease" & inTable$look == "disease" ) | ( class == "gene" & inTable$look == "disease" ) ) {
         orderedPubmed <- input[order( -input["c0.Number_of_Abstracts"] ), "c1.Gene_Symbol"]
         input$c1.Gene_Symbol <- factor( input$c1.Gene_Symbol, levels = as.factor( unique( orderedPubmed ) ), ordered = TRUE )
         p <- ggplot2::ggplot(input, ggplot2::aes ( x = c1.Gene_Symbol, y = c0.Number_of_Abstracts ), order = as.numeric(c0.Number_of_Abstracts) )
         x <- "genes"
     }
     ## /
-        
+    
     ## Draw the plot
     p <- p + ggplot2::geom_bar ( stat = "identity", fill = "grey" ) +
       ggplot2::labs ( title = " ", x = x, y = "# of pmids") +
