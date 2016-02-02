@@ -1,6 +1,6 @@
 Package: psygenet2r
 Title: Query PsyGeNET databse and comorbidity studies
-Version: 0.99.0
+Version: 0.99.1
 Authors@R: c(person("Alba", "Gutierrez-Sacristan", "alba.gutierrez@upf.edu", role = c("aut", "cre")),
   person("Carles", "Hernandez-Ferrer", "chernandez@creal.cat", role = "aut"))
 Description: Package to retreive data from PsyGeNET database (www.psygenet.org)
