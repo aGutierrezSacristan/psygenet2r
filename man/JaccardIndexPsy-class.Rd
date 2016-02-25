@@ -11,13 +11,15 @@ Jaccard Index between muliple diseases in \code{psygenet2r} package.
 \section{Slots}{
 
 \describe{
-\item{\code{index}}{}
-
 \item{\code{nit}}{Number of iterations to calculate the estimated Jaccard index}
 
-\item{\code{type}}{}
+\item{\code{type}}{Slot to save type of query (disease-disease, gene-disease)}
 
 \item{\code{table}}{\code{data.frame} containing the result table of Jaccard indexes}
+
+\item{\code{i1}}{[internal use] vector with names of first component}
+
+\item{\code{i2}}{[internal use] vector with names of second component}
 }}
 \seealso{
 psygenetGene, psygenetDisease, JaccardIndexPsy-methods

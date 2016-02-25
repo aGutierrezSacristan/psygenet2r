@@ -54,7 +54,7 @@ and \code{JaccardIndexPsy} objects.
 }
 \examples{
 if (require(psygenet2r)){
- plot(x) # for all-disease plot
+ plot(qr) # for all-disease plot
  plot(qr, type = 'disease class') # for MPI plot
 }
 \dontrun{

@@ -5,9 +5,12 @@
 #' can contains this information. The method \code{extractSentences} 
 #' allows to extrat this information.
 #' 
+#' @name extractSentences
+#' @rdname extractSentences-methods
+#' @aliases extractSentences
 #' @param input A \code{DataGeNET.Psy} object.
 #' @param disorder A disorder to check if any evidence exists.
-#' @param vervose If set to \code{TRUE} informative messages are show.
+#' @param verbose If set to \code{TRUE} informative messages are show.
 #' @return A data frame showing the evidence.
 #' @examples 
 #' extractSentences(qr, "Depression")

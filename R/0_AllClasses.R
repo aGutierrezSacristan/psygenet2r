@@ -49,10 +49,11 @@ setClass( "DataGeNET.Psy",
 #' @name JaccardIndexPsy-class
 #' @rdname JaccardIndexPsy-class
 #' @exportClass JaccardIndexPsy
-#' @slot index 
 #' @slot nit Number of iterations to calculate the estimated Jaccard index
-#' @slot type 
+#' @slot type Slot to save type of query (disease-disease, gene-disease)
 #' @slot table \code{data.frame} containing the result table of Jaccard indexes
+#' @slot i1 [internal use] vector with names of first component
+#' @slot i2 [internal use] vector with names of second component
 #' @seealso psygenetGene, psygenetDisease, JaccardIndexPsy-methods
 setClass( "JaccardIndexPsy",
     representation = 
