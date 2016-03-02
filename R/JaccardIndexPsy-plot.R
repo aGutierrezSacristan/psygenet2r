@@ -3,10 +3,8 @@
 #' This functions llows to create a variety of plots for \code{DataGeNEt.Psy}
 #' and \code{JaccardIndexPsy} objects.
 #'
-#' @name plot
-#' @rdname plot-methods
-#' @aliases plot
 #' @param x Object of class \code{JaccardIndexPsy}.
+#' @param y NOT USED
 #' @param cutOff Number to filter the shown results.
 #' @param zero.remove By deffault \code{TRUE}. It removes those relations
 #' with a Jaccard Index of 0.
@@ -24,7 +22,7 @@
 #' @export plot
 setMethod( "plot",
            signature = "JaccardIndexPsy",
-           definition = function( x, cutOff, zero.remove = TRUE, noTitle = FALSE, verbose = FALSE, ... ) {
+           definition = function( x, y, cutOff, zero.remove = TRUE, noTitle = FALSE, verbose = FALSE, ... ) {
    
    show.pval = FALSE
    input <- x@table
@@ -36,7 +34,9 @@ setMethod( "plot",
    if(!missing(cutOff)) {
     input <- input[ input$JaccardIndex >= cutOff, ]
    }
-   
+   # @name plot
+   # @rdname JaccardIndexPsy-methods
+   # @aliases plot
    if(length(unique(input$Disease1))>1){
      m <- max( input$JaccardIndex )
      p <- ggplot2::ggplot( input, ggplot2::aes( x = Disease1, y = Disease2 ) ) + 

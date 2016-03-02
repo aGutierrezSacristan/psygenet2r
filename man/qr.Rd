@@ -25,10 +25,8 @@ A dataset obtained from PsyGeNET after being queried with
 \code{psygenetGene} usig the term '4852' on \code{"ALL"} databse.
 }
 \examples{
-if (require(psygenet2r)){
- ngene(qr)
- ndisease(qr)
-}
+ngene(qr)
+ndisease(qr)
 }
 \keyword{datasets}
 

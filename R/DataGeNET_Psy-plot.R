@@ -4,10 +4,8 @@
 #' This functions llows to create a variety of plots for \code{DataGeNEt.Psy}
 #' and \code{JaccardIndexPsy} objects.
 #'
-#' @name plot
-#' @rdname plot-methods
-#' @aliases plot
 #' @param x Object of class \code{DataGeNET.Psy}
+#' @param y NOT USED
 #' @param layout Function to design the location of the different nodes. By 
 #' default \code{layout.fruchterman.reingold} from \code{igraph} is used.
 #' @param type Type of the drawn chart. By default it is \code{"disease"} but 
@@ -16,25 +14,26 @@
 #' \code{"heatmapGenes"}, \code{"heatmapScore"} or \code{"heatmap"}.
 #' @param verbose By default \code{FALSE}. If set to \code{TRUE} information
 #' on the drawing process will be shown.
+#' @param ... Passed to inner functions for different plots.
 #' @return A plot for \code{DataGeNET.Psy}.
 #' @examples
-#' if (require(psygenet2r)){
-#'  plot(qr) # for all-disease plot
-#'  plot(qr, type = 'disease class') # for MPI plot
-#' }
+#' plot(qr) # for all-disease plot
+#' plot(qr, type = 'disease class') # for MPI plot
 #' @export plot
 setMethod( 
     f = "plot",
     signature = "DataGeNET.Psy",
-    definition = function( x, ... ) {
-        plot_datagenet_psy( x, ... )
+    definition = function( x, y, layout = igraph::layout.fruchterman.reingold,
+                           type = "disease", verbose = FALSE, ... ) {
+        plot_datagenet_psy( x, layout=layout, type=type, verbose=verbose, ... )
     }
+    # @name plot
+    # @rdname DataGeNET.Psy-methods
+    # @aliases plot
 )
 
 #####
-plot_datagenet_psy <- function( object, 
-    layout = igraph::layout.fruchterman.reingold, 
-    type = "disease", verbose = FALSE, ... ) {
+plot_datagenet_psy <- function( object, layout, type, verbose, ... ) {
     if( !type %in% c( "disease", "individual disease", "disease class", 
                       "venn", "vennA", "heatmap", "heatmapGenes", "barplot", 
                       "heatmapScore" ) ) {

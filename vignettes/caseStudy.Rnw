@@ -264,7 +264,7 @@ m2
 \noindent Then, the \texttt{extractSentences} function is applied to the previous \texttt{DataGeNET.Psy} object and \texttt{disorder} argument is set to the disorder of interest, in this case, \texttt{"Bipolar Disorder"}. Notice that if the disorder name is used, it must be written as it appears in PsyGeNET, otherwise results will not be found. The result is a data frame that contains the gene, disease, original db, the pmid and the sentence. As an example the first pmids are shown.\\
 
 <<sentences2_extraction>>=
-sentences <- extractSentences( input = m2, 
+sentences <- extractSentences( m2, 
   disorder = "Bipolar Disorder" )
 head(sentences$PUBMED_ID)
 @

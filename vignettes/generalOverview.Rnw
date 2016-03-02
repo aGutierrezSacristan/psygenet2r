@@ -323,7 +323,7 @@ sss <- psygenetGeneSentences( geneList = genesOfInterest,
                              database = "ALL")
 sss
 
-geneSentences <- extractSentences( input = sss,
+geneSentences <- extractSentences( sss,
                                    disorder = "Mood Disorders")
 dim(geneSentences)
 @

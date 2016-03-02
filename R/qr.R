@@ -13,9 +13,7 @@
 #'   .. qresult :'data.frame'
 #' @return A \code{DataGeNET.Psy} object.
 #' @examples
-#' if (require(psygenet2r)){
-#'  ngene(qr)
-#'  ndisease(qr)
-#' }
+#' ngene(qr)
+#' ndisease(qr)
 #' @source \url{http://psygenet.org}
 "qr"
