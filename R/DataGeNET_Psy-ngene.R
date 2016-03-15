@@ -1,4 +1,4 @@
-#' @describeIn DataGeNET.Psy get number of genes
+#' @describeIn ngene Get number of genes
 #' @return The number of unique genes
 setMethod( "ngene",
     signature = "DataGeNET.Psy",

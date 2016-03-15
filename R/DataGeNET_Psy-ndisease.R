@@ -1,7 +1,5 @@
-#' @describeIn DataGeNET.Psy get number of diseases
+#' @describeIn ndisease Get number of diseases
 #' @return The number of unique diseases
-#' @examples
-#' ndisease(qr)
 setMethod( "ndisease",
     signature = "DataGeNET.Psy",
     definition = function( object ) {

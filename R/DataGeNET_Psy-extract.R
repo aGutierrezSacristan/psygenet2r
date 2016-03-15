@@ -1,8 +1,7 @@
-#' @describeIn DataGeNET.Psy extract raw data
-#' @aliases DataGeNET.Psy-methods
-#' @param object Object of class \code{DataGeNET.Psy}
+#' @describeIn extract Extract function for DataGeNET.Psy
 #' @return A \code{data.frame} containing the raw result from PsyGeNET
 #' @examples
+#' data(qr)
 #' extract(qr)[1:2, ] # get internat data.frame
 #' @export
 setMethod( "extract",

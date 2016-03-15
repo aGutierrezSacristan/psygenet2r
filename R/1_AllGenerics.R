@@ -3,9 +3,12 @@
 #' Obtain the number of unique diseases in a \code{DataGeNET.Psy}.
 #'
 #' @name ndisease
-#' @rdname DataGeNET.Psy-methods
-#' @param object Object of class \code{DataGeNET.Psy}.
+# @rdname ndisease-methods
 #' @aliases ndisease
+#' @param object Object of class \code{DataGeNET.Psy}.
+#' @examples
+#' data(qr)
+#' ndisease(qr)
 #' @export
 setGeneric ("ndisease",
     function(object){standardGeneric("ndisease")}
@@ -16,10 +19,12 @@ setGeneric ("ndisease",
 #' Obtain the number of unique genes in a \code{DataGeNET.Psy}.
 #'
 #' @name ngene
-#' @rdname DataGeNET.Psy-methods
+# @rdname ngene-methods
 #' @aliases ngene
+#' @param object Object of class \code{DataGeNET.Psy}.
 #' @return The number of unique genes
 #' @examples
+#' data(qr)
 #' ngene(qr)
 #' @export
 setGeneric ("ngene",
@@ -34,12 +39,14 @@ setGeneric ("ngene",
 #' allows to extrat this information.
 #' 
 #' @name extractSentences
-#' @rdname DataGeNET.Psy-methods
+# @rdname extractSentences-methods
 #' @aliases extractSentences
+#' @param object Object of class \code{DataGeNET.Psy}.
 #' @param disorder A disorder to check if any evidence exists.
 #' @param verbose If set to \code{TRUE} informative messages are show.
 #' @return A data frame showing the evidence.
-#' @examples 
+#' @examples
+#' data(qr)
 #' extractSentences(qr, "Depression")
 #' @export extractSentences
 setGeneric ("extractSentences",
@@ -53,7 +60,7 @@ setGeneric ("extractSentences",
 #' the disease of interest of an \code{JaccardIndexPsy} object.
 #'
 #' @name extract
-#' @rdname extract-methods
+# @rdname extract-methods
 #' @aliases extract
 #' @param object Object of class \code{DataGeNET.Psy} or \code{JaccardIndexPsy}
 #' @return A \code{data.frame} containing the raw result from PsyGeNET or

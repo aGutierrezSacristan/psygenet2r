@@ -17,6 +17,7 @@
 #' @param ... Passed to inner functions for different plots.
 #' @return A plot for \code{DataGeNET.Psy}.
 #' @examples
+#' data(qr)
 #' plot(qr) # for all-disease plot
 #' plot(qr, type = 'disease class') # for MPI plot
 #' @export plot

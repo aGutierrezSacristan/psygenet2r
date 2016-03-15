@@ -1,6 +1,4 @@
-#' @describeIn JaccardIndexPsy extract raw calulated values
-#' @aliases JaccardIndexPsy-methods
-#' @param object Object of class \code{JaccardIndexPsy}
+#' @describeIn extract Extract function for JacardIndexPsy
 #' @return A \code{data.frame} with the result Jaccard Index for each disease.
 #' @examples
 #' \dontrun{

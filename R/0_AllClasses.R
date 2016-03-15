@@ -2,9 +2,11 @@
 #'
 #' Class \code{DataGeNET.Psy} is the basic object use in \code{psygenet2r} 
 #' package. It is the main data container to using the different functions to
-#' query PsyGeNET database and generate teir output.
+#' query PsyGeNET database and generate teir output. The constructors of this 
+#' class are the functions \code{psygenetGene} and \code{psygenetDisease}.
 #'
 #' @name DataGeNET.Psy-class
+#' @aliases DataGeNET.Psy-class
 #' @rdname DataGeNET.Psy-class
 #' @exportClass DataGeNET.Psy
 #' @slot type Character containing \code{'gene'} of \code{'disease'}. It is 
@@ -47,6 +49,7 @@ setClass( "DataGeNET.Psy",
 #' Jaccard Index between muliple diseases in \code{psygenet2r} package.
 #'
 #' @name JaccardIndexPsy-class
+#' @aliases JaccardIndexPsy-class
 #' @rdname JaccardIndexPsy-class
 #' @exportClass JaccardIndexPsy
 #' @slot nit Number of iterations to calculate the estimated Jaccard index
@@ -54,6 +57,8 @@ setClass( "DataGeNET.Psy",
 #' @slot table \code{data.frame} containing the result table of Jaccard indexes
 #' @slot i1 [internal use] vector with names of first component
 #' @slot i2 [internal use] vector with names of second component
+#' @examples 
+#' ji <- jaccardEstimation( c( "COMT", "CLOCK", "DRD3" ), "umls:C0005586", "CURATED" )
 #' @seealso psygenetGene, psygenetDisease, JaccardIndexPsy-methods
 setClass( "JaccardIndexPsy",
     representation = 

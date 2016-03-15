@@ -36,6 +36,7 @@ This functions llows to create a variety of plots for \code{DataGeNEt.Psy}
 and \code{JaccardIndexPsy} objects.
 }
 \examples{
+data(qr)
 plot(qr) # for all-disease plot
 plot(qr, type = 'disease class') # for MPI plot
 }

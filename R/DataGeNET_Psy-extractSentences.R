@@ -1,6 +1,4 @@
-#' @describeIn DataGeNET.Psy get sentences or evidences
-#' @param disorder A disorder to check if any evidence exists.
-#' @param verbose If set to \code{TRUE} informative messages are show.
+#' @describeIn extractSentences Get sentences or evidences
 setMethod( "extractSentences",
     signature = "DataGeNET.Psy",
     definition = function (object, disorder, verbose = FALSE ) {
