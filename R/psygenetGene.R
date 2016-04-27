@@ -20,6 +20,7 @@
 #' \code{'>'} or with lower \code{'<'} meaing greather or equal and lower or
 #' @param check By default \code{TRUE}. Change it to \code{FALSE} to not
 #' validate the genes.
+#' @param hostMart The URL of Biomart to be used.
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
 #' on-time log from the function.
 #' @param warnings By default \code{TRUE}. Change it to \code{FALSE} to not see
@@ -28,7 +29,7 @@
 #' @examples
 #' d.alch <- psygenetGene( "ALDH2", "CURATED" )
 #' @export psygenetGene
-psygenetGene <- function( gene, database = "CURATED", score=c('>', 0), check = TRUE, verbose = FALSE, warnings = TRUE ) {
+psygenetGene <- function( gene, database = "CURATED", score=c('>', 0), check = TRUE, hostMart = "grch37.ensembl.org", verbose = FALSE, warnings = TRUE ) {
   check_database( database )
   if( length( gene ) != length( unique( gene ) ) ) {
     gene <- unique( gene )
@@ -44,7 +45,7 @@ psygenetGene <- function( gene, database = "CURATED", score=c('>', 0), check = T
   }
   
   if( check ) {
-    check_genes( gene, warnings = warnings )
+    check_genes( gene, hostMart = hostMart, verbose = verbose, warnings = warnings )
   }
   
   if( verbose ) {
