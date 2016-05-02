@@ -5,7 +5,8 @@
 \title{Query PsyGeNET for given genes and creates a representation in base of
 their panther-class}
 \usage{
-pantherGraphic(x, database = "CURATED", score, verbose = FALSE)
+pantherGraphic(x, database = "CURATED", score, verbose = FALSE,
+  check = TRUE, hostMart = "www.ensembl.org")
 }
 \arguments{
 \item{x}{Vector of genes of interest of \code{DataGeNET.Psy} resulting of
@@ -23,6 +24,11 @@ to use all these databases. Default \code{'CURATED'}.}
 
 \item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get a
 on-time log from the function.}
+
+\item{check}{By default \code{TRUE}. Change it to \code{FALSE} to not
+validate the genes.}
+
+\item{hostMart}{The URL of Biomart to be used.}
 }
 \value{
 A plot for a \code{DataGeNET.Psy} in terms of the panther-class.

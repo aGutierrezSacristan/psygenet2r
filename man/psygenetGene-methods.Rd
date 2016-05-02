@@ -5,7 +5,7 @@
 \title{Query PsyGeNET for given gene(s) and generates an \code{DataGeNET.Psy}}
 \usage{
 psygenetGene(gene, database = "CURATED", score = c(">", 0), check = TRUE,
-  hostMart = "grch37.ensembl.org", verbose = FALSE, warnings = TRUE)
+  hostMart = "www.ensembl.org", verbose = FALSE, warnings = TRUE)
 }
 \arguments{
 \item{gene}{Name or vector of names (that can be both code or symbol) to 

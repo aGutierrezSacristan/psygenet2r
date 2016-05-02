@@ -4,11 +4,11 @@
 
 ## What is this repository for?
 
-This report is used for package distribution while we walk thought BioConductor validation process.
+This report is used for package distribution while we walk thought BioConductor publication process. `psygenet2r` is already in Biocondcutor-devel.
 
 ## Package' Status
 
- * __Version__: 0.99.0
+ * __Version__: 1.0.1
  * __Authors__: Alba Gutierrez-Sacristan (GRIB-UPF), Carles Hernandez-Ferrer (CREAL)
  * __Maintainer__: Alba Gutierrez-Sacristan (GRIB-UPF)
 
