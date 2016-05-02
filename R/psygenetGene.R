@@ -29,7 +29,7 @@
 #' @examples
 #' d.alch <- psygenetGene( "ALDH2", "CURATED" )
 #' @export psygenetGene
-psygenetGene <- function( gene, database = "CURATED", score=c('>', 0), check = TRUE, hostMart = "grch37.ensembl.org", verbose = FALSE, warnings = TRUE ) {
+psygenetGene <- function( gene, database = "CURATED", score=c('>', 0), check = TRUE, hostMart = "www.ensembl.org", verbose = FALSE, warnings = TRUE ) {
   check_database( database )
   if( length( gene ) != length( unique( gene ) ) ) {
     gene <- unique( gene )

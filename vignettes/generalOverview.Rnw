@@ -147,7 +147,7 @@ t1
 
 
 <<search_gene_2, cache=TRUE>>=
-t2 <- psygenetGene( gene = "NPY", database = "ALL" )
+t2 <- psygenetGene( gene = "NPY", database = "ALL", check = FALSE )
 t2
 @
 
@@ -210,7 +210,8 @@ genesOfInterest <- c( "COMT", "CLOCK", "DRD3", "GNB3", "HTR1A",
 m1 <- psygenetGene(
     gene     = genesOfInterest, 
     database = "ALL",
-    verbose  = TRUE 
+    verbose  = TRUE,
+    check = FALSE
 )
 @
 
@@ -259,7 +260,7 @@ plot( m1, type="heatmapGenes", cutOff=0.5 )
 
 <<panther_gene, fig=TRUE>>=
 genesOfInterest <- unique( genesOfInterest )
-pantherGraphic( genesOfInterest, "ALL" )
+pantherGraphic( genesOfInterest, "ALL", check = FALSE )
 @
 
 \subsubsection{Ploting results of the Multiple Gene Query}

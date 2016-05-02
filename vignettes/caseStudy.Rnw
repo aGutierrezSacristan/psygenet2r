@@ -139,7 +139,8 @@ m1 <- psygenetGene(
     gene     = genesOfInterest, 
     database = "ALL",
     verbose  = FALSE,
-    warnings = FALSE
+    warnings = FALSE,
+    check = FALSE
 )
 m1
 @
@@ -197,7 +198,7 @@ plot( m1, type = "heatmapScore", cutOff = 0.1 )
 \begin{figure}[H]
 \begin{center}
 <<ggplot_panther, fig=TRUE, height=8, width=8>>=
-pantherGraphic( genesOfInterest, "ALL" )
+pantherGraphic( genesOfInterest, "ALL", check = FALSE)
 @
 \caption{Panther graphic analysis of the genes of interest.}
 \label{panther}
