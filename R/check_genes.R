@@ -1,5 +1,5 @@
-check_genes <- function( genes, hostMart = "www.ensembl.org", verbose = FALSE, 
-                         warnings = TRUE ) {
+check_genes <- function( genes, hostMart = "www.ensembl.org", biomart = "ENSEMBL_MART_ENSEMBL",
+                         verbose = FALSE, warnings = TRUE ) {
     ## This function can onlybe used if the R package biomaRt is present
     if( !requireNamespace( "biomaRt", quietly = TRUE ) ) {
         return( TRUE )

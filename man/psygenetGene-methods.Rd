@@ -4,8 +4,9 @@
 \alias{psygenetGene}
 \title{Query PsyGeNET for given gene(s) and generates an \code{DataGeNET.Psy}}
 \usage{
-psygenetGene(gene, database = "CURATED", score = c(">", 0), check = TRUE,
-  hostMart = "www.ensembl.org", verbose = FALSE, warnings = TRUE)
+psygenetGene(gene, database = "CURATED", score = c(">", 0), check = FALSE,
+  hostMart = "www.ensembl.org", biomart = "ENSEMBL_MART_ENSEMBL",
+  verbose = FALSE, warnings = TRUE)
 }
 \arguments{
 \item{gene}{Name or vector of names (that can be both code or symbol) to 
@@ -23,10 +24,13 @@ to use all these databases. Default \code{'CURATED'}.}
 \item{score}{A vector with two elements: 1) character with greather 
 \code{'>'} or with lower \code{'<'} meaing greather or equal and lower or}
 
-\item{check}{By default \code{TRUE}. Change it to \code{FALSE} to not
-validate the genes.}
+\item{check}{By default \code{FALSE}. Change it to \code{TRUE} to 
+validate the genes to biomart.}
 
 \item{hostMart}{The URL of Biomart to be used.}
+
+\item{biomart}{By default \code{'ENSEMBL_MART_ENSEMBL'}. The mart of biomart used to 
+check genes}
 
 \item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get a
 on-time log from the function.}
