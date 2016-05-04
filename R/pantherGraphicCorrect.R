@@ -25,7 +25,7 @@
 #' @param hostMart The URL of Biomart to be used.
 #' @return A plot for a \code{DataGeNET.Psy} in terms of the panther-class.
 #' @examples
-#' d.alch <- pantherGraphic( c( "COMT", "CLOCK", "DRD3" ), "CURATED" )
+#' d.alch <- pantherGraphic( c( "COMT", "CLOCK", "DRD3" ), "CURATED", check = FALSE )
 #' @export pantherGraphic
 pantherGraphic <- function ( x, database = "CURATED", score, verbose = FALSE, check = TRUE, hostMart = "www.ensembl.org" ) {
   if( class( x ) == "DataGeNET.Psy" ) {

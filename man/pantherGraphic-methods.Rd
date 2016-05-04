@@ -39,6 +39,6 @@ function creates a representation of a the panther-class these genes belongs
 to.
 }
 \examples{
-d.alch <- pantherGraphic( c( "COMT", "CLOCK", "DRD3" ), "CURATED" )
+d.alch <- pantherGraphic( c( "COMT", "CLOCK", "DRD3" ), "CURATED", check = FALSE )
 }
 
