@@ -42,6 +42,6 @@ Given the name of one or multiple gene and retrives their information
 from PsyGeNET and creates an object of type \code{DataGeNET.Psy}.
 }
 \examples{
-d.alch <- psygenetGene( "ALDH2", "CURATED" )
+d.alch <- psygenetGene( "ALDH2", "CURATED", check = FALSE )
 }
 
