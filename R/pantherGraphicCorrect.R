@@ -20,14 +20,17 @@
 #' @param score threshold to take into account a gene in the analysis
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
 #' on-time log from the function.
-#' @param check By default \code{TRUE}. Change it to \code{FALSE} to not
-#' validate the genes.
+#' @param check By default \code{FALSE}. Change it to \code{TRUE} to 
+#' validate the genes to biomart.
 #' @param hostMart The URL of Biomart to be used.
+#' @param biomart By default \code{'ENSEMBL_MART_ENSEMBL'}. The mart of biomart used to 
+#' check genes 
 #' @return A plot for a \code{DataGeNET.Psy} in terms of the panther-class.
 #' @examples
 #' d.alch <- pantherGraphic( c( "COMT", "CLOCK", "DRD3" ), "CURATED", check = FALSE )
 #' @export pantherGraphic
-pantherGraphic <- function ( x, database = "CURATED", score, verbose = FALSE, check = TRUE, hostMart = "www.ensembl.org" ) {
+pantherGraphic <- function ( x, database = "CURATED", score, verbose = FALSE, check = FALSE, 
+                             hostMart = "www.ensembl.org", biomart = "ENSEMBL_MART_ENSEMBL" ) {
   if( class( x ) == "DataGeNET.Psy" ) {
     if( x@type == "disease" ) {
       if( !missing( score ) ) {
@@ -47,7 +50,7 @@ pantherGraphic <- function ( x, database = "CURATED", score, verbose = FALSE, ch
   pantherFile[,3] <- gsub ( "0", "Unclassified", pantherFile[,3] )
   panther <- as.data.frame( transPantherFile ( pantherFile ) )
   
-  ourList <- psygenetGene( geneList, database, verbose = verbose, hostMart = hostMart, check = check )
+  ourList <- psygenetGene( geneList, database, verbose = verbose, hostMart = hostMart, biomart = biomart, check = check )
   ourList <- ourList@qresult [ , c( 1,2,4,7 ) ]
   
   # estimate frequency

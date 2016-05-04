@@ -18,9 +18,11 @@
 #' to use all these databases. Default \code{'CURATED'}.
 #' @param score A vector with two elements: 1) character with greather 
 #' \code{'>'} or with lower \code{'<'} meaing greather or equal and lower or
-#' @param check By default \code{TRUE}. Change it to \code{FALSE} to not
-#' validate the genes.
+#' @param check By default \code{FALSE}. Change it to \code{TRUE} to 
+#' validate the genes to biomart.
 #' @param hostMart The URL of Biomart to be used.
+#' @param biomart By default \code{'ENSEMBL_MART_ENSEMBL'}. The mart of biomart used to 
+#' check genes 
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
 #' on-time log from the function.
 #' @param warnings By default \code{TRUE}. Change it to \code{FALSE} to not see
@@ -29,7 +31,9 @@
 #' @examples
 #' d.alch <- psygenetGene( "ALDH2", "CURATED", check = FALSE )
 #' @export psygenetGene
-psygenetGene <- function( gene, database = "CURATED", score=c('>', 0), check = TRUE, hostMart = "www.ensembl.org", verbose = FALSE, warnings = TRUE ) {
+psygenetGene <- function( gene, database = "CURATED", score=c('>', 0), check = FALSE, 
+                          hostMart = "www.ensembl.org", biomart = "ENSEMBL_MART_ENSEMBL",
+                          verbose = FALSE, warnings = TRUE ) {
   check_database( database )
   if( length( gene ) != length( unique( gene ) ) ) {
     gene <- unique( gene )
@@ -45,7 +49,7 @@ psygenetGene <- function( gene, database = "CURATED", score=c('>', 0), check = T
   }
   
   if( check ) {
-    check_genes( gene, hostMart = hostMart, verbose = verbose, warnings = warnings )
+    check_genes( gene, hostMart = hostMart, biomart = biomart, verbose = verbose, warnings = warnings )
   }
   
   if( verbose ) {
