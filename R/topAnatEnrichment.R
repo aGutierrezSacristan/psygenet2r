@@ -35,7 +35,7 @@ topAnatEnrichment <- function( gene, dataType = "rna_seq", statistic = "fisher",
     eGenes <- vector()
     wGenes <- vector()
     
-    tabGenes <- ListPsyGeNETIds( database, "Gene" )
+    tabGenes <- ListPsyGeNETIds( database = "ALL", "Gene" )
     
     for( ii in 1:length( unique( gene ) ) ){
         ## Try to know if the given gene is an ID or a SYMBOL

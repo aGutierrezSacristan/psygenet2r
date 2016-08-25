@@ -167,7 +167,7 @@ class(t2)
 
 \begin{figure}
 \begin{center}
-<<plot_disease, fig=TRUE>>=
+<<plot_disease>>=
 plot( t1, type = "individual disease" )
 @
 \end{center}
@@ -177,7 +177,7 @@ plot( t1, type = "individual disease" )
 
 \begin{figure}[H]
 \begin{center}
-<<plot_psychiatric, fig=TRUE>>=
+<<plot_psychiatric>>=
 plot( t1, type = "disease class" )
 @
 \end{center}
@@ -236,7 +236,7 @@ m1
 
 \begin{figure}[H]
 \begin{center}
-<<plot_psychiatric1, fig=TRUE, widtgh=10>>=
+<<plot_psychiatric1, fig.widtgh=10>>=
 layout( matrix( c( 1, 2 ), nrow = 1 ) )
 plot( m1 )
 plot( m1, type = "disease class" )
@@ -246,7 +246,7 @@ plot( m1, type = "disease class" )
 
 \noindent \texttt{psygenet2r} package allows to visualize the GDAs attributes in a heatmap. The argument \texttt{type} must be \texttt{"heatmapGenes"} and the PsyGeNET score can also be determined by the user setting the \texttt{cut-off} argument to the score of interest. In this example, the cut-off is set to 0.5, it means that only those associations with an score equal or higher to 0.5 will be shown. \textbf{Warning}: if there are more than 100 associations, only the first 100 with highest score are shown in the heatmap. In this kind of representation we can identify genes that are associated to several diseases (e.g. SLC6A4) and also genes that are specific for a particular diseases (e.g. GABRA3).
 
-<<heatmap_disease_m, fig=TRUE,width=8, height=8 >>=
+<<heatmap_disease_m, fig.width=8, fig.height=8 >>=
 plot( m1, type="heatmapGenes" )
 @
 
@@ -257,7 +257,7 @@ plot( m1, type="heatmapGenes" )
 \noindent The \texttt{pantherGraphic} function shows the Panther class to which the proteins belong according to their associated psychiatric disorder. It provides a graphic with the results of these analysis, being the input a list of genes and the database (\texttt{ALL}, \texttt{CURATED}, \texttt{PsyCUR}, etc). The input genes can be from a vector that contains the genes of interest, or from the genes obtained in the \texttt{DataGeNET.psy} object in a disease or disease-list query. An score argument can be added to filter results. It can also be done given a DataGeNET.psy object obtained by querying with a single gene.
 
 
-<<panther_gene, fig=TRUE>>=
+<<panther_gene>>=
 genesOfInterest <- unique( genesOfInterest )
 pantherGraphic( genesOfInterest, "ALL", check = FALSE )
 @
@@ -268,7 +268,7 @@ pantherGraphic( genesOfInterest, "ALL", check = FALSE )
 
 \noindent Here, in this first barplot we show how many of the genes that are associated with a disease category are exclusively associated to it and how many of them are also associated with any other category.\\
 
-<<plot_diseaseBarplot, fig=TRUE, height=8, width=8>>=
+<<plot_diseaseBarplot, fig.height=8, fig.width=8>>=
 <<<<<<< HEAD
 =======
 plot( m1, type = "diseaseBarplot" )
@@ -278,19 +278,19 @@ geneAttrPlot( m1, type = "category" )
 
 \noindent If we are only interested in how many of our input genes are associated to each disease category, a pie chart can be obtained applying the \texttt{plot} function and setting up the \texttt{type} argument to \texttt{pieChart}.\\
 
-<<plot_pieChart, fig=TRUE, height=8, width=8>>=
+<<plot_pieChart, fig.height=8, fig.width=8>>=
 geneAttrPlot( m1, type = "pie" )
 @
 
 \noindent On the other hand, this second barplot show us the number of cuis and disease categories associated to each one of our genes of interest.\\
 
-<<plot_geneBarplot, fig=TRUE, height=8, width=8>>=
+<<plot_geneBarplot, fig.height=8, fig.width=8>>=
 geneAttrPlot( m1, type = "gene" )
 @
 
 \noindent An alternative graphical representation is a barplot showing gene-disease association according to each disease category taking into account the type of evidence of each assocation (association, no association, both).\\
 
-<<barplotIP, fig=TRUE, height=8, width=8>>=
+<<barplotIP, fig.height=8, fig.width=8>>=
 geneAttrPlot( m1, type = "index" )
 @
 
@@ -298,7 +298,7 @@ geneAttrPlot( m1, type = "index" )
 
 \noindent In order to obtain this graphic, \texttt{type} must be set to \texttt{"heatmap"}. The resulting heatmap shows which are the genes that are higher or lower associated to each one of the psychiatric disorders. 
 
-<<plot_psychiatric_heamap, fig = TRUE>>=
+<<plot_psychiatric_heamap>>=
 plot( m1, type = "heatmap" )
 @
 
@@ -318,7 +318,6 @@ tbl <- enrichedPD( genesOfInterest, database = "ALL")
 tbl
 @
 
-<<<<<<< HEAD
 <<enrichment2>>=
 genesOfInterest <- c(55825, 126, 831, 51752, 5521)
 tb2 <- enrichedPD( genesOfInterest, database = "ALL")
@@ -329,7 +328,7 @@ tb2
 
 \subsubsection{Enrichment analysis based on anatomical terms (TopAnat) for a list of genes}
 
-<<topAnat>>=
+<<topAnat, message=FALSE, results='hide'>>=
 genesOfInterest <- c( "COMT", "CLOCK", "DRD3", "GNB3", "HTR1A",
                       "MAOA", "HTR2A","HTR2C", "HTR6", "SLC6A4", 
                       "ACE",  "BDNF", "DRD4", "HTR1B", "HTR2B",
@@ -337,12 +336,13 @@ genesOfInterest <- c( "COMT", "CLOCK", "DRD3", "GNB3", "HTR1A",
                       "GABRA3"
 )
 tpAnat <- topAnatEnrichment( genesOfInterest, cutOff = 1 )
+@
+
+<<show_topAnat>>=
 head( tpAnat )
 @
 
-=======
 \noindent \textbf{The result is a table with a p-value of the enrichment of the given list of genes for each psychiatric disorder in PsyGeNET. As we can see these genes are enriched in the alcohol use disorder genes of PsyGeNET (p-val = 0.0009). This result is in agreement to what Treutlein et al. find in their analysis, in which they determined that these genes where associated with alcohol dependence.}\\ 
->>>>>>> 67b8c39f12f2be9787a889bf2ecd1783ecac5aae
 
 \subsubsection{Sentences that report a GDA}
 
@@ -407,7 +407,7 @@ class(d2)
 
 \noindent By default, \texttt{psygenet2r} shows the GDAs network when ploting a \texttt{DataGeNET.Psy} object with a disease-query. The result is a network where, orange nodes are genes and the central and green node is the disease of interest.\\  
 
-<<plot_visualizing_single_disease_search, fig=TRUE>>=
+<<plot_visualizing_single_disease_search>>=
 plot ( d1 )
 @
 
@@ -455,14 +455,14 @@ class(tm)
 
 \noindent As for single disease, GDAs network is the default option in \texttt{psygenet2r}. In the resulting network chart, the green nodes represent diseases and the oranges nodes represent genes.\\ 
 
-<<plot_disease_tm, fig=TRUE>>=
+<<plot_disease_tm>>=
 plot( tm )
 @
 
 
 \noindent Another possible option is visualize it in a heatmap. The argument \texttt{type} can be set to \texttt{"heatmap"} and the score argument must be determined by the user. For example, in the previous search, 494 different genes were found associated to the disorders of interest. The PsyGeNET score ranges from 0 to 1; greater score means that there are more evidences supporting the association, so we can restrict our heatmap to those association with an score greater or equal to 0.7. The darkest red belongs to the greatest score. 
 
-<<heatmap_disease_tm, fig=TRUE>>=
+<<heatmap_disease_tm>>=
 plot( tm, type = "heatmap" )
 @
 
@@ -472,13 +472,13 @@ plot( tm, type = "heatmap" )
 
 \noindent \texttt{psygenet2r} package allows to see how many pubmed ids support each gene-disease association. This can be visualize in a barplot by determining the gene or disease id in the \texttt{name} argument and setting \texttt{type} argument to \texttt{"barplot"}.\\ 
 
-<<barplot_visualizing_single_disease_search, fig=TRUE, width=5, height=3>>=
+<<barplot_visualizing_single_disease_search, fig.width=5, fig.height=3>>=
 plot ( d1, name = "major depressive affective disorder, single episode, unspecified", type = "barplot" )
 @
 
 \noindent As a result, a barplot is obtained. The X axis contains the genes related to the disease of interest, sorted by the number of pubmed ids in which we can find the gene-disease association. alternatively, the results can be visualized for the diseases.\\
 
-<<barplot_visualizing_single_gene_search, fig=TRUE, width=5, height=3>>=
+<<barplot_visualizing_single_gene_search, fig.width=5, fig.height=3>>=
 plot ( t1, name = "NPY", type = "barplot" )
 @
 
@@ -567,19 +567,19 @@ tail(extract(ji1))
 
 \noindent The plot of the result of a \texttt{jaccardEstimation} using a singe set of genes corresponds to a bar-plot of the Jaccard Index with each disease:
 
-<<ji1_plot, fig=TRUE, width=5, height=3>>=
+<<ji1_plot, fig.width=5, fig.height=3>>=
 plot(ji1, cutOff = 0.1)
 @
 
 \noindent The previous bar-plot shows the Jaccard Index greater than 0.1 obtained from testing each diseases in PsyGeNET. When given a set of genes and a set of diseases, the resulting plot is equivalent:
 
-<<ji2_plot, fig=TRUE, width=5, height=3>>=
+<<ji2_plot, fig.width=5, fig.height=3>>=
 plot(ji2)
 @
 
 \noindent The plot resulting from more than one disease is a heat-map with the given disease as X axis and all the diseases that share genes with them placed as Y axis. The intensity of the color represents the value of the Jaccard Index between, being the darker one the major Jaccard Index.\\
 
-<<ji3_plot, fig=TRUE, width=5, height=3>>=
+<<ji3_plot, fig.width=5, fig.height=3>>=
 plot(ji3)
 @
 
