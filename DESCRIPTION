@@ -1,10 +1,10 @@
 Package: psygenet2r
 Title: psygenet2r - An R package for querying PsyGeNET and to perform comorbidity studies in psychiatric disorders
-Version: 1.0.4
+Version: 1.0.5
 Authors@R: c(person("Alba", "Gutierrez-Sacristan", "alba.gutierrez@upf.edu", role = c("aut", "cre")),
-  person("Carles", "Hernandez-Ferrer", "chernandez@creal.cat", role = "aut"))
+  person("Carles", "Hernandez-Ferrer", "carles.hernandez@isglobal.org", role = "aut"))
 Description: Package to retrieve data from PsyGeNET database (www.psygenet.org) and to perform comorbidity studies with PsyGeNET's and user's data.
-Depends: R (>= 3.2)
+Depends: R (>= 3.3)
 License: MIT + file LICENSE
 LazyData: true
 Suggests: testthat
