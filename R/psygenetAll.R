@@ -1,6 +1,6 @@
 psygenetAll <- function( database, verbose = FALSE ) {
   if( verbose ) {
-    message( "Staring querying PsyGeNET for ", gene, " in ", database , " database." )
+    message( "Staring querying PsyGeNET in ", database , " database." )
   }
   
   oql <- "DEFINE
