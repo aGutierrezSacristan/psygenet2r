@@ -43,12 +43,12 @@ getUMLs <- function(word, database = "CURATED") {
     replacement = database 
   )
   
-  dataTsv <- RCurl::getURLContent( 
+  dataTsv <- rawToChar(RCurl::getURLContent( 
     getUrlPsi(), 
     readfunction  = charToRaw(oql), 
     upload        = TRUE, 
     customrequest = "POST"
-  )
+  ))
   
   data <- read.csv( textConnection( dataTsv ), header = TRUE, sep = "\t", stringsAsFactors = FALSE )[ , c(4, 5, 6) ]
   colnames(data) <- c("DiseaseName", "PsychiatricDisorder", "umls")

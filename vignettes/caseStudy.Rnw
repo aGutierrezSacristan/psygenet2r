@@ -22,7 +22,6 @@
 }
 
 \begin{document}
-\SweaveOpts{concordance=TRUE}
 
 %\VignetteIndexEntry{psygenet2r: Case study on GWAS on bipolar disorder}
 \title{\texttt{psygenet2r}: Case study on GWAS on bipolar disorder}
@@ -154,7 +153,7 @@ m1
 
 \subsection{Which diseases are associated to these genes according to PsyGeNET?}
 
-\noindent In order to visualize the 38 GDAs between the 21 genes found in PsyGeNET and the 10 different disorders, \texttt{psygenet2r} provides several options. One of them is the GDA network, which can be obtained by applying the \texttt{plot} function to the \texttt{DataGeNET.Psy} object (\texttt{m1}), obtained from \texttt{psygenetGene} function (section 4.1). In the GDA network, green nodes represent diseases and orange nodes represent genes.\\
+\noindent In order to visualize the 48 GDAs between the 16 genes found in PsyGeNET and the 15 different disorders, \texttt{psygenet2r} provides several options. One of them is the GDA network, which can be obtained by applying the \texttt{plot} function to the \texttt{DataGeNET.Psy} object (\texttt{m1}), obtained from \texttt{psygenetGene} function (section 4.1). In the GDA network, green nodes represent diseases and orange nodes represent genes.\\
 
 \begin{figure}[H]
 \begin{center}
@@ -180,9 +179,9 @@ plot( m1 )
 \begin{figure}[H]
 \begin{center}
 <<plot_psychiatric_m1Score, fig=TRUE, height=8, width=8>>=
-plot( m1, type = "heatmapScore", cutOff = 0.1 )
+geneAttrPlot( m1, type = "index" )
 @
-\caption{Gene-Psychiatric disorder association heat-map according to the PsyGeNET mean score.}
+\caption{Gene-Psychiatric disorder association heat-map according to the PsyGeNET evidence index.}
 \label{gene-psy}
 \end{center}
 \end{figure}
@@ -197,7 +196,7 @@ plot( m1, type = "heatmapScore", cutOff = 0.1 )
 
 \begin{figure}[H]
 \begin{center}
-<<ggplot_panther, fig=TRUE, height=8, width=8>>=
+<<ggplot_panther, fig=TRUE, height=8, width=8, message=FALSE, warning=FALSE>>=
 pantherGraphic( genesOfInterest, "ALL", check = FALSE)
 @
 \caption{Panther graphic analysis of the genes of interest.}
@@ -220,7 +219,7 @@ pantherGraphic( genesOfInterest, "ALL", check = FALSE)
 \begin{figure}[H]
 \begin{center}
 <<heatmap_disease_m, fig=TRUE, height=8, width=8>>=
-plot( m1, type="heatmapGenes", cutOff=0.3 )
+plot( m1, type="heatmapGenes")
 @
 \caption{Gene-Disease Association Heat-map for GDAs with PsyGeNET score greater than 0.3.}
 \label{gene-disease-2}
@@ -239,9 +238,9 @@ plot( m1, type="heatmapGenes", cutOff=0.3 )
 \begin{figure}[H]
 \begin{center}
 <<pmids_barplot, fig=TRUE, height=8, width=8>>=
-plot( m1, name="Bipolar Disorder", type="barplot")
+plot( m1, name="manic depressive illness", type="barplot")
 @
-\caption{PubMed Ids that report each gene association with bipolar disorder.}
+\caption{PubMed Ids that report each gene association with bipolar disorder (manic depressive illness).}
 \label{pubmed-2}
 \end{center}
 \end{figure}
@@ -266,7 +265,7 @@ m2
 
 <<sentences2_extraction>>=
 sentences <- extractSentences( m2, 
-  disorder = "Bipolar Disorder" )
+  disorder = "manic depressive illness" )
 head(sentences$PUBMED_ID)
 @
 
@@ -289,8 +288,8 @@ head(sentences$PUBMED_ID)
 \noindent Let's calculate the Jaccard Index for the genes of interest and bipolar disorder:
 
 <<jaccard_1>>=
-xx <- jaccardEstimation( genesOfInterest, "Bipolar Disorder", 
-  database = "CURATED", nboot = 500 )
+xx <- jaccardEstimation( genesOfInterest, "manic depressive illness", 
+  database = "ALL", nboot = 500 )
 xx
 @
 
@@ -304,7 +303,7 @@ extract( xx )
 
 <<jaccard_3, cache=TRUE>>=
 xx <- jaccardEstimation( genesOfInterest, 
-  database = "CURATED", nboot = 500 )
+  database = "ALL", nboot = 500 )
 @
 
 \noindent The result from the Jaccard Index estimation can be plot using the function \texttt{plot}. The result is a bar-plot where the p-value of each comparison between our genes and PsyGeNET's disease is shown. A \texttt{cutOff} argument can be added in order to visualize only those diseases with an statistically significant p-value, in this case it is not necessary:
@@ -326,7 +325,7 @@ plot( xx )
 \begin{figure}[H]
 \begin{center}
 <<plot_venn_1_2, fig=TRUE, height=8, width=8>>=
-plot( m1, type = "vennA" )
+geneAttrPlot( m1, type = "gene" )
 @
 \caption{Venn Diagram: Genes shared between the three main psychiatric disorders}
 \label{vennA}
@@ -334,6 +333,18 @@ plot( m1, type = "vennA" )
 \end{figure}
 
 \noindent Figure \ref{vennA} clearly shows that none of our genes of interest are associated to the three disorders. There are 14 exclusively associated to major depression and 4 to alcohol use disorder. The gene that appears associated to cocaine use disorder is also associated to major depression. Alcohol use disorder and major depression share two genes.\\
+
+\begin{figure}[H]
+\begin{center}
+<<plot_pie, fig=TRUE, height=8, width=8>>=
+geneAttrPlot( m1, type = "pie" )
+@
+\caption{Venn Diagram: Genes shared between the three main psychiatric disorders}
+\label{vennA}
+\end{center}
+\end{figure}
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage

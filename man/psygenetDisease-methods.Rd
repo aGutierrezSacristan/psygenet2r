@@ -4,7 +4,7 @@
 \alias{psygenetDisease}
 \title{Query PsyGeNET for given disease(s) and generates an \code{DataGeNET.Psy}}
 \usage{
-psygenetDisease(disease, database = "CURATED", score = c(">", 0),
+psygenetDisease(disease, database = "ALL", score = c(">", 0),
   verbose = FALSE, warnings = TRUE)
 }
 \arguments{
@@ -13,12 +13,10 @@ specific diseases from PsyGeNET. The diseases non existing in PsyGeNET will
 be removed from the output.}
 
 \item{database}{Name of the database that will be queried. It can take the 
-values \code{'MODELS'} to use Comparative Toxigenomics Database, data from 
-mouse and rat; \code{'GAD'} to use Genetic Association Database; \code{'CTD'}
-to use Comparative Toxigenomics Database, data from human; \code{'PsyCUR'} to
-use Psychiatric disorders Gene association manually curated; \code{'CURATED'}
-to use Human, manually curated databases (PsyCUR and CTD); or \code{'ALL'} 
-to use all these databases. Default \code{'CURATED'}.}
+values \code{'psycur15'} to use data validated by experts for first release 
+of PsyGeNET; \code{'psycur16'} to use data validated by experts for second 
+release of PsyGeNET; or \code{'ALL'} to use both databases. 
+Default \code{'ALL'}.}
 
 \item{score}{A vector with two elements: 1) character with greather 
 \code{'>'} or with lower \code{'<'} meaing greather or equal and lower or
@@ -38,6 +36,6 @@ Given the name of one or multiple diseases and retrives their information
 from PsyGeNET and creates an object of type \code{DataGeNET.Psy}.
 }
 \examples{
-d.alch <- psygenetDisease( "Alcoholism", "CURATED" )
+d.sch <- psygenetDisease( "schizophrenia", "ALL" )
 }
 

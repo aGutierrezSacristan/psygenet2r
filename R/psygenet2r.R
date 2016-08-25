@@ -19,8 +19,6 @@
 #' @docType package
 #' @name psygenet2r
 #' 
-#' @import VennDiagram
-#' @importFrom bvenn bvenn
 #' @importFrom biomaRt useMart getBM
 #' @importFrom igraph graph.data.frame simplify vcount ecount V plot.igraph
 #' @importFrom ggplot2 labs qplot aes theme guides geom_bar guide_legend element_line ylab xlab element_text ggtitle scale_fill_gradient2 element_blank element_rect theme_grey theme_classic scale_x_discrete coord_flip

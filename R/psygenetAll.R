@@ -27,12 +27,12 @@ psygenetAll <- function( database, verbose = FALSE ) {
     replacement = database
   )
   
-  dataTsv <- RCurl::getURLContent( 
+  dataTsv <- rawToChar(RCurl::getURLContent( 
     getUrlPsi(), 
     readfunction  = charToRaw( oql ), 
     upload        = TRUE, 
     customrequest = "POST" 
-  )
+  ))
   data <- read.csv( textConnection( dataTsv ), header = TRUE, sep="\t" )
   return( data )
 }

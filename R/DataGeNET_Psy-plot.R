@@ -9,9 +9,9 @@
 #' @param layout Function to design the location of the different nodes. By 
 #' default \code{layout.fruchterman.reingold} from \code{igraph} is used.
 #' @param type Type of the drawn chart. By default it is \code{"disease"} but 
-#' it also can be \code{"individual"}, \code{"disease"}, 
-#' \code{"disease class"}, \code{"venn"}, \code{"barplot"}, 
-#' \code{"heatmapGenes"}, \code{"heatmapScore"} or \code{"heatmap"}.
+#' it also can be \code{"individual disease"}, \code{"disease"}, 
+#' \code{"disease class"}, \code{"barplot"}, 
+#' \code{"heatmapGenes"} or \code{"heatmap"}.
 #' @param verbose By default \code{FALSE}. If set to \code{TRUE} information
 #' on the drawing process will be shown.
 #' @param ... Passed to inner functions for different plots.
@@ -36,8 +36,8 @@ setMethod(
 #####
 plot_datagenet_psy <- function( object, layout, type, verbose, ... ) {
     if( !type %in% c( "disease", "individual disease", "disease class", 
-                      "venn", "vennA", "heatmap", "heatmapGenes", "barplot", 
-                      "heatmapScore" ) ) {
+                      "heatmap", "heatmapGenes", "barplot"
+                      ) ) {
         stop( "Invalid content of argument 'type'." )
     }
     if( type == "disease" ) {
@@ -49,29 +49,28 @@ plot_datagenet_psy <- function( object, layout, type, verbose, ... ) {
     } else if( type == "disease class" ) {
         plot_psy_psychiatric( search = object@term, table = object@qresult, 
             layout = layout, verbose = verbose )
-    } else if( type == "venn" ) {
-        plot_psy_venn( search = object@term, table = object@qresult, 
-            verbose = verbose )
-    } else if( type == "vennA" ) {
-        plot_psy_vennAlternative( search = object@term, table = object@qresult, 
-            verbose = verbose )
+#     } else if( type == "venn" ) {
+#         plot_psy_venn( search = object@term, table = object@qresult, 
+#             verbose = verbose )
+#     } else if( type == "vennA" ) {
+#         plot_psy_vennAlternative( search = object@term, table = object@qresult, 
+#             verbose = verbose )
     }else if( type == "barplot" ) {
         plot_pmids_barplot( search = object@term, table = object@qresult, 
             class = object@type, verbose = verbose, ... )
     }else if( type == "heatmapGenes" ) {
         plot_psy_heatmapGenes( search = object@term, table = object@qresult, 
             verbose = verbose, ... )
-    } else if( type == "heatmapScore" ) {
-        plot_psy_heatmapScore( search = object@term, table = object@qresult, 
-            verbose = verbose, ... )
+#     } else if( type == "heatmapScore" ) {
+#         plot_psy_heatmapScore( search = object@term, table = object@qresult, 
+#             verbose = verbose, ... )
     } else if ( type == "heatmap" ) {
         if( object@type == "gene" ) {
             plot_psy_heatmap( search = object@term, table = object@qresult, 
                 verbose = verbose )
         } else if( object@type == "disease" ) {
             plot_psy_heatmapDisease( search = object@term, 
-                table = object@qresult, 
-                verbose = verbose, ... )
+                table = object@qresult, verbose = verbose )
         }
     } else {
         stop( paste0( "Invalid 'type' value. Accepted: 'disease', ",
@@ -83,7 +82,7 @@ plot_datagenet_psy <- function( object, layout, type, verbose, ... ) {
 #####
 plot_psy_disease <- function( search, table, layout, verbose, inc = 5, 
                               cutOff=FALSE ) {
-  
+    
     if(cutOff){
         table <- table[ table$c0.Score >= cutOff, ]
     }
@@ -91,40 +90,43 @@ plot_psy_disease <- function( search, table, layout, verbose, inc = 5,
     netw  <- igraph::graph.data.frame( edges, directed = FALSE )
     netw  <- igraph::simplify( netw )
     lay   <- layout( netw )
-  
+    
     if( verbose ) {
         message( "The network contains ", igraph::vcount( netw ), 
                  " nodes and ", igraph::ecount( netw ), " edges." )
     }
-  
+    
     diseases <- unique( table$c2.DiseaseName )
-  
+    
     ttl <- " "
-
+    
     igraph::plot.igraph( netw,
-        vertex.frame.color = "white",
-        layout             = lay,
-        vertex.color       = ifelse( igraph::V( netw )$name %in% diseases, "#00A028", "#FF6432" ),
-        vertex.label.dist  = 0,      #puts the name labels slightly off the dots
-        vertex.frame.color = 'blue', #the color of the border of the dots
-        vertex.label.color = 'black',#the color of the name labels
-        vertex.label.font  = 0,      #the font of the name labels
-        vertex.label       = igraph::V( netw )$name, #specifies the lables of the vertices. in this case the 'name' attribute is used
-        edge.color         = "darkgrey",
-        edge.width         = 5,
-        edge.arrow.size    = 0.5,
-        vertex.size        = 10,
-        vertex.label.cex   = 0.8,    #specifies the size of the font of the labels
-        main               = ttl
-  )
+                         vertex.frame.color = "white",
+                         layout             = lay,
+                         vertex.color       = ifelse( igraph::V( netw )$name %in% diseases, "#00A028", "#FF6432" ),
+                         vertex.label.dist  = 0,      #puts the name labels slightly off the dots
+                         vertex.frame.color = 'blue', #the color of the border of the dots
+                         vertex.label.color = 'black',#the color of the name labels
+                         vertex.label.font  = 0,      #the font of the name labels
+                         vertex.label       = igraph::V( netw )$name, #specifies the lables of the vertices. in this case the 'name' attribute is used
+                         edge.color         = "darkgrey",
+                         edge.width         = 5,
+                         edge.arrow.size    = 0.5,
+                         vertex.size        = 10,
+                         vertex.label.cex   = 0.8,    #specifies the size of the font of the labels
+                         main               = ttl
+    )
 }
 #####
 
 #####
 plot_psy_psychiatric <- function( search, table, layout, verbose, inc = 5 ) {
-  
+    
+
+    table <- diseaseNameMapping( table )
+    
     edges <- as.data.frame( table( data.frame( table[ , 1 ], table[ , 7 ], 
-                                             stringsAsFactors = FALSE ) ) )
+                                               stringsAsFactors = FALSE ) ) )
     colnames( edges ) <- c( "gene", "main", "count" )
     
     netw  <- igraph::graph.data.frame( edges, directed = FALSE )
@@ -136,120 +138,131 @@ plot_psy_psychiatric <- function( search, table, layout, verbose, inc = 5 ) {
     if( verbose ) {
         message( "The network contains ", 
                  length( unique( as.character( table[ , 7 ] ) ) ), 
-                 " of the 3 possible psychiatric disorders." )
+                 " of the 8 possible psychiatric disorders." )
     }
-  
-      colors <- c( "#EDC832", "#3F994B", "#715699", 
-                   rep( "#FF6432", length( genes ) ) )
-      names( colors ) <- c( "Cocaine-Use-Disorder", "Alcohol-Use-Disorder", 
-                            "Major-Depression", genes )
-      
+    
+    colors <- c( "#FF3C32", "#FFC698", "#9BE75E", "#1F6024", 
+                 "#5AB69C", "#50B8D6","#5467C3","#A654C3",
+                 rep( "#FF6432", length( genes ) ) )
+    
+    names( colors ) <- c( "Alcohol use disorders", 
+                          "Bipolar disorders and related disorders", 
+                          "Depressive disorders", 
+                          "Schizophrenia spectrum and other psychotic disorders", 
+                          "Cocaine use disorders", 
+                          "Substance-induced depressive disorder", 
+                          "Cannabis use disorders",
+                          "Substance Induced-Psychosis", genes )
+    
+    colors <- diseaseNameMapping( colors )
+    
+   
     if( length(search) == 1 ) {
         ss <- sum( as.numeric( edges[ , 3 ] ) )
         sz <- c( ( as.numeric( edges[ , 3 ] ) / ss ) * 100, 10 )
         names( sz ) <- c( as.character( edges$main ), genes )
         
         ttl <- " "
-    
+        
         igraph::plot.igraph( netw,
-              vertex.frame.color = "white",
-              layout             = lay,
-              vertex.color        = colors[ igraph::V( netw )$name ],
-              vertex.label.dist   = 0,      #puts the name labels slightly 
-                                            #off the dots
-              vertex.frame.color  = 'blue', #the color of the border of the dots
-              vertex.label.color  = 'black',#the color of the name labels
-              vertex.label.font   = 0,      #the font of the name labels
-              vertex.label        = igraph::V( netw )$name, #specifies the 
-                                            #lables of the vertices. in this 
-                                            #case the 'name' attribute is used
-              edge.color          = "darkgrey",
-              edge.arrow.size     = 0.5,
-              vertex.size         = sz[ igraph::V( netw )$name ],
-              vertex.label.cex    = 0.8,    #specifies the size of the font of
-                                            #the labels
-              main                = ttl
+                             vertex.frame.color = "white",
+                             layout             = lay,
+                             vertex.color        = colors[ igraph::V( netw )$name ],
+                             vertex.label.dist   = 0,      #puts the name labels slightly 
+                             #off the dots
+                             vertex.frame.color  = 'blue', #the color of the border of the dots
+                             vertex.label.color  = 'black',#the color of the name labels
+                             vertex.label.font   = 0,      #the font of the name labels
+                             vertex.label        = igraph::V( netw )$name, #specifies the 
+                             #lables of the vertices. in this 
+                             #case the 'name' attribute is used
+                             edge.color          = "darkgrey",
+                             edge.arrow.size     = 0.5,
+                             vertex.size         = sz[ igraph::V( netw )$name ],
+                             vertex.label.cex    = 0.8,    #specifies the size of the font of
+                             #the labels
+                             main                = ttl
         )
     } else {
         ttl <- " "
         igraph::plot.igraph( netw,
-              vertex.frame.color  = "white",
-              layout              = lay,
-              vertex.color        = colors[ igraph::V( netw )$name ],
-              vertex.label.dist   = 0,      #puts the name labels slightly off 
-                                            #the dots
-              vertex.frame.color  = 'blue', #the color of the border of the dots
-              vertex.label.color  = 'black',#the color of the name labels
-              vertex.label.font   = 0,      #the font of the name labels
-              vertex.label        = igraph::V( netw )$names, #specifies the 
-                                            #lables of the vertices. in this 
-                                            #case the 'name' attribute is used
-              edge.color          = "darkgrey",
-              edge.width          = ( inc * as.numeric( 
-                  as.character( edges[, 3 ] ) ) ) / 30,
-              edge.arrow.size     = 0.5,
-              vertex.label.cex    = 0.8,    #specifies the size of the font 
-                                            #of the labels
-              main                = ttl
+                             vertex.frame.color  = "white",
+                             layout              = lay,
+                             vertex.color        = colors[ igraph::V( netw )$name ],
+                             vertex.label.dist   = 0,      #puts the name labels slightly off 
+                             #the dots
+                             vertex.frame.color  = 'blue', #the color of the border of the dots
+                             vertex.label.color  = 'black',#the color of the name labels
+                             vertex.label.font   = 0,      #the font of the name labels
+                             vertex.label        = igraph::V( netw )$names, #specifies the 
+                             #lables of the vertices. in this 
+                             #case the 'name' attribute is used
+                             edge.color          = "darkgrey",
+                             edge.width          = ( inc * as.numeric( 
+                                 as.character( edges[, 3 ] ) ) ) / 30,
+                             edge.arrow.size     = 0.5,
+                             vertex.label.cex    = 0.8,    #specifies the size of the font 
+                             #of the labels
+                             main                = ttl
         )
     }
 }
 #####
 
 #####
-plot_psy_venn <- function( search, table, verbose ) {
-    
-    if( length(search) == 1 ) {
-        stop( "For this type of chart, a multiple query created with 'psygenetGene' is required." )
-    }
-    
-    tt <- table( table[ , c( 1, 7 ) ] )
-
-    a <- draw.triple.venn(
-        area1 = sum( tt[ ,"Alcohol-Use-Disorder" ] != 0 ),
-        area2 = sum( tt[ ,"Major-Depression" ] != 0 ),
-        area3 = sum( tt[ ,"Cocaine-Use-Disorder" ] != 0 ),
-        
-        n12   = sum( tt[ ,"Alcohol-Use-Disorder" ] != 0 & 
-                         tt[ ,"Major-Depression" ] != 0 ),
-        n23   = sum( tt[ ,"Major-Depression" ] != 0 & 
-                         tt[ ,"Cocaine-Use-Disorder" ] != 0 ),
-        n13   = sum( tt[ ,"Alcohol-Use-Disorder" ] != 0 & 
-                         tt[ ,"Cocaine-Use-Disorder" ] != 0 ),
-        
-        n123  = sum( tt[ ,"Alcohol-Use-Disorder" ] != 0 & 
-                         tt[ ,"Major-Depression" ] != 0 & 
-                         tt[ ,"Cocaine-Use-Disorder" ] != 0 ),
-        
-        category = c("Alcohol-Use-Disorder", "Major-Depression", 
-                     "Cocaine-Use-Disorder"),
-        lty = "blank",
-        fill = c( "#3F994B", "#715699", "#EDC832" )
-    )
-}
+# plot_psy_venn <- function( search, table, verbose ) {
+#     
+#     if( length(search) == 1 ) {
+#         stop( "For this type of chart, a multiple query created with 'psygenetGene' is required." )
+#     }
+#     
+#     tt <- table( table[ , c( 1, 7 ) ] )
+# 
+#     a <- draw.triple.venn(
+#         area1 = sum( tt[ ,"Alcohol-Use-Disorder" ] != 0 ),
+#         area2 = sum( tt[ ,"Major-Depression" ] != 0 ),
+#         area3 = sum( tt[ ,"Cocaine-Use-Disorder" ] != 0 ),
+#         
+#         n12   = sum( tt[ ,"Alcohol-Use-Disorder" ] != 0 & 
+#                          tt[ ,"Major-Depression" ] != 0 ),
+#         n23   = sum( tt[ ,"Major-Depression" ] != 0 & 
+#                          tt[ ,"Cocaine-Use-Disorder" ] != 0 ),
+#         n13   = sum( tt[ ,"Alcohol-Use-Disorder" ] != 0 & 
+#                          tt[ ,"Cocaine-Use-Disorder" ] != 0 ),
+#         
+#         n123  = sum( tt[ ,"Alcohol-Use-Disorder" ] != 0 & 
+#                          tt[ ,"Major-Depression" ] != 0 & 
+#                          tt[ ,"Cocaine-Use-Disorder" ] != 0 ),
+#         
+#         category = c("Alcohol-Use-Disorder", "Major-Depression", 
+#                      "Cocaine-Use-Disorder"),
+#         lty = "blank",
+#         fill = c( "#3F994B", "#715699", "#EDC832" )
+#     )
+# }
 #####
 
 #####
-plot_psy_vennAlternative <- function( search, table, verbose ) {
-    
-    if( length(search) == 1 ) {
-        stop( "For this type of chart, a multiple query created with 'psygenetGene' is required." )
-    }
-    
-    input = table
-    
-    bvenn::bvenn(list(
-        AlcoholUseDisorder = as.character(unique(input[
-            input$c2.PsychiatricDisorder=="Alcohol-Use-Disorder",][1])[,1]),
-        MajorDepression = as.character(unique(input[
-            input$c2.PsychiatricDisorder=="Major-Depression",][1])[,1]),
-        CocaineUseDisorder =as.character(unique(input[
-            input$c2.PsychiatricDisorder=="Cocaine-Use-Disorder",][1])[,1]),
-        colors = c("#edc832", "#3f994b", "#715699", 
-               "purple", "orange", "green", "brown")
-        ),
-    scale=0.8)
-}
+# plot_psy_vennAlternative <- function( search, table, verbose ) {
+#     
+#     if( length(search) == 1 ) {
+#         stop( "For this type of chart, a multiple query created with 'psygenetGene' is required." )
+#     }
+#     
+#     input = table
+#     
+#     bvenn::bvenn(list(
+#         AlcoholUseDisorder = as.character(unique(input[
+#             input$c2.PsychiatricDisorder=="Alcohol-Use-Disorder",][1])[,1]),
+#         MajorDepression = as.character(unique(input[
+#             input$c2.PsychiatricDisorder=="Major-Depression",][1])[,1]),
+#         CocaineUseDisorder =as.character(unique(input[
+#             input$c2.PsychiatricDisorder=="Cocaine-Use-Disorder",][1])[,1]),
+#         colors = c("#edc832", "#3f994b", "#715699", 
+#                "purple", "orange", "green", "brown")
+#         ),
+#     scale=0.8)
+# }
 #####
 
 #####
@@ -260,9 +273,11 @@ plot_psy_heatmap <- function( search, table, verbose ) {
             "'psygenetGene' is required." )
     }
     
+    table <- diseaseNameMapping( table )
     disorders <- as.character(unique(table$c2.PsychiatricDisorder))
     tt <- table( table[ , c( 1, 7 ) ] )
     diseasesNumber <- psygenetAll ( "ALL" )
+    diseasesNumber <- diseaseNameMapping( diseasesNumber )
     
     
     for(i in 1:length(disorders)){
@@ -270,6 +285,7 @@ plot_psy_heatmap <- function( search, table, verbose ) {
     diseasesNumber[diseasesNumber$c2.PsychiatricDisorder == disorders[i], 5] ))
     tt[,disorders[i]] <-  (tt[,disorders[i]]/cuis)*100
     }
+    
       
     p <- ggplot2::qplot( x = c2.PsychiatricDisorder, y = c1.Gene_Symbol, 
         data = reshape2::melt( tt ), 
@@ -290,69 +306,72 @@ plot_psy_heatmap <- function( search, table, verbose ) {
 #####
 
 #####
-plot_psy_heatmapGenes <- function( search, table, cutOff=0, verbose ) {
-    
-    if( length(search) == 1 ) {
-        stop( "For this type of chart, a multiple query created with ",
-        "'psygenetGene' is required." )
-    }
-    if( length(search) > 1 ) {
-        tt <- ( table[ , c( 1, 6, 8 ) ] )
-        tt <- tt [ with ( tt , order(-c0.Score)), ]
-        if ( dim( tt )[ 1 ] > 100 ){
-            tt <- tt[ 1:100 ,]
-            show( "warning: dataframe has  been reduced to the first 100 highest scoring associations" )
-        }
+plot_psy_heatmapGenes <- function( search, table, verbose ) {
         
-        tt <- tt[ tt$c0.Score > cutOff, ]
-    
-        p <- ggplot2::qplot( x = c1.Gene_Symbol, y = c2.DiseaseName, data= tt,
-                             fill = c0.Score, geom = "tile" ) +
-          ggplot2::ylab( "Genes" ) + ggplot2::xlab( "Disease Name" ) +
-          ggplot2::scale_fill_gradient2( low = "#26a064", high ="#17623d", 
-                                         space = "rgb", guide = "colourbar" ) +
-          ggplot2::theme( axis.text = ggplot2::element_text ( size = 11 ), 
-                          axis.title = ggplot2::element_text( size = 11 ), 
-                          panel.background = ggplot2::element_rect( 
-                              fill="white", colour = "black" ) ) +
-          ggplot2::theme_grey( base_size = 12 ) + 
-          ggplot2::labs(title = " ", x = "Gene",  y = "Disease") + 
-          ggplot2::scale_x_discrete( expand = c( 0, 0 ) ) +
-          ggplot2::theme(plot.margin = grid::unit(x=c(5,15,5,15), units="mm"),
-             axis.line = ggplot2::element_line(size = 0.7, color = "black"), 
-             text = ggplot2::element_text(size = 11), 
-             axis.text.x = ggplot2::element_text(angle=45,size=10,hjust=1), 
-             panel.background = ggplot2::element_blank()) + 
-          ggplot2::guides(fill=ggplot2::guide_legend(title="Score"))
-    
-        return(p)
-    }
-}
-#####
-
-#####
-plot_psy_heatmapDisease <- function( search, table, score, verbose ) {
-    
     if( length(search) == 1 ) {
         stop( "For this type of chart, a multiple query created with ",
-            "'psygenetGene' is required." )
+              "'psygenetGene' is required." )
     }
     
     tt <- ( table[ , c( 1, 6, 8 ) ] )
     tt <- tt [ with ( tt , order(-c0.Score)), ]
-    tt <- tt [ tt$c0.Score >= score,]
+
+    
+    for(i in 1:nrow(tt)){
+        if(tt$c0.Score[i] > 0 & tt$c0.Score[i] < 1){
+            tt$c0.Score[i] <- 0.5
+        }
+    }
+
+
+    p <- ggplot2::ggplot(data = tt, ggplot2::aes(x = c1.Gene_Symbol, y = c2.DiseaseName)) +
+        ggplot2::theme_grey( base_size = 12 ) +
+        ggplot2::theme(
+            axis.text = ggplot2::element_text ( size = 11 ), 
+            axis.title = ggplot2::element_text( size = 11 ), 
+            axis.line = ggplot2::element_line(size = 0.7, color = "black"), 
+            axis.text.x = ggplot2::element_text(angle=45,size=10,hjust=1), 
+            plot.margin = grid::unit(x=c(5,15,5,15), units="mm"),
+            text = ggplot2::element_text(size = 11), 
+            panel.background = ggplot2::element_blank()
+        ) +
+
+        ggplot2::ylab( "Disease" ) + ggplot2::xlab( "Gene" ) +
+        ggplot2::guides( fill=ggplot2::guide_legend( title="Evidence Index" ) ) +
+        ggplot2::scale_x_discrete( expand = c( 0, 0 ) ) +
+        ggplot2::geom_tile(color = "white", ggplot2::aes(fill = factor(c0.Score))) + 
+        ggplot2::scale_fill_manual(
+            breaks=c("[-Inf, 0]", "(0, 1)", "[1, Inf)"), 
+            values = c("#f00c00", "#ff9c24", "#008006")
+        )
+    
+    return(p)
+}
+#####
+
+#####
+plot_psy_heatmapDisease <- function( search, table, verbose ) {
+    
+    if( length(search) == 1 ) {
+        stop( "For this type of chart, a multiple query created with ",
+            "'psygenetDisease' is required." )
+    }
+    
+    tt <- ( table[ , c( 1, 6, 8 ) ] )
+    tt <- tt [ with ( tt , order(-c0.Score)), ]
+    ## tt <- tt [ tt$c0.Score >= score,]
   
     ggplot2::qplot( x = c2.DiseaseName, y = c1.Gene_Symbol, data= tt , 
                     fill = c0.Score, geom = "tile" ) + 
         ggplot2::ylab( "Genes" ) + ggplot2::xlab( "Disease Name" ) + 
-        ggplot2::ggtitle( " ") + 
+        ggplot2::ggtitle("") + 
         ggplot2::scale_fill_gradient2(low = "#0000FF", high ="#d24041", 
                                       space = "rgb", guide = "colourbar")+
         ggplot2::theme_classic( ) + 
         ggplot2::theme(plot.margin=grid::unit(x=c(5,15,5,15), units = "mm"),
-                        axis.line=ggplot2::element_line(size=0.7,color="black"), 
-                        text = ggplot2::element_text(size=14) ,
-                axis.text.x = ggplot2::element_text(angle=45,size=9,hjust=1)) + 
+            axis.line=ggplot2::element_line(size=0.7,color="black"), 
+            text = ggplot2::element_text(size=14) ,
+            axis.text.x = ggplot2::element_text(angle=45,size=9,hjust=1)) + 
         ggplot2::guides(fill=ggplot2::guide_legend(title="Score"))
 }
 #####

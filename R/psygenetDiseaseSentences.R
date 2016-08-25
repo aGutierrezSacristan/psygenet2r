@@ -9,12 +9,10 @@
 #' specific diseases from PsyGeNET. The diseases non existing in PsyGeNET will
 #' be removed from the output.
 #' @param database Name of the database that will be queried. It can take the 
-#' values \code{'MODELS'} to use Comparative Toxigenomics Database, data from 
-#' mouse and rat; \code{'GAD'} to use Genetic Association Database; \code{'CTD'}
-#' to use Comparative Toxigenomics Database, data from human; \code{'PsyCUR'} to
-#' use Psychiatric disorders Gene association manually curated; \code{'CURATED'}
-#' to use Human, manually curated databases (PsyCUR and CTD); or \code{'ALL'} 
-#' to use all these databases. Default \code{'CURATED'}.
+#' values \code{'psycur15'} to use data validated by experts for first release 
+#' of PsyGeNET; \code{'psycur16'} to use data validated by experts for second 
+#' release of PsyGeNET; or \code{'ALL'} to use both databases. 
+#' Default \code{'ALL'}.
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
 #' on-time log from the function.
 #' @return An object of class \code{DataGeNET.Psy}
@@ -23,7 +21,7 @@
 #' psyDisSen <- psygenetDiseaseSentences( diseaseList = diseasesOfInterest,
 #'                                        database = "ALL" )
 #' @export psygenetDiseaseSentences
-psygenetDiseaseSentences <- function( diseaseList, database, verbose = FALSE ) {
+psygenetDiseaseSentences <- function( diseaseList, database = "ALL", verbose = FALSE ) {
   
   if( verbose ) {
     message( "Staring querying PsyGeNET for you disease list in ", database , " database." )
@@ -87,13 +85,13 @@ psygenetDiseaseSentences <- function( diseaseList, database, verbose = FALSE ) {
         pattern     = "DTB",
         replacement = database 
       )
-      dataTsv <- RCurl::getURLContent(
+      dataTsv <- rawToChar(RCurl::getURLContent(
         getUrlPsi(), 
         readfunction  = charToRaw(oql2), 
         upload        = TRUE, 
         customrequest = "POST", 
         .encoding     = "UTF-8"
-      ) 
+      ))
       dataNew <- read.csv( textConnection( dataTsv ), header = TRUE, sep="\t" ) 
       data <- rbind( data, dataNew )
     }

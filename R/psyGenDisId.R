@@ -23,12 +23,12 @@ psyGenDisId <- function( database, genDis ) {
         replacement = database 
     )
     
-    dataTsv <- RCurl::getURLContent(
+    dataTsv <- rawToChar(RCurl::getURLContent(
       getUrlPsi(), 
       readfunction  = charToRaw(oql), 
       upload        = TRUE, 
       customrequest = "POST"
-    ) 
+    ) )
     data <- read.csv( textConnection( dataTsv ), header = TRUE, sep="\t" ) 
     
     if ( genDis == "Gene" ){

@@ -10,12 +10,10 @@
 #' specific genes from PsyGeNET. The genes non existing in PsyGeNET will
 #' be removed from the output.
 #' @param database Name of the database that will be queried. It can take the 
-#' values \code{'MODELS'} to use Comparative Toxigenomics Database, data from 
-#' mouse and rat; \code{'GAD'} to use Genetic Association Database; \code{'CTD'}
-#' to use Comparative Toxigenomics Database, data from human; \code{'PsyCUR'} to
-#' use Psychiatric disorders Gene association manually curated; \code{'CURATED'}
-#' to use Human, manually curated databases (PsyCUR and CTD); or \code{'ALL'} 
-#' to use all these databases. Default \code{'CURATED'}.
+#' values \code{'psycur15'} to use data validated by experts for first release 
+#' of PsyGeNET; \code{'psycur16'} to use data validated by experts for second 
+#' release of PsyGeNET; or \code{'ALL'} to use both databases. 
+#' Default \code{'ALL'}.
 #' @param score A vector with two elements: 1) character with greather 
 #' \code{'>'} or with lower \code{'<'} meaing greather or equal and lower or
 #' @param check By default \code{FALSE}. Change it to \code{TRUE} to 
@@ -29,9 +27,9 @@
 #' the warnings.
 #' @return An object of class \code{DataGeNET.Psy}
 #' @examples
-#' d.alch <- psygenetGene( "ALDH2", "CURATED", check = FALSE )
+#' d.alch <- psygenetGene( "ALDH2", "ALL", check = FALSE )
 #' @export psygenetGene
-psygenetGene <- function( gene, database = "CURATED", score=c('>', 0), check = FALSE, 
+psygenetGene <- function( gene, database = "ALL", score=c('>', 0), check = FALSE, 
                           hostMart = "www.ensembl.org", biomart = "ENSEMBL_MART_ENSEMBL",
                           verbose = FALSE, warnings = TRUE ) {
   check_database( database )
@@ -43,7 +41,7 @@ psygenetGene <- function( gene, database = "CURATED", score=c('>', 0), check = F
   }
   
   if(length(score) != 2) {
-    stop("Invalid argumetn 'score'. It must have two elements.")
+    stop("Invalid argument 'score'. It must have two elements.")
   } else if(!score[1] %in% c('>', '<')) {
     stop("Invalid argument 'score'. First elemnt must be '>' or '<'.")
   }
@@ -69,7 +67,7 @@ psygenetGene <- function( gene, database = "CURATED", score=c('>', 0), check = F
     SELECT
     c1 (Gene_Symbol, Gene_Id, Gene_Description),
     c2 (Disease_Id, Disease_code, DiseaseName, PsychiatricDisorder),
-    c0 (Score, Number_of_Abstracts)
+    c0 (Score, Number_of_Abstracts, Number_of_AbstractsValidated)
     FROM
     c0
     WHERE
@@ -146,12 +144,12 @@ psygenetGene <- function( gene, database = "CURATED", score=c('>', 0), check = F
         )
       }
       
-      dataTsv <- RCurl::getURLContent(
+      dataTsv <- rawToChar(RCurl::getURLContent(
         getUrlPsi(), 
         readfunction  = charToRaw( oql2 ), 
         upload        = TRUE, 
         customrequest = "POST"
-      )
+      ))
       dataNew <- read.csv( textConnection( dataTsv ), header = TRUE, sep = "\t" )
       result <- rbind( result, dataNew )
       

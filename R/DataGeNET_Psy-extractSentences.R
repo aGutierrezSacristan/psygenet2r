@@ -27,9 +27,8 @@ setMethod( "extractSentences",
     
     #############
     
-        object <- object[,c(1,4,6,7,8,9)]
-    colnames( object ) <- c("GENE", "DISEASE_UMLS","DISEASE_NAME", 
-                           "ORIGINAL_DB", "PUBMED_ID", "SENTENCE")
+    colnames( object ) <- c("GENE_SYMBOL", "GENE_ID", "DISEASE_UMLS","DISEASE_NAME", 
+                           "ORIGINAL_DB", "PUBMED_ID", "ANNOTATION","SENTENCE")
     return( object )
     
     }

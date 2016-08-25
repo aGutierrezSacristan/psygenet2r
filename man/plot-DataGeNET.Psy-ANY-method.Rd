@@ -19,9 +19,9 @@ object.}
 default \code{layout.fruchterman.reingold} from \code{igraph} is used.}
 
 \item{type}{Type of the drawn chart. By default it is \code{"disease"} but 
-it also can be \code{"individual"}, \code{"disease"}, 
-\code{"disease class"}, \code{"venn"}, \code{"barplot"}, 
-\code{"heatmapGenes"}, \code{"heatmapScore"} or \code{"heatmap"}.}
+it also can be \code{"individual disease"}, \code{"disease"}, 
+\code{"disease class"}, \code{"barplot"}, 
+\code{"heatmapGenes"} or \code{"heatmap"}.}
 
 \item{verbose}{By default \code{FALSE}. If set to \code{TRUE} information
 on the drawing process will be shown.}

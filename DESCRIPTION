@@ -4,12 +4,12 @@ Version: 1.0.4
 Authors@R: c(person("Alba", "Gutierrez-Sacristan", "alba.gutierrez@upf.edu", role = c("aut", "cre")),
   person("Carles", "Hernandez-Ferrer", "chernandez@creal.cat", role = "aut"))
 Description: Package to retrieve data from PsyGeNET database (www.psygenet.org) and to perform comorbidity studies with PsyGeNET's and user's data.
-Depends: R (>= 3.2), VennDiagram
+Depends: R (>= 3.2)
 License: MIT + file LICENSE
 LazyData: true
 Suggests: testthat
-Imports: stringr, RCurl, igraph, bvenn, ggplot2, reshape2, grid,
-        parallel, biomaRt
+Imports: stringr, RCurl, igraph, ggplot2, reshape2, grid,
+        parallel, biomaRt, BgeeDB
 NeedsCompilation: no
 Packaged: 2016-03-07 13:45:03 UTC; chernandez
 Author: Alba Gutierrez-Sacristan [aut],

@@ -16,11 +16,11 @@ This report is used for package distribution while we walk thought BioConductor 
 
 ### Installation
 
-While BioCondutor finish validating the package, `psygenet2r` can be installed using `devtools` from this repository:
+While BioCondutor finish updating the package, `psygenet2r` can be installed using `devtools` from this repository:
 
 ```R
 library(devtools)
-install_bitbucket("albags/psygenet2r")
+install_bitbucket("ibi_group/psygenet2r")
 ```
 
 ### Querying PsyGeNET:
@@ -41,7 +41,7 @@ qg <- psygenetGene(gene = 4852,
 
 ```R
 library(psygenet2r)
-qd <- psygenetDisease(disease = "Single Major Depressive Episode", 
+qd <- psygenetDisease(disease = "schizophrenia", 
     database = "ALL",
     score = c('>', 0.5) 
 )
