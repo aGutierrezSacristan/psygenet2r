@@ -230,7 +230,7 @@ m1
 \begin{landscape}
 \begin{figure}[H]
 \begin{center}
-<<plot_psychiatric1, out.width='1\\linewidth', fig.width=10, fig.height=6,fig.align='center'>>=
+<<plot_psychiatric1, fig.width=10, fig.height=4,fig.align='center'>>=
 layout( matrix( c( 1, 2 ), nrow = 1 ) )
 plot( m1 )
 plot( m1, type = "disease class" )
@@ -256,7 +256,7 @@ plot( m1, type="heatmapGenes" )
 
 \noindent In order to obtain this graphic, \texttt{type} must be set to \texttt{"heatmap"}. The resulting heatmap shows which are the genes that are higher or lower associated to each one of the psychiatric disorders. 
 
-<<plot_psychiatric_heamap>>=
+<<plot_psychiatric_heamap, warning = FALSE>>=
 plot( m1, type = "heatmap" )
 @
 

@@ -16,7 +16,7 @@
 #' @param dataType It can take the values \code{'rna_seq'} or \code{'affymetrix'}.
 #' Default \code{'rna_seq'}.
 #' @param statistics Default \code{'fisher'}.
-#' @param cutOff Default \code{'0.01'}.
+#' @param cutOff Default \code{1}.
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
 #' on-time log from the function.
 #' @param warnings By default \code{TRUE}. Change it to \code{FALSE} to not see
@@ -26,7 +26,7 @@
 #' topAnatEnrichment(c("ADCY2", "AKAP13", "ANK3"), "ALL")
 #' @export topAnatEnrichment
 
-topAnatEnrichment <- function( gene, dataType = "rna_seq", statistic = "fisher", cutOff = 0.01, verbose = FALSE, warnings = FALSE ){
+topAnatEnrichment <- function( gene, dataType = "rna_seq", statistic = "fisher", cutOff = 1, verbose = FALSE, warnings = FALSE ){
 
     data <- psygenetAll ( database = "ALL", verbose = verbose )
     
@@ -95,27 +95,40 @@ topAnatEnrichment <- function( gene, dataType = "rna_seq", statistic = "fisher",
                                      datatype = dataType)
     
         
-    #ensembl for mapping genes
-    ensembl <- biomaRt::useMart("ensembl")
-    ensembl <- biomaRt::useDataset("hsapiens_gene_ensembl", mart=ensembl)
+    # #ensembl for mapping genes
+    # hostMart = "uswest.ensembl.org";
+    # 
+    # ensembl <- biomaRt::useMart( biomart = "ENSEMBL_MART_ENSEMBL", 
+    #                              dataset="hsapiens_gene_ensembl", 
+    #                              host = hostMart)
+    # 
+    # ensembl <- biomaRt::useMart("ensembl")
+    # ensembl <- biomaRt::useDataset("hsapiens_gene_ensembl", mart=ensembl)
+    # 
+    # genesId2ensembl <- biomaRt::getBM(attributes=c('ensembl_gene_id',
+    #                                       'hgnc_symbol',
+    #                                       'chromosome_name'),
+    #                                   values ="1",
+    #                                   mart = ensembl)
+    # 
+    # genesId2ensembl <- genesId2ensembl[genesId2ensembl$hgnc_symbol != "",]
+    # 
+    # psygenet_universe <- genesId2ensembl[genesId2ensembl$hgnc_symbol %in% tabGenes$c1.Gene_Symbol, ]
+ 
     
-    genesId2ensembl <- biomaRt::getBM(attributes=c('ensembl_gene_id',
-                                          'hgnc_symbol',
-                                          'chromosome_name'),
-                                      values ="1",
-                                      mart = ensembl)
+    conv <- read.delim(system.file(paste0("extdata", .Platform$file.sep,
+              "ensemble2gene_symbol.tsv"), package = "psygenet2r"), stringsAsFactors = FALSE)
     
-    genesId2ensembl <- genesId2ensembl[genesId2ensembl$hgnc_symbol != "",]
-    genesId2ensembl <- genesId2ensembl[genesId2ensembl$hgnc_symbol %in% genesOfInterest,]
-    
-    myGenes <- as.data.frame(genesId2ensembl[,1])
+    myGenes <- conv[conv$hgnc_symbol %in% genesOfInterest, 1, drop = FALSE]
     colnames(myGenes) <- "ensembl_gene_id"
     
-    # Background are all genes with a GO annotation
-    universe <- biomaRt::getBM(attributes= "ensembl_gene_id", 
-                      filters=c("with_go_go"), 
-                      values=list(c(TRUE)), 
-                      mart=ensembl)
+    # # Background are all genes with a GO annotation
+    # universe <- biomaRt::getBM(attributes= "ensembl_gene_id", 
+    #                   filters=c("with_go_go"), 
+    #                   values=list(c(TRUE)), 
+    #                   mart=ensembl)
+    # 
+    universe <- conv[ , 1, drop = FALSE]
     
     # Prepares the gene list vector 
     geneList <- factor(as.integer(universe[,1] %in% myGenes[,1]))
@@ -135,7 +148,7 @@ topAnatEnrichment <- function( gene, dataType = "rna_seq", statistic = "fisher",
                            results, 
                            cutOff)
     
-    return( tableOver)
+    return( tableOver )
 }
 
 
