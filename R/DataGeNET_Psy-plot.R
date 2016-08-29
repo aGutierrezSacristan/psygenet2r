@@ -74,7 +74,8 @@ plot_datagenet_psy <- function( object, layout, type, verbose, ... ) {
         }
     } else {
         stop( paste0( "Invalid 'type' value. Accepted: 'disease', ",
-        "'psychiatric', 'venn', 'vennA' and 'heatmap'." ) )
+        "'individual disease'  'disease class', 
+        'barplot', 'heatmapGenes' and 'heatmap'." ) )
     }
 }
 #####
@@ -350,7 +351,7 @@ plot_psy_heatmapGenes <- function( search, table, verbose ) {
 #####
 
 #####
-plot_psy_heatmapDisease <- function( search, table, verbose ) {
+plot_psy_heatmapDisease <- function( search, table, verbose) {
     
     if( length(search) == 1 ) {
         stop( "For this type of chart, a multiple query created with ",
@@ -359,8 +360,8 @@ plot_psy_heatmapDisease <- function( search, table, verbose ) {
     
     tt <- ( table[ , c( 1, 6, 8 ) ] )
     tt <- tt [ with ( tt , order(-c0.Score)), ]
-    ## tt <- tt [ tt$c0.Score >= score,]
-  
+    #tt <- tt [ tt$c0.Score >= score,]
+
     ggplot2::qplot( x = c2.DiseaseName, y = c1.Gene_Symbol, data= tt , 
                     fill = c0.Score, geom = "tile" ) + 
         ggplot2::ylab( "Genes" ) + ggplot2::xlab( "Disease Name" ) + 

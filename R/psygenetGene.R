@@ -16,6 +16,7 @@
 #' Default \code{'ALL'}.
 #' @param score A vector with two elements: 1) character with greather 
 #' \code{'>'} or with lower \code{'<'} meaing greather or equal and lower or
+#' equal; 2) the evidence index cut-off to be compared. By default: \code{c('>', 0)}.
 #' @param check By default \code{FALSE}. Change it to \code{TRUE} to 
 #' validate the genes to biomart.
 #' @param hostMart The URL of Biomart to be used.

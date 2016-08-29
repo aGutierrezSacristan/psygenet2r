@@ -16,7 +16,7 @@
 #' Default \code{'ALL'}.
 #' @param score A vector with two elements: 1) character with greather 
 #' \code{'>'} or with lower \code{'<'} meaing greather or equal and lower or
-#' equal; 2) the score to be compared. By default: \code{c('>', 0)}.
+#' equal; 2) the evidence index cut-off to be compared. By default: \code{c('>', 0)}.
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
 #' on-time log from the function.
 #' @param warnings By default \code{TRUE}. Change it to \code{FALSE} to don't see
