@@ -34,7 +34,7 @@
 
 \section{Introduction}
 
-\noindent Psychiatric disorders have a great impact on morbidity and mortality \cite{Murray, Whiteford}. According to the World Health Organization (WHO), one of every four people will suffer mental or neurological disorders \cite{WHO2001}. It has been suggested that most psychiatric disorders display a strong genetic component \cite{Issler, Levinson, Schizophrenia}. During the last years there has been a growing research in psychiatric disorders' genetics \cite{Sullivan}, and therefore the number of publications that focus on psychiatric disorders have increased steadily (Figure \ref{pubmed1}).\vspace{1cm}
+\noindent Psychiatric disorders have a great impact on morbidity and mortality \cite{Murray, Whiteford}. According to the World Health Organization (WHO), one of every four people will suffer mental or neurological disorders at some point in their lives\cite{WHO2001}. It has been suggested that most psychiatric disorders display a strong genetic component \cite{Issler, Levinson, Schizophrenia}. During the last years there has been a growing research in psychiatric disorders' genetics \cite{Sullivan}, and therefore the number of publications that focus on psychiatric disorders have increased steadily (Figure \ref{pubmed1}).\vspace{1cm}
 
 \begin{figure}[H]
 \begin{center}
@@ -47,10 +47,10 @@ data.file <- system.file(
 )
 
 pmid <- read.delim(data.file, header=TRUE, sep=",")
-pmid <- pmid[pmid$year<2015 & pmid$year>1950,]
+pmid <- pmid[pmid$year<2017 & pmid$year>1950,]
 
 pmid$year <- factor(pmid$year)
-labels <- as.integer(seq(1950, 2015, by=5))
+labels <- as.integer(seq(1950, 2016, by=5))
 
 p <- ggplot(pmid, aes ( x = year, y = count ) ) +
     geom_bar ( stat = "identity", fill = "grey" ) +
@@ -64,20 +64,21 @@ p <- ggplot(pmid, aes ( x = year, y = count ) ) +
 
 p
 @
-\caption{Number of publications for psychiatric disorders in PubMed. It has been obtained querying {\small \texttt{'psychiatric disorder[Title/Abstract]'}} from 1955 to 2014.}
+\caption{Number of publications for psychiatric disorders in PubMed. It has been obtained querying {\small \texttt{'psychiatric disorder[Title/Abstract]'}} from 1955 to 2016.}
 \label{pubmed1}
 \end{center}
 \end{figure}\vspace{1cm}
 
-\noindent However, there is still limited understanding on the cellular and molecular mechanisms leading to psychiatric diseases, which has limited the application of this wealth of data in the clinical practice. This situation also applies to psychiatric comorbidities. Some of the factors that explain the current situation is the heterogeneity of the information about psychiatric disorders and its fragmentation into knowledge silos, and the lack of resources that collect these wealth of data, integrate them, and supply the information in an intuitive, open access manner to the community. PsyGeNET has been developed to fill this gap. \texttt{psygenet2r} has been developed to facilitate statistical analysis of PsyGeNET data, allowing its integration with other packages available in R to develop data analysis workflows.\\
+\noindent However, there is still limited understanding on the cellular and molecular mechanisms leading to psychiatric diseases, which has limited the application of this wealth of data in the clinical practice. This situation also applies to psychiatric comorbidities. Some of the factors that explain the current situation is the heterogeneity of the information about psychiatric disorders and its fragmentation into knowledge silos, and the lack of resources that collect these wealth of data, integrate them, and supply the information in an intuitive, open access manner to the community. PsyGeNET \cite{psygenet} has been developed to fill this gap. \texttt{psygenet2r} has been developed to facilitate statistical analysis of PsyGeNET data, allowing its integration with other packages available in R to develop data analysis workflows.\\
 
-\noindent \texttt{psygenet2r} package allows to retrieve the genes associated to psychiatric diseases, or explore the association between a disease of interest and PsyGeNET diseases based on shared genes. In addition, \texttt{psygenet2r} allows the annotation of genes with psychiatric diseases based on expert-curated information. This functionality can be of interest to interpret the results of GWAS or Whole Exome Sequencing studies, in which a list of gene variants is obtained and there is a need to prioritize them based on their functional and clinical relevance. In this context, it would be of interest to know if there is information on their implication in psychiatric diseases. In this Case study we will describe how we can analyze the genes identified in a GWAS study in the context of psychiatric diseases using \texttt{psygenet2r}. For this purpose, we will use as an example the data obtained from a GWAS study on bipolar disorder published by \cite{McCarthy}. In this study, the authors analyzed the brain expression of 58 genes, previously identified in a GWAS of bipolar disorder, and correlated this information with structural MRI studies to identify brain regions that are abnormal in bipolar disorder. We will use this list of 58 genes from the bipolar disorder study to show the functionality of \texttt{psygenet2r} package.\\
+\noindent \texttt{psygenet2r} package allows to retrieve the genes associated to psychiatric diseases, or explore the association between a disease of interest and PsyGeNET diseases based on shared genes. In addition, \texttt{psygenet2r} allows the annotation of genes with psychiatric diseases based on expert-curated information. This functionality can be of interest to interpret the results of GWAS or Whole Exome Sequencing studies, in which a list of gene variants is obtained and there is a need to prioritize them based on their functional and clinical relevance. In this context, it would be of interest to know if there is information on their implication in psychiatric diseases. In this Case study we will describe how we can analyze the genes identified in a GWAS study in the context of psychiatric diseases using \texttt{psygenet2r}. For this purpose, we will use as an example the data obtained from a GWAS study on bipolar disorder published by \cite{McCarthy}. In this study, the authors analyzed the brain expression of 58 genes, previously identified in a GWAS of bipolar disorder \cite{ODZ4}, and correlated this information with structural MRI studies to identify brain regions that are abnormal in bipolar disorder. We will use this list of 58 genes from the bipolar disorder study to show the functionality of \texttt{psygenet2r} package.\\
+
 
 \subsection{Objective}
 
 \noindent The goal of the study is to analyze a set of genes discovered by GWAS in the context of PsyGeNET. More specifically, we want to answer the following questions:\\
 \begin{enumerate}
-\item Are bipolar disorder genes associated to substance use disorders according to PsyGeNET?
+\item Are the genes associated to psychiatric disorders according to PysGeNET?
 \item What is the level of evidence of these associations?
 \item What is the function of the proteins encoded by these genes related to bipolar disorder?
 \item Is bipolar disorder associated to other psychiatric disorders?
@@ -88,7 +89,7 @@ p
 \section{Implementation}
 
 \subsection{\texttt{psygenet2r} package}
-\noindent PsyGeNET, a knowledge resource for the exploratory analysis of psychiatric diseases and their genes, focused on eight psychiatric disorders: depression, bipolar disorder, alcohol use disorders, cocaine use disorders, schizophrenia, substance-induced depressive disorder and psychoses and cannabis use disorder. PsyGeNET database has been developed by automatic extraction of information from the literature using the text mining tool BeFree (http://ibi.imim.es/befree/), followed by curation by experts in the domain. The current version of PsyGeNET (version 2.0) contains 3,771 associations between 1,549 genes and 117 psychiatric disease concepts. \texttt{psygenet2r} package contains functions to query and analyze PsyGeNET data, and to integrate with other information, as exemplified in this case study.\\
+\noindent PsyGeNET, a knowledge resource for the exploratory analysis of psychiatric diseases and their genes, contains information on eight psychiatric disorders: depression, bipolar disorder, schizophrenia, alcohol, cocaine and cannabis use disorders, substance-induced depressive disorder and psychoses. PsyGeNET database has been developed by automatic extraction of information from the literature using the text mining tool BeFree (http://ibi.imim.es/befree/), followed by curation by experts in the domain. The current version of PsyGeNET (version 2.0) contains 3,771 associations between 1,549 genes and 117 psychiatric disease concepts. \texttt{psygenet2r} package contains functions to query and analyze PsyGeNET data, and to integrate with other information, as exemplified in this case study.\\
 
 \subsection{Installation}
 \noindent \texttt{psygenet2r} package is provided through Bioconductor \cite{bioc}. To install \texttt{psygenet2r} the user must type in the two following commands in R session:
@@ -125,7 +126,7 @@ genesOfInterest <- c("ADCY2", "AKAP13", "ANK3", "ANKS1A",
 
 \subsection{How many of these genes are in PsyGeNET?}
 
-\noindent In order to know how many of the genes of interest are present in PsyGeNET, \texttt{psygenetGeneList} function is used. This function requires as input the genes' vector and the selected database. For this analysis \texttt{"ALL"} databases are selected.\\ 
+\noindent In order to know how many of the genes of interest are present in PsyGeNET, \texttt{psygenetGeneList} function is used. This function requires as input the genes' vector and the selected database. For this analysis \texttt{"ALL"} database are selected.\\ 
 
 <<search_multiple>>=
 m1 <- psygenetGene(
@@ -142,9 +143,9 @@ m1
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Which diseases are associated to these genes according to PsyGeNET?}
+\subsection{Which diseases are associated to these genes according to PsyGeNET database?}
 
-\noindent In order to visualize the 48 GDAs between the 16 genes found in PsyGeNET and the 15 different disorders, \texttt{psygenet2r} provides several options. One of them is the GDA network, which can be obtained by applying the \texttt{plot} function to the \texttt{DataGeNET.Psy} object (\texttt{m1}), obtained from \texttt{psygenetGene} function (section 4.1). In the GDA network, green nodes represent diseases and orange nodes represent genes.\\
+\noindent In order to visualize the 48 GDAs between the 16 genes found in PsyGeNET and the 15 different disorders, \texttt{psygenet2r} provides several options. One of them is the GDA network, which can be obtained by applying the \texttt{plot} function to the \texttt{DataGeNET.Psy} object (\texttt{m1}), obtained from \texttt{psygenetGene} function (section 3.1). In the GDA network, green nodes represent diseases and orange nodes represent genes.\\
 
 \begin{figure}[H]
 \begin{center}
@@ -158,11 +159,9 @@ plot( m1 )
 
 \noindent As shown in Figure \ref{gene-disease}, most of the genes (10) are associated to bipolar disorder (umls:C0005586), in agreement with McCarthy et al. \cite{McCarthy}, but some of these genes are also associated to other disorders related to alcohol UD, depression and schizophrenia.\\
 
-\noindent We can also visualize the association type (Association, No Association,Both) using heat-maps.\\
+\noindent In PsyGeNET it is important to keep track of both “positive” and the “negative” findings, and let the user make their own judgements based on the available evidence. We can visualize the association type (Association, No Association,Both) using heat-maps.\\
 
 \noindent In the example shown in the next figure (Figure \ref{gene-psy}), the gene-disease associations related to alcohol UD and depresison are all of type "Association". On the other hand, for bipolar disorder and schizophrenia there are some GDAs that have both types of associations. Finally, in the schizophrenia category it can be seen that there is one GDA with "no association" type.\\
-
-\noindent In PsyGeNET it is important to keep track of both “positive” and the “negative” findings, and let the user make their own judgements based on the available evidence.\\
 
 \noindent The barplot can be obtained using the \texttt{geneAttrPlot} function and by setting the \texttt{type} argument to \texttt{"index"}.\\
 
@@ -180,21 +179,21 @@ geneAttrPlot( m1, type = "index" )
 
 \subsection{What are the functions of the proteins encoded by these genes?}
 
-\noindent \texttt{psygenet2r} package can be used to analyze gene attributes such as the panther class. The \textsl{PANTHER Protein Class Ontology} includes commonly used classes of protein functions. The panther class to which the genes belong according to their psychiatric disorder can be analyzed using the function \texttt{pantherGraphic}.\\ 
+\noindent \texttt{psygenet2r} package can be used to analyze gene attributes such as the panther class. The \textsl{PANTHER Protein Class Ontology} includes commonly used classes of protein functions. The Panther class can be analyzed using the function \texttt{pantherGraphic}.\\ 
 
-\noindent \texttt{pantherGraphic} function requires as input the list of genes (\texttt{genesOfInterest} vector) and the database (for instance \texttt{ALL}). The output of  \texttt{pantherGraphic} function is a bar-plot with the different panther classes in the Y-axis and the percentage of genes in the X-axis, grouped by PsyGeNET psychiatric disorders.\\
+\noindent \texttt{pantherGraphic} function requires as input the list of genes (\texttt{genesOfInterest} vector) and the database (for instance \texttt{ALL}). The output of  \texttt{pantherGraphic} function is a bar-plot with the different Panther classes in the Y-axis and the percentage of genes in the X-axis, grouped by PsyGeNET psychiatric disorders.\\
 
 \begin{figure}[H]
 \begin{center}
 <<ggplot_panther, fig=TRUE, height=8, width=8, message=FALSE, warning=FALSE>>=
 pantherGraphic( genesOfInterest, "ALL", check = FALSE)
 @
-\caption{Panther graphic analysis of the genes of interest.}
+\caption{Panther class analysis of the genes of interest.}
 \label{panther}
 \end{center}
 \end{figure}
 
-\noindent The bar-plot shown in Figure \ref{panther} is obtained from the gene-list of interest. All the genes in the list that are associated with the psychiatric disease class of alcohol use disorders are signaling molecules. On the other hand, it can be observed that those genes associated with bipolar disorder, depression and schizophrenia are in a variety of panther classes.\\
+\noindent The bar-plot shown in Figure \ref{panther} is obtained from the gene-list of interest. All the genes in the list that are associated with the psychiatric disease class of alcohol use disorders are signaling molecules. On the other hand, it can be observed that those genes associated with bipolar disorder, depression and schizophrenia are in a variety of Panther classes.\\
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -209,7 +208,7 @@ pantherGraphic( genesOfInterest, "ALL", check = FALSE)
 \begin{landscape}
 \begin{figure}[H]
 \begin{center}
-<<heatmap_disease_m, fig=TRUE, fig.width=10, fig.height=5.8, fig.align='center'>>=
+<<heatmap_disease_m, fig=TRUE, fig.width=10, fig.height=4.5, fig.align='center'>>=
 plot( m1, type="heatmapGenes")
 @
 \caption{Gene-Disease Association Heatmap}
@@ -222,7 +221,7 @@ plot( m1, type="heatmapGenes")
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{For the disorder of interest, how many PubMed id support each gene-disease associations?}
+\subsection{For the disorder of interest, how many publications support each gene-disease associations?}
 
 \noindent In addition to the PsyGeNET evidence index, we can also inspect the number of publications that support a GDA. \texttt{psygenet2r} allows the visualization of this information in a bar-plot, using the \texttt{plot} function with the \texttt{disorder} argument to indicate the disease of interest, and the \texttt{type} argument set to \texttt{"barplot"}. Figure \ref{pubmed-2} shows an example, with the genes in the X-axis and the number of PMIDs in the y-axis.\\
 
@@ -231,7 +230,7 @@ plot( m1, type="heatmapGenes")
 <<pmids_barplot, fig=TRUE, height=8, width=8>>=
 plot( m1, name="bipolar disorder", type="barplot")
 @
-\caption{PubMed Ids that report each gene association with bipolar disorder (manic depressive illness).}
+\caption{Publications that report each gene association with bipolar disorder}
 \label{pubmed-2}
 \end{center}
 \end{figure}
@@ -264,16 +263,15 @@ head(sentences$PUBMED_ID)
 
 \subsection{Is bipolar disorder significantly associated with other diseases?}
 
-\noindent An interesting calculation is to know which diseases are similar to a target disease based on shared genes. Since PsyGeNET database contains information on genes associated to psychiatric diseases we can use it to estimate disease similarity. The Jaccard Index is a statistic used for comparing the similarity of two sets. In our case, these sets are the genes associated to each one of the target diseases. In the \texttt{psygenet2r} package, the Jaccard Index is calculated by using the function \texttt{jacacardEstimation}.\\
+\noindent An interesting question is to know which diseases are similar to a target disease based on shared genes. Since PsyGeNET database contains information on genes associated to psychiatric diseases we can use it to estimate disease similarity. The Jaccard Index is a statistic used for comparing the similarity of two sets. In our case, these sets are the genes associated to each one of the target diseases. In the \texttt{psygenet2r} package, the Jaccard Index is calculated by using the function \texttt{jacacardEstimation}.\\
 
-\noindent The function \texttt{jacacardEstimation} allows us to calculate the Jaccard Index using both PsyGeNET's data (like disease names or CUIs) and external information as vectors of genes. Moreover the Jaccard Index, this function calculates an associated p-value to the index.\\
+\noindent The function \texttt{jacacardEstimation} allows us to calculate the Jaccard Index using both PsyGeNET's data (like disease names or CUIs) and external information as vectors of genes. Moreover, this function calculates p-value for the index to assess its statistical significance.\\
 
-\noindent The strategy to calculate the Jaccard Index and its p-value corresponds to:
+\noindent The strategy to calculate the Jaccard Index and its p-value as follows:
 \begin{enumerate}[label=(\Alph*)]
   \item Calculate the Jaccard Index between the pair of diseases. Let's call it \textit{rJI}.
-  \item Randomly select a set of genes from DisGeNET for each one of the input diseases (or set of genes).
-  \item See how many of these genes are in common and divide them for the total length to calculate their Jaccard Index. Let's call it \textit{iJI}.
-  \item Calculate the p-value by dividing the count of the \textit{iJI} higher than the real \textit{rJI} by the number of attempts we performed the steps B and C plus one (\texttt{nboot + 1}).
+  \item Randomly select a set of genes from DisGeNET for each one of the input diseases (or set of genes) and compute their Jaccard Index (iJI).
+  \item Calculate the p-value by dividing the count of the \textit{iJI} higher than the real \textit{rJI} by the number of attempts we performed the step B plus one (\texttt{nboot + 1}).
 \end{enumerate}
 
 \noindent Let's calculate the Jaccard Index for the genes of interest and bipolar disorder:
@@ -284,7 +282,7 @@ xx <- jaccardEstimation( genesOfInterest, "bipolar disorder",
 xx
 @
 
-\noindent The result shows the number of interactions used to calculate the p-value and the type of input, in this case a list of genes and a disease. The Jaccard Index and the p-value can be extracted using the function \texttt{extract}:
+\noindent The result shows the number of iterations used to calculate the p-value and the type of input, in this case a list of genes and a disease. The Jaccard Index and the p-value can be extracted using the function \texttt{extract}:
 
 <<jaccard_2>>=
 extract( xx )
@@ -297,7 +295,7 @@ xx <- jaccardEstimation( genesOfInterest,
   database = "ALL", nboot = 500 )
 @
 
-\noindent The result from the Jaccard Index estimation can be plot using the function \texttt{plot}. The result is a bar-plot where the p-value of each comparison between our genes and PsyGeNET's disease is shown. A \texttt{cutOff} argument can be added in order to visualize only those diseases with an statistically significant p-value, in this case it is not necessary:
+\noindent The result from the Jaccard Index estimation can be visualized using the function \texttt{plot}. The result is a bar-plot where the p-value of each comparison between our genes and PsyGeNET's disease is shown. A \texttt{cutOff} argument can be added in order to visualize only those diseases with an statistically significant p-value:
 
 \begin{figure}[H]
 \begin{center}
@@ -389,17 +387,23 @@ geneAttrPlot( m1, type = "gene" )
   Bioinformatics
   2015.
   doi:10.1093/bioinformatics/btv301
-\bibitem{Psychiatry}  % [12]
-  Black Donald W., Andreasen Nancy C.
-  \textbf{Introductory Textbook of Psychiatry (5th ed.)}.
-  American Psychiatric Publishing, Inc., pg. 158
-  ISBN-13: 978-1585624003
-\bibitem{McGuffin}  % [5]
-  McGuffin Peter, Rijsdijk Fruhling, Andrew Martin, Sham Pak, Katz Randy, Cardno Alastair. 
-  \textbf{The heritability of bipolar affective disorder and the genetic relationship to unipolar depression}.
-  JAMA Psychiatry
-  2003.
-  doi:10.1001/archpsyc.60.5.497
+% \bibitem{Psychiatry}  % [12]
+%   Black Donald W., Andreasen Nancy C.
+%   \textbf{Introductory Textbook of Psychiatry (5th ed.)}.
+%   American Psychiatric Publishing, Inc., pg. 158
+%   ISBN-13: 978-1585624003
+\bibitem{McCarthy}  % [4]
+  McCarthy Michael J., Liang Sherri, Spadoni Andrea D., Kelsoe John R., Simmons Alan N.
+  \textbf{Whole brain expression of bipolar disorder associated genes: structural and genetic analyses}.
+  PLoS One
+  2014.
+  doi:10.1371/journal.pone.0100204
+% \bibitem{McGuffin}  % [5]
+%   McGuffin Peter, Rijsdijk Fruhling, Andrew Martin, Sham Pak, Katz Randy, Cardno Alastair. 
+%   \textbf{The heritability of bipolar affective disorder and the genetic relationship to unipolar depression}.
+%   JAMA Psychiatry
+%   2003.
+%   doi:10.1001/archpsyc.60.5.497
 \bibitem{ODZ4}      %[8]
   PGCBD Consortium.
   \textbf{Large-scale genome-wide association analysis of bipolar disorder identifies a new susceptibility locus near ODZ4}. 
@@ -409,12 +413,7 @@ geneAttrPlot( m1, type = "gene" )
 \bibitem{bioc}
   Bioconductor
   \url{http://www.bioconductor.org}
-\bibitem{McCarthy}  % [4]
-  McCarthy Michael J., Liang Sherri, Spadoni Andrea D., Kelsoe John R., Simmons Alan N.
-  \textbf{Whole brain expression of bipolar disorder associated genes: structural and genetic analyses}.
-  PLoS One
-  2014.
-  doi:10.1371/journal.pone.0100204
+
 %\bibitem{Pettinati} %[7]
 %  Pettinati Helen M., O’Brien Charles P.,  Dundon William D.
 %  \textbf{Current status of co-occurring mood and substance use disorders: a new therapeutic target}. 
