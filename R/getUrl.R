@@ -1,5 +1,5 @@
 getUrlPsi <- function() {
-  url <- "http://localhost:8181/oql"
+  url <- "http://www.psygenet.org/oql"
   return( url )
 }
 
