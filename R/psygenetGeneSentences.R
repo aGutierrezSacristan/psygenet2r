@@ -8,14 +8,11 @@
 #' @param geneList Name or vector of names (that can be both code or symbol) to 
 #' specific genes from PsyGeNET. The genes non existing in PsyGeNET will
 #' be removed from the output.
-#'
 #' @param database Name of the database that will be queried. It can take the 
-#' values \code{'MODELS'} to use Comparative Toxigenomics Database, data from 
-#' mouse and rat; \code{'GAD'} to use Genetic Association Database; \code{'CTD'}
-#' to use Comparative Toxigenomics Database, data from human; \code{'PsyCUR'} to
-#' use Psychiatric disorders Gene association manually curated; \code{'CURATED'}
-#' to use Human, manually curated databases (PsyCUR and CTD); or \code{'ALL'} 
-#' to use all these databases. Default \code{'CURATED'}.
+#' values \code{'psycur15'} to use data validated by experts for first release 
+#' of PsyGeNET; \code{'psycur16'} to use data validated by experts for second 
+#' release of PsyGeNET; or \code{'ALL'} to use both databases. 
+#' Default \code{'ALL'}.
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
 #' on-time log from the function.
 #' @return An object of class \code{DataGeNET.Psy}
@@ -25,7 +22,7 @@
 #' psyGeneSen <- psygenetGeneSentences( geneList = genesOfInterest,
 #'                                      database = "ALL")
 #' @export psygenetGeneSentences
-psygenetGeneSentences <- function( geneList, database = "CURATED", verbose = FALSE ) {
+psygenetGeneSentences <- function( geneList, database = "ALL", verbose = FALSE ) {
   
   if( verbose ) {
     message( "Staring querying PsyGeNET for you gene list in ", database , " database." )
@@ -39,9 +36,9 @@ psygenetGeneSentences <- function( geneList, database = "CURATED", verbose = FAL
   ON
   'http://www.psygenet.org/web/PsyGeNET'
   SELECT
-  c1 (Gene_Symbol, Gene_Id, Gene_Description),
-  c2 (Disease_Id, Disease_code, DiseaseName ),
-  c0 (OriginalDB, Pubmed_Id, Sentence)
+  c1 (Gene_Symbol, Gene_Id),
+  c2 (Disease_code, DiseaseName ),
+  c0 (OriginalDB, Pubmed_Id, curatorAnnot, Sentence)
   FROM
   c0
   WHERE
@@ -81,13 +78,7 @@ psygenetGeneSentences <- function( geneList, database = "CURATED", verbose = FAL
         pattern     = "DTB",
         replacement = database 
       )
-      dataTsv <- RCurl::getURLContent(
-        getUrlPsi(), 
-        readfunction  = charToRaw(oql2), 
-        upload        = TRUE, 
-        customrequest = "POST", 
-        .encoding     = "UTF-8"
-      ) 
+      dataTsv <- download_data(oql2)
       dataNew <- read.csv( textConnection(dataTsv), header = TRUE, sep="\t" ) 
       data <- rbind( data, dataNew )
     }

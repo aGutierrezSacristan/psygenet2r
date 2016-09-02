@@ -4,22 +4,23 @@
 \alias{enrichedPD}
 \title{Enrichment of a user's input (genes) in PsyGeNET's diseases.}
 \usage{
-enrichedPD(gene, database = "CURATED", verbose = FALSE)
+enrichedPD(gene, database = "ALL", verbose = FALSE, warnings = FALSE)
 }
 \arguments{
 \item{gene}{Name or vector of names (that can be both code or uml) to 
 specific genes from PsyGeNET.}
 
 \item{database}{Name of the database that will be queried. It can take the 
-values \code{'MODELS'} to use Comparative Toxigenomics Database, data from 
-mouse and rat; \code{'GAD'} to use Genetic Association Database; \code{'CTD'}
-to use Comparative Toxigenomics Database, data from human; \code{'PsyCUR'} to
-use Psychiatric disorders Gene association manually curated; \code{'CURATED'}
-to use Human, manually curated databases (PsyCUR and CTD); or \code{'ALL'} 
-to use all these databases. Default \code{'CURATED'}.}
+values \code{'psycur15'} to use data validated by experts for first release 
+of PsyGeNET; \code{'psycur16'} to use data validated by experts for second 
+release of PsyGeNET; or \code{'ALL'} to use both databases. 
+Default \code{'ALL'}.}
 
 \item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get a
 on-time log from the function.}
+
+\item{warnings}{By default \code{TRUE}. Change it to \code{FALSE} to not see
+the warnings.}
 }
 \value{
 A \code{data.frame} with the enricment at each Psychiatric Disorder
@@ -29,6 +30,6 @@ Test the enrichment of a given gene list on Psychiatric Disorders from
 PsyGeNET.
 }
 \examples{
-enrichedPD(c("ADCY2", "AKAP13", "ANK3"), "CURATED")
+enrichedPD(c("ADCY2", "AKAP13", "ANK3"), "ALL")
 }
 

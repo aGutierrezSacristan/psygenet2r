@@ -23,13 +23,7 @@ ListPsyGeNETIds <- function( database, query_type ) {
         replacement = database 
     )
     
-    dataTsv <- RCurl::getURLContent( 
-      getUrlPsi(), 
-      readfunction  = charToRaw(oql), 
-      upload        = TRUE, 
-      customrequest = "POST"
-    )
-    
+    dataTsv <- download_data( oql )
     data <- read.csv( textConnection( dataTsv ), header = TRUE, sep = "\t" )
     
     query_type <- tolower(query_type)

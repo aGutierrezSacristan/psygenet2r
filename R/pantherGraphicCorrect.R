@@ -11,26 +11,18 @@
 #' @param x Vector of genes of interest of \code{DataGeNET.Psy} resulting of
 #' \code{psyegnetDisease}.
 #' @param database Name of the database that will be queried. It can take the 
-#' values \code{'MODELS'} to use Comparative Toxigenomics Database, data from 
-#' mouse and rat; \code{'GAD'} to use Genetic Association Database; \code{'CTD'}
-#' to use Comparative Toxigenomics Database, data from human; \code{'PsyCUR'} to
-#' use Psychiatric disorders Gene association manually curated; \code{'CURATED'}
-#' to use Human, manually curated databases (PsyCUR and CTD); or \code{'ALL'} 
-#' to use all these databases. Default \code{'CURATED'}.
+#' values \code{'psycur15'} to use data validated by experts for first release 
+#' of PsyGeNET; \code{'psycur16'} to use data validated by experts for second 
+#' release of PsyGeNET; or \code{'ALL'} to use both databases. 
+#' Default \code{'ALL'}.
 #' @param score threshold to take into account a gene in the analysis
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
 #' on-time log from the function.
-#' @param check By default \code{FALSE}. Change it to \code{TRUE} to 
-#' validate the genes to biomart.
-#' @param hostMart The URL of Biomart to be used.
-#' @param biomart By default \code{'ENSEMBL_MART_ENSEMBL'}. The mart of biomart used to 
-#' check genes 
 #' @return A plot for a \code{DataGeNET.Psy} in terms of the panther-class.
 #' @examples
-#' d.alch <- pantherGraphic( c( "COMT", "CLOCK", "DRD3" ), "CURATED", check = FALSE )
+#' d.alch <- pantherGraphic( c( "COMT", "CLOCK", "DRD3" ), "ALL" )
 #' @export pantherGraphic
-pantherGraphic <- function ( x, database = "CURATED", score, verbose = FALSE, check = FALSE, 
-                             hostMart = "www.ensembl.org", biomart = "ENSEMBL_MART_ENSEMBL" ) {
+pantherGraphic <- function ( x, database = "ALL", score, verbose = FALSE ) {
   if( class( x ) == "DataGeNET.Psy" ) {
     if( x@type == "disease" ) {
       if( !missing( score ) ) {
@@ -40,7 +32,7 @@ pantherGraphic <- function ( x, database = "CURATED", score, verbose = FALSE, ch
         geneList <- as.character( x@qresult$c1.Gene_Symbol )
       }
     } else {
-      stop( "Invalid 'type' of 'DatageNET' object. Expected result of 'psygenetDisease' or 'psygenetDiseaseList'." )
+      stop( "Invalid 'type' of 'DatageNET' object. Expected result of 'psygenetDisease'." )
     }
   } else if( class( x ) == "character" ) {
     geneList <- x
@@ -48,10 +40,12 @@ pantherGraphic <- function ( x, database = "CURATED", score, verbose = FALSE, ch
   
   pantherFile <- psyPanther ( database )
   pantherFile[,3] <- gsub ( "0", "Unclassified", pantherFile[,3] )
+  pantherFile[,3] <- gsub ( "null", "Unclassified", pantherFile[,3] )
   panther <- as.data.frame( transPantherFile ( pantherFile ) )
   
-  ourList <- psygenetGene( geneList, database, verbose = verbose, hostMart = hostMart, biomart = biomart, check = check )
+  ourList <- psygenetGene( geneList, database, verbose = verbose )
   ourList <- ourList@qresult [ , c( 1,2,4,7 ) ]
+  ourList <- diseaseNameMapping( ourList )
   
   # estimate frequency
   disorders <- as.character(unique(ourList$c2.PsychiatricDisorder))
@@ -85,22 +79,38 @@ pantherGraphic <- function ( x, database = "CURATED", score, verbose = FALSE, ch
   misPanterSOrted <- results2[ with ( results2, order ( -as.numeric(Freq) ) ), ]$Var1
   results$Var1 <- factor ( results$Var1 , levels = as.factor ( misPanterSOrted ) )
   
-  setsOrder <- c ( "Cocaine-Use-Disorder", "Alcohol-Use-Disorder", "Major-Depression", "All" )
+
+  setsOrder <- c ( "Alcohol UD", 
+                   "Bipolar disorder", 
+                   "Depression", 
+                   "Schizophrenia", 
+                   "Cocaine UD", 
+                   "SI-Depression", 
+                   "Cannabis UD",
+                   "DI-Psychosis", 
+                   "All" )
+ 
+  
   results$diseases <- factor ( results$diseases , levels = as.factor(setsOrder ) )
   results <- results [ results$perc != 0, ]
-  
-  colors <- c( "yellow3", "limegreen", "purple2", "gray60" )
+   
+  colors <- c( "#FF3C32", "#FFC698", "#9BE75E", "#1F6024", 
+               "#5AB69C", "#50B8D6","#5467C3","#A654C3","gray60" )
   names( colors ) <- setsOrder
+  colors <- diseaseNameMapping( colors )
   
   # plot the results
   miplot <- ggplot2::ggplot ( results, ggplot2::aes ( x = Var1, y = perc, fill = diseases ) ) +
-    ggplot2::geom_bar ( stat = "identity", position="dodge" ) + 
-    ggplot2::labs ( x = "panther class", y = "percentage of genes" ) +
-    ggplot2::theme_classic() + 
-    ggplot2::theme( axis.line = ggplot2::element_line ( size = 0.7, color = "black" ) , text = ggplot2::element_text ( size = 14 ) , axis.text.x = ggplot2::element_text ( size = 14, hjust = 1 ) ) +
-    ggplot2::scale_fill_manual ( values = colors, guide = ggplot2::guide_legend ( reverse=TRUE ) ) + 
-    ggplot2::coord_flip() + 
-    ggplot2::guides(fill = ggplot2::guide_legend(title="Psychiatric Disorders"))
+      ggplot2::geom_bar ( stat = "identity", position="dodge" ) + 
+      ggplot2::labs ( x = "panther class", y = "percentage of genes" ) +
+      ggplot2::theme_classic() + 
+      ggplot2::theme( axis.line = ggplot2::element_line ( size = 0.7, color = "black" ) , 
+                      text = ggplot2::element_text ( size = 14 ) , 
+                      axis.text.x = ggplot2::element_text ( size = 14, hjust = 1 ),
+                      legend.position = "bottom") +
+      ggplot2::scale_fill_manual ( values = colors, guide = ggplot2::guide_legend ( reverse=TRUE ) ) + 
+      ggplot2::coord_flip() + 
+      ggplot2::guides(fill = ggplot2::guide_legend(title="Psychiatric Disorders"))
   return ( miplot )
 }
 
@@ -130,12 +140,7 @@ psyPanther <- function( database ) {
       replacement = database 
   )
   
-  dataTsv <- RCurl::getURLContent(
-    getUrlPsi(), 
-    readfunction  = charToRaw(oql), 
-    upload        = TRUE, 
-    customrequest = "POST"
-  )
+  dataTsv <- download_data(oql)
   data <- read.csv( textConnection(dataTsv), header = TRUE, sep = "\t" )
   
   pantherClass <- data[ !duplicated( data[ , 1 ] ), ]

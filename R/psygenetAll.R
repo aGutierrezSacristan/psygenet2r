@@ -1,6 +1,6 @@
 psygenetAll <- function( database, verbose = FALSE ) {
   if( verbose ) {
-    message( "Staring querying PsyGeNET for ", gene, " in ", database , " database." )
+    message( "Staring querying PsyGeNET in ", database , " database." )
   }
   
   oql <- "DEFINE
@@ -27,12 +27,7 @@ psygenetAll <- function( database, verbose = FALSE ) {
     replacement = database
   )
   
-  dataTsv <- RCurl::getURLContent( 
-    getUrlPsi(), 
-    readfunction  = charToRaw( oql ), 
-    upload        = TRUE, 
-    customrequest = "POST" 
-  )
+  dataTsv <- download_data( oql )
   data <- read.csv( textConnection( dataTsv ), header = TRUE, sep="\t" )
   return( data )
 }

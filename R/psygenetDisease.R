@@ -10,24 +10,22 @@
 #' specific diseases from PsyGeNET. The diseases non existing in PsyGeNET will
 #' be removed from the output.
 #' @param database Name of the database that will be queried. It can take the 
-#' values \code{'MODELS'} to use Comparative Toxigenomics Database, data from 
-#' mouse and rat; \code{'GAD'} to use Genetic Association Database; \code{'CTD'}
-#' to use Comparative Toxigenomics Database, data from human; \code{'PsyCUR'} to
-#' use Psychiatric disorders Gene association manually curated; \code{'CURATED'}
-#' to use Human, manually curated databases (PsyCUR and CTD); or \code{'ALL'} 
-#' to use all these databases. Default \code{'CURATED'}.
+#' values \code{'psycur15'} to use data validated by experts for first release 
+#' of PsyGeNET; \code{'psycur16'} to use data validated by experts for second 
+#' release of PsyGeNET; or \code{'ALL'} to use both databases. 
+#' Default \code{'ALL'}.
 #' @param score A vector with two elements: 1) character with greather 
 #' \code{'>'} or with lower \code{'<'} meaing greather or equal and lower or
-#' equal; 2) the score to be compared. By default: \code{c('>', 0)}.
+#' equal; 2) the evidence index cut-off to be compared. By default: \code{c('>', 0)}.
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
 #' on-time log from the function.
 #' @param warnings By default \code{TRUE}. Change it to \code{FALSE} to don't see
 #' the warnings.
 #' @return An object of class \code{DataGeNET.Psy}
 #' @examples
-#' d.alch <- psygenetDisease( "Alcoholism", "CURATED" )
+#' d.sch <- psygenetDisease( "schizophrenia", "ALL" )
 #' @export psygenetDisease
-psygenetDisease <- function( disease, database = "CURATED", score=c('>', 0), verbose = FALSE, warnings = TRUE ) {
+psygenetDisease <- function( disease, database = "ALL", score=c('>', 0), verbose = FALSE, warnings = TRUE ) {
   check_database( database )
   if( length( disease ) != length( unique( disease ) ) ) {
     disease <- unique( disease )
@@ -59,8 +57,8 @@ psygenetDisease <- function( disease, database = "CURATED", score=c('>', 0), ver
     'http://www.psygenet.org/web/PsyGeNET'
     SELECT
     c1 (Gene_Symbol, Gene_Id, Gene_Description),
-    c2 (Disease_Id, Disease_code, DiseaseName, PsychiatricDisorder),
-    c0 (Score, Disease_Id, Number_of_Abstracts)
+    c2 (Disease_code, Disease_Id, DiseaseName, PsychiatricDisorder),
+    c0 (Score, Disease_Id, Number_of_Abstracts,Number_of_AbstractsValidated)
     FROM
     c0
     WHERE
@@ -163,12 +161,7 @@ psygenetDisease <- function( disease, database = "CURATED", score=c('>', 0), ver
           "to PsyGeNET for disease <", disease[ii], ">."
         )
       }
-      dataTsv <- RCurl::getURLContent(
-        getUrlPsi(), 
-        readfunction = charToRaw( oql_current ), 
-        upload = TRUE, 
-        customrequest = "POST"
-      )
+      dataTsv <- download_data( oql_current )
       dataNew <- read.csv( textConnection( dataTsv ), header = TRUE, sep = "\t" )
       result <- rbind( result, dataNew )
     }

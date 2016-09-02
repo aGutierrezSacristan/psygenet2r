@@ -5,7 +5,7 @@
 \title{Query PsyGeNET for given gene(s) and extract the pmids sentences that report 
 a gene-disease asssociation.}
 \usage{
-psygenetGeneSentences(geneList, database = "CURATED", verbose = FALSE)
+psygenetGeneSentences(geneList, database = "ALL", verbose = FALSE)
 }
 \arguments{
 \item{geneList}{Name or vector of names (that can be both code or symbol) to 
@@ -13,12 +13,10 @@ specific genes from PsyGeNET. The genes non existing in PsyGeNET will
 be removed from the output.}
 
 \item{database}{Name of the database that will be queried. It can take the 
-values \code{'MODELS'} to use Comparative Toxigenomics Database, data from 
-mouse and rat; \code{'GAD'} to use Genetic Association Database; \code{'CTD'}
-to use Comparative Toxigenomics Database, data from human; \code{'PsyCUR'} to
-use Psychiatric disorders Gene association manually curated; \code{'CURATED'}
-to use Human, manually curated databases (PsyCUR and CTD); or \code{'ALL'} 
-to use all these databases. Default \code{'CURATED'}.}
+values \code{'psycur15'} to use data validated by experts for first release 
+of PsyGeNET; \code{'psycur16'} to use data validated by experts for second 
+release of PsyGeNET; or \code{'ALL'} to use both databases. 
+Default \code{'ALL'}.}
 
 \item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get a
 on-time log from the function.}

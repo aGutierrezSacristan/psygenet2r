@@ -66,6 +66,6 @@ setGeneric ("extractSentences",
 #' @return A \code{data.frame} containing the raw result from PsyGeNET or
 #' a \code{data.frame} with the result Jaccard Index for each disease.
 setGeneric ("extract",
-    function(object){standardGeneric("extract")}
+    function(object, ...){standardGeneric("extract")}
 )
 

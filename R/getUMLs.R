@@ -43,13 +43,7 @@ getUMLs <- function(word, database = "CURATED") {
     replacement = database 
   )
   
-  dataTsv <- RCurl::getURLContent( 
-    getUrlPsi(), 
-    readfunction  = charToRaw(oql), 
-    upload        = TRUE, 
-    customrequest = "POST"
-  )
-  
+  dataTsv <- download_data(oql)
   data <- read.csv( textConnection( dataTsv ), header = TRUE, sep = "\t", stringsAsFactors = FALSE )[ , c(4, 5, 6) ]
   colnames(data) <- c("DiseaseName", "PsychiatricDisorder", "umls")
   data <- data[!duplicated(data$umls), ]

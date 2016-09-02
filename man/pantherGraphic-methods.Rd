@@ -5,34 +5,22 @@
 \title{Query PsyGeNET for given genes and creates a representation in base of
 their panther-class}
 \usage{
-pantherGraphic(x, database = "CURATED", score, verbose = FALSE,
-  check = FALSE, hostMart = "www.ensembl.org",
-  biomart = "ENSEMBL_MART_ENSEMBL")
+pantherGraphic(x, database = "ALL", score, verbose = FALSE)
 }
 \arguments{
 \item{x}{Vector of genes of interest of \code{DataGeNET.Psy} resulting of
 \code{psyegnetDisease}.}
 
 \item{database}{Name of the database that will be queried. It can take the 
-values \code{'MODELS'} to use Comparative Toxigenomics Database, data from 
-mouse and rat; \code{'GAD'} to use Genetic Association Database; \code{'CTD'}
-to use Comparative Toxigenomics Database, data from human; \code{'PsyCUR'} to
-use Psychiatric disorders Gene association manually curated; \code{'CURATED'}
-to use Human, manually curated databases (PsyCUR and CTD); or \code{'ALL'} 
-to use all these databases. Default \code{'CURATED'}.}
+values \code{'psycur15'} to use data validated by experts for first release 
+of PsyGeNET; \code{'psycur16'} to use data validated by experts for second 
+release of PsyGeNET; or \code{'ALL'} to use both databases. 
+Default \code{'ALL'}.}
 
 \item{score}{threshold to take into account a gene in the analysis}
 
 \item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get a
 on-time log from the function.}
-
-\item{check}{By default \code{FALSE}. Change it to \code{TRUE} to 
-validate the genes to biomart.}
-
-\item{hostMart}{The URL of Biomart to be used.}
-
-\item{biomart}{By default \code{'ENSEMBL_MART_ENSEMBL'}. The mart of biomart used to 
-check genes}
 }
 \value{
 A plot for a \code{DataGeNET.Psy} in terms of the panther-class.
@@ -43,6 +31,6 @@ function creates a representation of a the panther-class these genes belongs
 to.
 }
 \examples{
-d.alch <- pantherGraphic( c( "COMT", "CLOCK", "DRD3" ), "CURATED", check = FALSE )
+d.alch <- pantherGraphic( c( "COMT", "CLOCK", "DRD3" ), "ALL" )
 }
 

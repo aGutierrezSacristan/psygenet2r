@@ -30,12 +30,7 @@ disgenetAll <- function( database, verbose = FALSE ) {
         replacement = database 
     )
     
-    dataTsv <- RCurl::getURLContent(
-        getUrlDis(), 
-        readfunction  = charToRaw(oql), 
-        upload        = TRUE, 
-        customrequest = "POST"
-    ) 
+    dataTsv <- download_data(oql, url = getUrlDis())
     data <- read.csv(textConnection(dataTsv), header = TRUE, sep="\t")
     
     return( data )

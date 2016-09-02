@@ -34,7 +34,7 @@
 #' @return An object of class \code{JaccardIndexPsy} with the computed
 #' calculation of the JaccardIndex.
 #' @examples
-#' ji <- jaccardEstimation( c( "COMT", "CLOCK", "DRD3" ), "umls:C0005586", "CURATED" )
+#' ji <- jaccardEstimation( c( "COMT", "CLOCK", "DRD3" ), "umls:C0005586", "ALL" )
 #' @export jaccardEstimation
 jaccardEstimation <- function(pDisease, sDisease, database="CURATED", nboot = 100, ncores = 1, verbose = FALSE) {
   if(missing(pDisease)) {
