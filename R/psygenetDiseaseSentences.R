@@ -85,13 +85,7 @@ psygenetDiseaseSentences <- function( diseaseList, database = "ALL", verbose = F
         pattern     = "DTB",
         replacement = database 
       )
-      dataTsv <- rawToChar(RCurl::getURLContent(
-        getUrlPsi(), 
-        readfunction  = charToRaw(oql2), 
-        upload        = TRUE, 
-        customrequest = "POST", 
-        .encoding     = "UTF-8"
-      ))
+      dataTsv <- download_data(oql2)
       dataNew <- read.csv( textConnection( dataTsv ), header = TRUE, sep="\t" ) 
       data <- rbind( data, dataNew )
     }

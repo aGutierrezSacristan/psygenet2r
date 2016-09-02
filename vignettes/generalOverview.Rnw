@@ -86,8 +86,7 @@ suppressMessages(suppressWarnings(library( psygenet2r )))
 
 <<dataGenet1, echo=FALSE>>=
 t1 <- psygenetGene( gene = 4852, 
-                    database = "ALL", 
-                    check = FALSE)
+                    database = "ALL")
 @
 
 <<dataGenet2>>=
@@ -135,20 +134,19 @@ Name             & Description                                                \\
 
 \subsubsection{Using as a query a single gene}
 
-\noindent In order to look for a single gene into PsyGeNET, we can use the \texttt{psygenetGene} function. This function retrieves PsyGeNET's information using both, the NCBI gene identifier and the official Gene Symbol from HUGO. It contains also other arguments like the database to query, the PsyGeNET evidence index (score argument) and the check argument, that allows the user to decide if he wants to validate or not the gene before interrogating the database.\\
+\noindent In order to look for a single gene into PsyGeNET, we can use the \texttt{psygenetGene} function. This function retrieves PsyGeNET's information using both, the NCBI gene identifier and the official Gene Symbol from HUGO. It contains also other arguments like the database to query, the PsyGeNET evidence index (score argument).\\
   
 \noindent As an example, the gene \textit{NPY}, whose entrez id is \textsl{4852} is queried using \texttt{psygenetGene} function, and using alternatively the official HUGO Gene Symbol. In this example database \texttt{"ALL"}.\\
 
 <<search_gene_1, cache=TRUE>>=
 t1 <- psygenetGene( gene = 4852, 
-                    database = "ALL", 
-                    check = FALSE)
+                    database = "ALL")
 t1
 @
 
 
 <<search_gene_2, cache=TRUE>>=
-t2 <- psygenetGene( gene = "NPY", database = "ALL", check = FALSE )
+t2 <- psygenetGene( gene = "NPY", database = "ALL" )
 t2
 @
 
@@ -210,8 +208,7 @@ genesOfInterest <- c( "COMT", "CLOCK", "DRD3", "GNB3", "HTR1A",
 m1 <- psygenetGene(
     gene     = genesOfInterest, 
     database = "ALL",
-    verbose  = TRUE,
-    check = FALSE
+    verbose  = TRUE
 )
 @
 
@@ -272,7 +269,7 @@ plot( m1, type = "heatmap" )
 
 <<panther_gene>>=
 genesOfInterest <- unique( genesOfInterest )
-pantherGraphic( genesOfInterest, "ALL", check = FALSE )
+pantherGraphic( genesOfInterest, "ALL" )
 @
 
 \subsubsection{Ploting results of the multiple gene query}
@@ -551,6 +548,8 @@ plot(ji3)
 \section{Warnings}
 
 \noindent \texttt{heatmap} type argument do not allow queries for single gene:
+
+\begin{verbatim}
 
 > plot( t1, type = "heatmap" )
 ==> Error: For this type of chart, a multiple gene query created with

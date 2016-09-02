@@ -20,7 +20,7 @@ Default \code{'ALL'}.}
 
 \item{score}{A vector with two elements: 1) character with greather 
 \code{'>'} or with lower \code{'<'} meaing greather or equal and lower or
-equal; 2) the score to be compared. By default: \code{c('>', 0)}.}
+equal; 2) the evidence index cut-off to be compared. By default: \code{c('>', 0)}.}
 
 \item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get a
 on-time log from the function.}

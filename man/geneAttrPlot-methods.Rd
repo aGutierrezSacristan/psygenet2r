@@ -2,8 +2,7 @@
 % Please edit documentation in R/geneAttrPlot.R
 \name{geneAttrPlot}
 \alias{geneAttrPlot}
-\title{Query PsyGeNET for given genes and creates a representation in base of
-their panther-class}
+\title{Ploting the relation between genes and disease-categories}
 \usage{
 geneAttrPlot(x, type = "pie", verbose = FALSE)
 }
@@ -11,31 +10,17 @@ geneAttrPlot(x, type = "pie", verbose = FALSE)
 \item{x}{Vector of genes of interest of \code{DataGeNET.Psy} resulting of
 \code{psyegnetDisease}.}
 
+\item{type}{(default \code{"pie"}) It can takes \code{"pie"},}
+
 \item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get a
 on-time log from the function.}
-
-\item{database}{Name of the database that will be queried. It can take the 
-values \code{'psycur15'} to use data validated by experts for first release 
-of PsyGeNET; \code{'psycur16'} to use data validated by experts for second 
-release of PsyGeNET; or \code{'ALL'} to use both databases. 
-Default \code{'ALL'}.}
-
-\item{score}{threshold to take into account a gene in the analysis}
-
-\item{check}{By default \code{FALSE}. Change it to \code{TRUE} to 
-validate the genes to biomart.}
-
-\item{hostMart}{The URL of Biomart to be used.}
-
-\item{biomart}{By default \code{'ENSEMBL_MART_ENSEMBL'}. The mart of biomart used to 
-check genes}
 }
 \value{
 A plot for a \code{DataGeNET.Psy} in terms of the panther-class.
 }
 \description{
-Given a vector of genes of interest (or using a DataGeNET.Psy object), this
-function creates a representation of a the panther-class these genes belongs
-to.
+Given a set of genes or a result of \code{psygenetGene} creates four types
+of plots showing the relation of the genes with the disease's category
+in psyGeNET.
 }
 

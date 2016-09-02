@@ -49,6 +49,6 @@ of genes composed by the genes of all the diseases that the main
 psychiatric disorder cotains.
 }
 \examples{
-ji <- jaccardEstimation( c( "COMT", "CLOCK", "DRD3" ), "umls:C0005586", "CURATED" )
+ji <- jaccardEstimation( c( "COMT", "CLOCK", "DRD3" ), "umls:C0005586", "ALL" )
 }
 

@@ -23,7 +23,7 @@
 #' the warnings.
 #' @return An object of class \code{DataGeNET.Psy}
 #' @examples
-#' d.alch <- psygenetGene( "ALDH2", "ALL", check = FALSE )
+#' d.alch <- psygenetGene( "ALDH2", "ALL" )
 #' @export psygenetGene
 psygenetGene <- function( gene, database = "ALL", score=c('>', 0),
                           verbose = FALSE, warnings = TRUE ) {
@@ -135,12 +135,7 @@ psygenetGene <- function( gene, database = "ALL", score=c('>', 0),
         )
       }
       
-      dataTsv <- rawToChar(RCurl::getURLContent(
-        getUrlPsi(), 
-        readfunction  = charToRaw( oql2 ), 
-        upload        = TRUE, 
-        customrequest = "POST"
-      ))
+      dataTsv <- download_data( oql2 )
       dataNew <- read.csv( textConnection( dataTsv ), header = TRUE, sep = "\t" )
       result <- rbind( result, dataNew )
       

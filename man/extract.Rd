@@ -7,14 +7,16 @@
 \alias{extract,JaccardIndexPsy-method}
 \title{Raw data from \code{DataGeNET.Psy} and \code{JaccardIndexPsy}.}
 \usage{
-extract(object)
+extract(object, ...)
 
 \S4method{extract}{DataGeNET.Psy}(object)
 
-\S4method{extract}{JaccardIndexPsy}(object)
+\S4method{extract}{JaccardIndexPsy}(object, order.cl = "pval", ...)
 }
 \arguments{
 \item{object}{Object of class \code{DataGeNET.Psy} or \code{JaccardIndexPsy}}
+
+\item{order.cl}{Order resulting \code{data.frame} by the name of this column.}
 }
 \value{
 A \code{data.frame} containing the raw result from PsyGeNET or

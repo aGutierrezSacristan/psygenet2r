@@ -38,7 +38,7 @@
 
 \begin{figure}[H]
 \begin{center}
-<<pubmedArticles, echo=FALSE, fig=TRUE, height=8, width=8>>=
+<<pubmedArticles, echo=FALSE, fig.height=8, fig.width=8>>=
 library(ggplot2)
 
 data.file <- system.file(
@@ -133,8 +133,7 @@ m1 <- psygenetGene(
     gene     = genesOfInterest, 
     database = "ALL",
     verbose  = FALSE,
-    warnings = FALSE,
-    check = FALSE
+    warnings = FALSE
 )
 m1
 @
@@ -149,7 +148,7 @@ m1
 
 \begin{figure}[H]
 \begin{center}
-<<plot_disease_m, fig=TRUE, height=8, width=8>>=
+<<plot_disease_m, fig.height=8, fig.width=8>>=
 plot( m1 )
 @
 \caption{Gene-Disease Association Network}
@@ -167,7 +166,7 @@ plot( m1 )
 
 \begin{figure}[H]
 \begin{center}
-<<plot_psychiatric_m1Score, fig=TRUE, height=8, width=8>>=
+<<plot_psychiatric_m1Score, fig.height=8, fig.width=8>>=
 geneAttrPlot( m1, type = "index" )
 @
 \caption{Association type barplot according to psychiatric category}
@@ -185,8 +184,8 @@ geneAttrPlot( m1, type = "index" )
 
 \begin{figure}[H]
 \begin{center}
-<<ggplot_panther, fig=TRUE, height=8, width=8, message=FALSE, warning=FALSE>>=
-pantherGraphic( genesOfInterest, "ALL", check = FALSE)
+<<ggplot_panther, fig.height=8, fig.width=8, message=FALSE, warning=FALSE>>=
+pantherGraphic( genesOfInterest, "ALL")
 @
 \caption{Panther class analysis of the genes of interest.}
 \label{panther}
@@ -208,7 +207,7 @@ pantherGraphic( genesOfInterest, "ALL", check = FALSE)
 \begin{landscape}
 \begin{figure}[H]
 \begin{center}
-<<heatmap_disease_m, fig=TRUE, fig.width=10, fig.height=4.5, fig.align='center'>>=
+<<heatmap_disease_m, fig.width=10, fig.height=4.5, fig.align='center'>>=
 plot( m1, type="heatmapGenes")
 @
 \caption{Gene-Disease Association Heatmap}
@@ -227,7 +226,7 @@ plot( m1, type="heatmapGenes")
 
 \begin{figure}[H]
 \begin{center}
-<<pmids_barplot, fig=TRUE, height=8, width=8>>=
+<<pmids_barplot, fig.height=8, fig.width=8>>=
 plot( m1, name="bipolar disorder", type="barplot")
 @
 \caption{Publications that report each gene association with bipolar disorder}
@@ -299,7 +298,7 @@ xx <- jaccardEstimation( genesOfInterest,
 
 \begin{figure}[H]
 \begin{center}
-<<jaccard_4, fig=TRUE, height=5>>=
+<<jaccard_4, fig.height=5>>=
 plot( xx )
 @
 \end{center}
@@ -313,7 +312,7 @@ plot( xx )
 
 \begin{figure}[H]
 \begin{center}
-<<plot_bpGenes, fig=TRUE, height=8, width=8>>=
+<<plot_bpGenes, fig.height=8, fig.width=8>>=
 geneAttrPlot( m1, type = "category" )
 @
 \caption{Barplot: Genes associated to each of the psychiatric disorders}
@@ -323,11 +322,11 @@ geneAttrPlot( m1, type = "category" )
 
 \noindent Figure \ref{bpGenes} clearly shows that none of our genes of interest are associated to the three disorders. There are 2 exclusively associated to bipolar disorder, 2 in the case of depression and 3 in schizophrenia. The rest of the genes appears in more than one psychiatric disorder.\\
 
-\noindex In order see which are the genes that are associated only to one psychiatric category, the \texttt{type} argument of \texttt{geneAttrPlot} function can be set to \texttt{gene}. This will allow to see how many of the CUIs and categories are associated to each one of the 16 genes. 
+\noindent In order see which are the genes that are associated only to one psychiatric category, the \texttt{type} argument of \texttt{geneAttrPlot} function can be set to \texttt{gene}. This will allow to see how many of the CUIs and categories are associated to each one of the 16 genes. 
 
 \begin{figure}[H]
 \begin{center}
-<<plot_bpDis, fig=TRUE, height=8, width=8>>=
+<<plot_bpDis, fig.height=8, fig.width=8>>=
 geneAttrPlot( m1, type = "gene" )
 @
 \caption{Barplot: CUIs and psychiatric categories associated to each gene}

@@ -161,12 +161,7 @@ psygenetDisease <- function( disease, database = "ALL", score=c('>', 0), verbose
           "to PsyGeNET for disease <", disease[ii], ">."
         )
       }
-      dataTsv <- rawToChar(RCurl::getURLContent(
-        getUrlPsi(), 
-        readfunction = charToRaw( oql_current ), 
-        upload = TRUE, 
-        customrequest = "POST"
-      ))
+      dataTsv <- download_data( oql_current )
       dataNew <- read.csv( textConnection( dataTsv ), header = TRUE, sep = "\t" )
       result <- rbind( result, dataNew )
     }

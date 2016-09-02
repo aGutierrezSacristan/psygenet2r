@@ -18,17 +18,11 @@
 #' @param score threshold to take into account a gene in the analysis
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
 #' on-time log from the function.
-#' @param check By default \code{FALSE}. Change it to \code{TRUE} to 
-#' validate the genes to biomart.
-#' @param hostMart The URL of Biomart to be used.
-#' @param biomart By default \code{'ENSEMBL_MART_ENSEMBL'}. The mart of biomart used to 
-#' check genes 
 #' @return A plot for a \code{DataGeNET.Psy} in terms of the panther-class.
 #' @examples
-#' d.alch <- pantherGraphic( c( "COMT", "CLOCK", "DRD3" ), "ALL", check = FALSE )
+#' d.alch <- pantherGraphic( c( "COMT", "CLOCK", "DRD3" ), "ALL" )
 #' @export pantherGraphic
-pantherGraphic <- function ( x, database = "ALL", score, verbose = FALSE, check = FALSE, 
-                             hostMart = "www.ensembl.org", biomart = "ENSEMBL_MART_ENSEMBL" ) {
+pantherGraphic <- function ( x, database = "ALL", score, verbose = FALSE ) {
   if( class( x ) == "DataGeNET.Psy" ) {
     if( x@type == "disease" ) {
       if( !missing( score ) ) {
@@ -38,7 +32,7 @@ pantherGraphic <- function ( x, database = "ALL", score, verbose = FALSE, check 
         geneList <- as.character( x@qresult$c1.Gene_Symbol )
       }
     } else {
-      stop( "Invalid 'type' of 'DatageNET' object. Expected result of 'psygenetDisease' or 'psygenetDiseaseList'." )
+      stop( "Invalid 'type' of 'DatageNET' object. Expected result of 'psygenetDisease'." )
     }
   } else if( class( x ) == "character" ) {
     geneList <- x
@@ -49,7 +43,7 @@ pantherGraphic <- function ( x, database = "ALL", score, verbose = FALSE, check 
   pantherFile[,3] <- gsub ( "null", "Unclassified", pantherFile[,3] )
   panther <- as.data.frame( transPantherFile ( pantherFile ) )
   
-  ourList <- psygenetGene( geneList, database, verbose = verbose, hostMart = hostMart, biomart = biomart, check = check )
+  ourList <- psygenetGene( geneList, database, verbose = verbose )
   ourList <- ourList@qresult [ , c( 1,2,4,7 ) ]
   ourList <- diseaseNameMapping( ourList )
   
@@ -146,12 +140,7 @@ psyPanther <- function( database ) {
       replacement = database 
   )
   
-  dataTsv <- rawToChar(RCurl::getURLContent(
-    getUrlPsi(), 
-    readfunction  = charToRaw(oql), 
-    upload        = TRUE, 
-    customrequest = "POST"
-  ))
+  dataTsv <- download_data(oql)
   data <- read.csv( textConnection(dataTsv), header = TRUE, sep = "\t" )
   
   pantherClass <- data[ !duplicated( data[ , 1 ] ), ]
