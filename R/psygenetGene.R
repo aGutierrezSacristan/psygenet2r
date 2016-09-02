@@ -17,11 +17,6 @@
 #' @param score A vector with two elements: 1) character with greather 
 #' \code{'>'} or with lower \code{'<'} meaing greather or equal and lower or
 #' equal; 2) the evidence index cut-off to be compared. By default: \code{c('>', 0)}.
-#' @param check By default \code{FALSE}. Change it to \code{TRUE} to 
-#' validate the genes to biomart.
-#' @param hostMart The URL of Biomart to be used.
-#' @param biomart By default \code{'ENSEMBL_MART_ENSEMBL'}. The mart of biomart used to 
-#' check genes 
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
 #' on-time log from the function.
 #' @param warnings By default \code{TRUE}. Change it to \code{FALSE} to not see
@@ -30,8 +25,7 @@
 #' @examples
 #' d.alch <- psygenetGene( "ALDH2", "ALL", check = FALSE )
 #' @export psygenetGene
-psygenetGene <- function( gene, database = "ALL", score=c('>', 0), check = FALSE, 
-                          hostMart = "www.ensembl.org", biomart = "ENSEMBL_MART_ENSEMBL",
+psygenetGene <- function( gene, database = "ALL", score=c('>', 0),
                           verbose = FALSE, warnings = TRUE ) {
   check_database( database )
   if( length( gene ) != length( unique( gene ) ) ) {
@@ -45,10 +39,6 @@ psygenetGene <- function( gene, database = "ALL", score=c('>', 0), check = FALSE
     stop("Invalid argument 'score'. It must have two elements.")
   } else if(!score[1] %in% c('>', '<')) {
     stop("Invalid argument 'score'. First elemnt must be '>' or '<'.")
-  }
-  
-  if( check ) {
-    check_genes( gene, hostMart = hostMart, biomart = biomart, verbose = verbose, warnings = warnings )
   }
   
   if( verbose ) {
