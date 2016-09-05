@@ -63,6 +63,7 @@ setGeneric ("extractSentences",
 # @rdname extract-methods
 #' @aliases extract
 #' @param object Object of class \code{DataGeNET.Psy} or \code{JaccardIndexPsy}
+#' @param ... NO USED
 #' @return A \code{data.frame} containing the raw result from PsyGeNET or
 #' a \code{data.frame} with the result Jaccard Index for each disease.
 setGeneric ("extract",

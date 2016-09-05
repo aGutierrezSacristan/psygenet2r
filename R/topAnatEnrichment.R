@@ -8,14 +8,14 @@
 #' @aliases topAnatEnrichment
 #' @param gene Name or vector of names (that can be both code or uml) to 
 #' specific genes from PsyGeNET.
-#' @param database Name of the database that will be queried. It can take the 
-#' values \code{'psycur15'} to use data validated by experts for first release 
-#' of PsyGeNET; \code{'psycur16'} to use data validated by experts for second 
-#' release of PsyGeNET; or \code{'ALL'} to use both databases. 
-#' Default \code{'ALL'}.
+# @param database Name of the database that will be queried. It can take the 
+# values \code{'psycur15'} to use data validated by experts for first release 
+# of PsyGeNET; \code{'psycur16'} to use data validated by experts for second 
+# release of PsyGeNET; or \code{'ALL'} to use both databases. 
+# Default \code{'ALL'}.
 #' @param dataType It can take the values \code{'rna_seq'} or \code{'affymetrix'}.
 #' Default \code{'rna_seq'}.
-#' @param statistics Default \code{'fisher'}.
+#' @param statistic Default \code{'fisher'}.
 #' @param cutOff Default \code{1}.
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
 #' on-time log from the function.
@@ -23,7 +23,9 @@
 #' the warnings.
 #' @return A \code{data.frame} with the enrichment results
 #' @examples
+#' \dontrun{
 #' topAnatEnrichment(c("ADCY2", "AKAP13", "ANK3"), "ALL")
+#' }
 #' @export topAnatEnrichment
 
 topAnatEnrichment <- function( gene, dataType = "rna_seq", statistic = "fisher", cutOff = 1, verbose = FALSE, warnings = FALSE ){
