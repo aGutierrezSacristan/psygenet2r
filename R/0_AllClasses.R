@@ -58,7 +58,7 @@ setClass( "DataGeNET.Psy",
 #' @slot i1 [internal use] vector with names of first component
 #' @slot i2 [internal use] vector with names of second component
 #' @examples 
-#' ji <- jaccardEstimation( c( "COMT", "CLOCK", "DRD3" ), "umls:C0005586", "CURATED" )
+#' ji <- jaccardEstimation( c( "COMT", "CLOCK", "DRD3" ), "umls:C0005586", "ALL" )
 #' @seealso psygenetGene, psygenetDisease, JaccardIndexPsy-methods
 setClass( "JaccardIndexPsy",
     representation = 

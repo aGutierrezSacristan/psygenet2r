@@ -22,12 +22,6 @@ on-time log from the function.}
 \item{warnings}{By default \code{TRUE}. Change it to \code{FALSE} to not see
 the warnings.}
 
-\item{database}{Name of the database that will be queried. It can take the 
-values \code{'psycur15'} to use data validated by experts for first release 
-of PsyGeNET; \code{'psycur16'} to use data validated by experts for second 
-release of PsyGeNET; or \code{'ALL'} to use both databases. 
-Default \code{'ALL'}.}
-
 \item{statistics}{Default \code{'fisher'}.}
 }
 \value{
@@ -38,6 +32,8 @@ Test the enrichment of a given gene list on Psychiatric Disorders from
 PsyGeNET.
 }
 \examples{
+\dontrun{
 topAnatEnrichment(c("ADCY2", "AKAP13", "ANK3"), "ALL")
+}
 }
 

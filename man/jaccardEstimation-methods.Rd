@@ -4,7 +4,7 @@
 \alias{jaccardEstimation}
 \title{Calculation of the Jaccard Index between ideseases}
 \usage{
-jaccardEstimation(pDisease, sDisease, database = "CURATED", nboot = 100,
+jaccardEstimation(pDisease, sDisease, database = "ALL", nboot = 100,
   ncores = 1, verbose = FALSE)
 }
 \arguments{
@@ -17,12 +17,9 @@ genes vs. main psychiatric disorders or diseases vs. main psychiatric
 disorders. To compare multiple diseases only use \code{pDisease}.}
 
 \item{database}{Name of the database that will be queried. It can take the 
-values \code{'MODELS'} to use Comparative Toxigenomics Database, data from 
-mouse and rat; \code{'GAD'} to use Genetic Association Database; \code{'CTD'}
-to use Comparative Toxigenomics Database, data from human; \code{'PsyCUR'} to
-use Psychiatric disorders Gene association manually curated; \code{'CURATED'}
-to use Human, manually curated databases (PsyCUR and CTD); or \code{'ALL'} 
-to use all these databases. Default \code{'CURATED'}.}
+values \code{'psycur15'} to use data validated by experts for first release 
+of PsyGeNET; \code{'psycur16'} to use data validated by experts for second 
+release of PsyGeNET; or \code{'ALL'} to use both databases.}
 
 \item{nboot}{Number of iterations sued to compute the pvalue associted
 to the calculated Jaccard Index (default 100).}

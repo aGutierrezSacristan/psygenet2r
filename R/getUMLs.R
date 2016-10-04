@@ -8,17 +8,15 @@
 #' @aliases getUMLs
 #' @param word Disese to convert to UMLS using PsyGeNET database.
 #' @param database Name of the database that will be queried. It can take the 
-#' values \code{'MODELS'} to use Comparative Toxigenomics Database, data from 
-#' mouse and rat; \code{'GAD'} to use Genetic Association Database; \code{'CTD'}
-#' to use Comparative Toxigenomics Database, data from human; \code{'PsyCUR'} to
-#' use Psychiatric disorders Gene association manually curated; \code{'CURATED'}
-#' to use Human, manually curated databases (PsyCUR and CTD); or \code{'ALL'} 
-#' to use all these databases. Default \code{'CURATED'}.
+#' values \code{'psycur15'} to use data validated by experts for first release 
+#' of PsyGeNET; \code{'psycur16'} to use data validated by experts for second 
+#' release of PsyGeNET; or \code{'ALL'} to use both databases. 
+#' Default \code{'ALL'}.
 #' @return The corresponding UMLs for the input disease/s
 #' @examples
-#' umls <- getUMLs( "Alcoholism", "CURATED" )
+#' umls <- getUMLs( word = "depressive", database = "ALL" )
 #' @export getUMLs
-getUMLs <- function(word, database = "CURATED") {
+getUMLs <- function(word, database = "ALL") {
   oql <- "DEFINE
     c0='/data/main',
     c1='/data/genes',
