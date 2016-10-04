@@ -16,8 +16,6 @@ extract(object, ...)
 \arguments{
 \item{object}{Object of class \code{DataGeNET.Psy} or \code{JaccardIndexPsy}}
 
-\item{...}{NO USED}
-
 \item{order.cl}{Order resulting \code{data.frame} by the name of this column.}
 }
 \value{

@@ -75,6 +75,7 @@ library( psygenet2r )
 suppressMessages(suppressWarnings(library( psygenet2r )))
 @
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{\texttt{DataGeNET.Psy object}}
@@ -90,12 +91,13 @@ t1 <- psygenetGene( gene = 4852,
 
 <<dataGenet2>>=
 t1
-class( t1 )
+class(t1)
 @
 
 \noindent This object comes with a series of functions to allow users to interact with the information retrieved from PsyGeNET. These functions are \texttt{ngene}, \texttt{ndisease}, \texttt{extract} and \texttt{plot}. The first function \texttt{ngene} returns the number of retrieved genes for a given query. \texttt{ndisease} is the homologous function but for the diseases. The function \texttt{extract} returns a formatted \texttt{data.frame} with the complete set of information downloaded from PsyGeNET. Finally, the \texttt{plot} function allows the visualization of the results in a variety of ways such as gene-disease association networks or heatmaps.\\
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 \section{PsyGeNET and \texttt{psygenet2r}}
 
@@ -129,6 +131,7 @@ Name             & Description                                                \\
 \subsection{Using genes as a query}
 \texttt{psygenet2r} package allows exploring PsyGeNET information using a specifc gene or a list of genes. It retrieves the information that is available in PsyGeNET (associated diseases, source database, PsyGeNET evidence index, number of publications, attributes of genes, etc) and allows to visualize the results in different  ways.
 
+
 \subsubsection{Using as a query a single gene}
 
 \noindent In order to look for a single gene into PsyGeNET, we can use the \texttt{psygenetGene} function. This function retrieves PsyGeNET's information using both, the NCBI gene identifier and the official Gene Symbol from HUGO. It contains also other arguments like the database to query, the PsyGeNET evidence index (score argument).\\
@@ -150,8 +153,8 @@ t2
 \noindent Both cases result in an \texttt{DataGeNET.Psy} object:
 
 <<searcg_gene_class>>=
-class( t1 )
-class( t2 )
+class(t1)
+class(t2)
 @
 
 \noindent In the particular example used, by inspecting the \texttt{DataGeNET.Psy} object, we can see that the gene \textit{NPY} is associated to 13 different diseases in PsyGeNET (with no restriction on the PsyGeNET evidence index). 
@@ -209,8 +212,6 @@ m1 <- psygenetGene(
 )
 @
 
-
-
 \noindent A \texttt{DataGeNET.Psy} object is obtained. In this particular example, 19 genes are present in PsyGeNET and are associated to 42 diseases, involving 212 GDAs.\\
 
 <<show_multiple>>=
@@ -225,7 +226,7 @@ m1
 
 \begin{figure}[H]
 \begin{center}
-<<plot_psychiatric1a, fig.width=10, fig.height=10, fig.align='center'>>=
+<<plot_psychiatric1a, fig.width=10, fig.height=10,fig.align='center'>>=
 plot( m1 )
 @
 \end{center}
@@ -281,7 +282,6 @@ pantherGraphic( genesOfInterest, "ALL" )
 geneAttrPlot( m1, type = "category" )
 @
 
-
 \noindent As a result, a barplot is obtained. The X axis contains the psychiatric disorders, sorted alphabetically and the number of genes are represented in the Y axis. For each psychiatric disorder a maximum of two bars can be plotted, the blue bar represents the total number of genes for the psychiatric disorder. For those cases in which some of these genes are specific for the disorder a second bar, coloured in orange, will be displayed.\\
 
 \noindent Alternatively, \texttt{psygenet2r} package allows to visualize for each gene, how many disease concepts and how many psychiatric categories are associated to it. This can be done applying the \texttt{geneAttrPlot} function and setting the \texttt{type} argument to \texttt{"gene"}.\\ 
@@ -313,6 +313,7 @@ geneAttrPlot( m1, type = "index" )
 
 \noindent In our example, the barplot shows that depression is the psychiatric disorder with more gene-disease associations (127 GDAs), and there is no negative evidence for any of the associations.\\
 
+
 \subsubsection{Enrichment analysis for a list of genes}
 
 \noindent The R package \texttt{psygenet2r} allows to perform an enrichment analysis on a list of genes with PsyGeNET diseases. It is done by using the function \texttt{enrichedPD}. In order to illustrate this function, the previous list of 20 genes associated to depression \cite{REF5} will be used. \\
@@ -322,6 +323,7 @@ tbl <- enrichedPD( genesOfInterest, database = "ALL")
 tbl
 @
 
+
 \noindent The result is a table with a p-value of the enrichment of the given list of genes for each psychiatric disorder in PsyGeNET. As we can see, if we put a p-value cut-off of 0.01, these genes are enriched in 5 of the 8 psychiatric disorders, being alcohol UD (p-val ~ 9e-10) and depression (p-val ~ 6e-9), the ones with the lowest p-value.\\ 
 
 \subsubsection{Enrichment analysis based on anatomical terms (TopAnat) for a list of genes}
@@ -330,10 +332,9 @@ tbl
 
 \noindent It is done by using the function \texttt{topAnatEnrichment}. This function perform the enrichment analysis using a list of genes (NCBI gene identifier or official Gene Symbol from HUGO). It contains also other arguments like the \texttt{dataType} (rna\_seq or affymetrix), \texttt{statistics}, that by default is \texttt{fisher} and the \texttt{cutOff} argument.\\
 
-<<topAnat, message=FALSE, warnng=FALSE>>=
+<<topAnat, message=FALSE, results='hide'>>=
 tpAnat <- topAnatEnrichment( genesOfInterest, cutOff = 1 )
 @
-
 
 <<show_topAnat>>=
 head( tpAnat )
@@ -353,7 +354,7 @@ sss
 
 geneSentences <- extractSentences( object = sss,
                                    disorder = "alcohol abuse")
-dim( geneSentences )
+dim(geneSentences)
 @
 
 \noindent The result is a data frame that contains the gene symbol, gene identifier, disease name, original db, the pmid, the annotation type and the sentence.\\ 
@@ -369,7 +370,7 @@ dim( geneSentences )
 \noindent If the user does not know the disease identifier, the \texttt{getUMLS} function can be used to obtain disease names and UMLS CUIs from a string query. Providing as input the term and source of interest, \texttt{getUMLs} function retrieves all the PsyGeNET concepts that contain it. As an example it is shown the query results for \texttt{depressive} term in \texttt{ALL} databases.\\ 
 
 <<getUMLS>>=
-getUMLs( "depressive", database = "ALL" )
+getUMLs("depressive", database="ALL")
 @
 
 \noindent As an example, the disease \textit{major affective disorder 2}, whose disease id is \textsl{umls:C1839839} is queried using \texttt{psygenetDisease} function, and using both, disease name and disease id. For this example database \texttt{"ALL"} is selected:\\
@@ -391,9 +392,10 @@ d2
 \noindent Both cases result in an \texttt{DataGeNET.Psy} object, that contains the same information as in the gene query search:
 
 <<search_gene_class>>=
-class( d1 )
-class( d2 )
+class(d1)
+class(d2)
 @
+
 
 \noindent The argument \texttt{score} is filled with a vector which first position can be \texttt{'<'} or \texttt{'>'} to indicate if the threshold is read as lower or upper. The second argument is the threshold in itself which will always be included. This argument is also present in \texttt{psygenetGene}.
 
@@ -438,9 +440,9 @@ tm
 \noindent Three cases result in an \texttt{DataGeNET.Psy} object:
 
 <<search_gene_class_2>>=
-class( tt )
-class( dm )
-class( tm )
+class(tt)
+class(dm)
+class(tm)
 @
 
 \noindent This type of object contains all the information about the different genes associated with the diseases of interest retrieved from PsyGeNET. By inspecting the \texttt{DataGeNET.Psy} object we can see that, according to PsyGeNET and querying in ALL databases, the 2 disorders of interest are associated to 25 different genes in 25 different associations. 
@@ -469,13 +471,13 @@ plot( tm, type = "heatmap" )
 \noindent \texttt{psygenet2r} package allows to see how many publications support each gene-disease association. This can be visualized in a barplot by determining the gene or disease id in the \texttt{name} argument and setting \texttt{type} argument to \texttt{"barplot"}.\\ 
 
 <<barplot_visualizing_single_disease_search, fig.width=5, fig.height=3>>=
-plot( d1, name = "major affective disorder 2", type = "barplot" )
+plot ( d1, name = "major affective disorder 2", type = "barplot" )
 @
 
 \noindent As a result, a barplot is obtained. The X axis contains the genes related to the disease of interest, sorted by the number of pubmed ids in which we can find the gene-disease association. Alternatively, the results can be visualized for the diseases.\\
 
 <<barplot_visualizing_single_gene_search, fig.width=5, fig.height=3>>=
-plot( t1, name = "NPY", type = "barplot" )
+plot ( t1, name = "NPY", type = "barplot" )
 @
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -541,7 +543,6 @@ plot(ji2)
 plot(ji3)
 @
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Warnings}
@@ -552,7 +553,7 @@ plot(ji3)
 
 > plot( t1, type = "heatmap" )
 ==> Error: For this type of chart, a multiple gene query created with
- 'psygenetGene' is required.
+ 'psygenetGeneList' is required.
 
 \end{verbatim}
 

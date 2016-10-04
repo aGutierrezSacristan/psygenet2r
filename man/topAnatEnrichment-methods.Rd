@@ -14,8 +14,6 @@ specific genes from PsyGeNET.}
 \item{dataType}{It can take the values \code{'rna_seq'} or \code{'affymetrix'}.
 Default \code{'rna_seq'}.}
 
-\item{statistic}{Default \code{'fisher'}.}
-
 \item{cutOff}{Default \code{1}.}
 
 \item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get a
@@ -23,6 +21,14 @@ on-time log from the function.}
 
 \item{warnings}{By default \code{TRUE}. Change it to \code{FALSE} to not see
 the warnings.}
+
+\item{database}{Name of the database that will be queried. It can take the 
+values \code{'psycur15'} to use data validated by experts for first release 
+of PsyGeNET; \code{'psycur16'} to use data validated by experts for second 
+release of PsyGeNET; or \code{'ALL'} to use both databases. 
+Default \code{'ALL'}.}
+
+\item{statistics}{Default \code{'fisher'}.}
 }
 \value{
 A \code{data.frame} with the enrichment results
@@ -32,8 +38,6 @@ Test the enrichment of a given gene list on Psychiatric Disorders from
 PsyGeNET.
 }
 \examples{
-\dontrun{
 topAnatEnrichment(c("ADCY2", "AKAP13", "ANK3"), "ALL")
-}
 }
 

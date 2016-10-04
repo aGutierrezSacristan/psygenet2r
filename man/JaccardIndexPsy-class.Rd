@@ -22,7 +22,7 @@ Jaccard Index between muliple diseases in \code{psygenet2r} package.
 \item{\code{i2}}{[internal use] vector with names of second component}
 }}
 \examples{
-ji <- jaccardEstimation( c( "COMT", "CLOCK", "DRD3" ), "umls:C0005586", "ALL" )
+ji <- jaccardEstimation( c( "COMT", "CLOCK", "DRD3" ), "umls:C0005586", "CURATED" )
 }
 \seealso{
 psygenetGene, psygenetDisease, JaccardIndexPsy-methods
