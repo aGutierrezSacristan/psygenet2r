@@ -1,6 +1,15 @@
--2016/09/02
+- 2016/10/11
 
-- * Package Update due to future update of PsyGeNET
+ * Package Update due changes in BgeeDB
 
-- * Removed functions for Venn Diagrams
+ * Correction on description of "database" arguments due to update on PsyGeNET
+
+
+- 2016/09/02
+
+ * Package Update due to future update of PsyGeNET
+
+ * Removed functions for Venn Diagrams
+
+
 
