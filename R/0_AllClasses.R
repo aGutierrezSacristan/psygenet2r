@@ -57,7 +57,7 @@ setClass( "DataGeNET.Psy",
 #' @slot table \code{data.frame} containing the result table of Jaccard indexes
 #' @slot i1 [internal use] vector with names of first component
 #' @slot i2 [internal use] vector with names of second component
-#' @examples
+#' @examples 
 #' ji <- jaccardEstimation( c( "COMT", "CLOCK", "DRD3" ), "umls:C0005586", "ALL" )
 #' @seealso psygenetGene, psygenetDisease, JaccardIndexPsy-methods
 setClass( "JaccardIndexPsy",

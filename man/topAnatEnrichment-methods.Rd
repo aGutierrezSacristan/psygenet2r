@@ -14,8 +14,6 @@ specific genes from PsyGeNET.}
 \item{dataType}{It can take the values \code{'rna_seq'} or \code{'affymetrix'}.
 Default \code{'rna_seq'}.}
 
-\item{statistic}{Default \code{'fisher'}.}
-
 \item{cutOff}{Default \code{1}.}
 
 \item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get a
@@ -23,6 +21,8 @@ on-time log from the function.}
 
 \item{warnings}{By default \code{TRUE}. Change it to \code{FALSE} to not see
 the warnings.}
+
+\item{statistics}{Default \code{'fisher'}.}
 }
 \value{
 A \code{data.frame} with the enrichment results

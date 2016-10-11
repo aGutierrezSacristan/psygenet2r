@@ -323,6 +323,12 @@ plot_psy_heatmapGenes <- function( search, table, verbose ) {
             tt$c0.Score[i] <- 0.5
         }
     }
+    
+    h.value = c(0, 0.5, 1) 
+    h.color = c("#f00c00", "#ff9c24", "#008006")
+    heatmapColors = data.frame(h.value, h.color)
+    hColors <- as.character(heatmapColors$h.color)
+    names(hColors) <- heatmapColors$h.value
 
 
     p <- ggplot2::ggplot(data = tt, ggplot2::aes(x = c1.Gene_Symbol, y = c2.DiseaseName)) +
@@ -341,10 +347,7 @@ plot_psy_heatmapGenes <- function( search, table, verbose ) {
         ggplot2::guides( fill=ggplot2::guide_legend( title="Evidence Index" ) ) +
         ggplot2::scale_x_discrete( expand = c( 0, 0 ) ) +
         ggplot2::geom_tile(color = "white", ggplot2::aes(fill = factor(c0.Score))) + 
-        ggplot2::scale_fill_manual(
-            breaks=c("[-Inf, 0]", "(0, 1)", "[1, Inf)"), 
-            values = c("#f00c00", "#ff9c24", "#008006")
-        )
+        ggplot2::scale_fill_manual(values = hColors)
     
     return(p)
 }
@@ -362,18 +365,40 @@ plot_psy_heatmapDisease <- function( search, table, verbose) {
     tt <- tt [ with ( tt , order(-c0.Score)), ]
     #tt <- tt [ tt$c0.Score >= score,]
 
-    ggplot2::qplot( x = c2.DiseaseName, y = c1.Gene_Symbol, data= tt , 
-                    fill = c0.Score, geom = "tile" ) + 
-        ggplot2::ylab( "Genes" ) + ggplot2::xlab( "Disease Name" ) + 
-        ggplot2::ggtitle("") + 
-        ggplot2::scale_fill_gradient2(low = "#0000FF", high ="#d24041", 
-                                      space = "rgb", guide = "colourbar")+
-        ggplot2::theme_classic( ) + 
-        ggplot2::theme(plot.margin=grid::unit(x=c(5,15,5,15), units = "mm"),
-            axis.line=ggplot2::element_line(size=0.7,color="black"), 
-            text = ggplot2::element_text(size=14) ,
-            axis.text.x = ggplot2::element_text(angle=45,size=9,hjust=1)) + 
-        ggplot2::guides(fill=ggplot2::guide_legend(title="Score"))
+    for(i in 1:nrow(tt)){
+        if(tt$c0.Score[i] > 0 & tt$c0.Score[i] < 1){
+            tt$c0.Score[i] <- 0.5
+        }
+    }
+    
+
+    h.value = c(0, 0.5, 1) 
+    h.color = c("#f00c00", "#ff9c24", "#008006")
+    heatmapColors = data.frame(h.value, h.color)
+    hColors <- as.character(heatmapColors$h.color)
+    names(hColors) <- heatmapColors$h.value
+    
+
+    p <- ggplot2::ggplot(data = tt, ggplot2::aes(x = c2.DiseaseName, y = c1.Gene_Symbol)) +
+        ggplot2::theme_grey( base_size = 12 ) +
+        ggplot2::theme(
+            axis.text = ggplot2::element_text ( size = 11 ), 
+            axis.title = ggplot2::element_text( size = 11 ), 
+            axis.line = ggplot2::element_line(size = 0.7, color = "black"), 
+            axis.text.x = ggplot2::element_text(angle=45,size=10,hjust=1), 
+            plot.margin = grid::unit(x=c(5,15,5,15), units="mm"),
+            text = ggplot2::element_text(size = 11), 
+            panel.background = ggplot2::element_blank()
+        ) +
+        
+        ggplot2::ylab( "Gene" ) + ggplot2::xlab( "Disease" ) +
+        ggplot2::guides( fill=ggplot2::guide_legend( title="Evidence Index" ) ) +
+        ggplot2::scale_x_discrete( expand = c( 0, 0 ) ) +
+        ggplot2::geom_tile(color = "white", ggplot2::aes(fill = factor(c0.Score))) + 
+        ggplot2::scale_fill_manual( values = hColors)
+    
+    return(p)
+
 }
 #####
 
