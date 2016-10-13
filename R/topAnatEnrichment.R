@@ -19,7 +19,7 @@
 #' @return A \code{data.frame} with the enrichment results
 #' @examples
 #' \dontrun{
-#' topAnatEnrichment(c("ADCY2", "AKAP13", "ANK3"), "ALL")
+#' topAnatEnrichment(gene=c("ADCY2", "AKAP13", "ANK3"))
 #' }
 #' @export topAnatEnrichment
 
@@ -116,7 +116,7 @@ topAnatEnrichment <- function( gene, dataType = c("rna_seq", "affymetrix"), stat
     conv <- read.delim(system.file(paste0("extdata", .Platform$file.sep,
               "ensemble2gene_symbol.tsv"), package = "psygenet2r"), stringsAsFactors = FALSE)
     
-    myGenes <- conv[conv$hgnc_symbol %in% genesOfInterest, 1, drop = FALSE]
+    myGenes <- conv[conv$hgnc_symbol %in% geneList, 1, drop = FALSE]
     colnames(myGenes) <- "ensembl_gene_id"
     
     # # Background are all genes with a GO annotation
