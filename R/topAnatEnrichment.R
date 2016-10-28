@@ -8,8 +8,9 @@
 #' @aliases topAnatEnrichment
 #' @param gene Name or vector of names (that can be both code or uml) to 
 #' specific genes from PsyGeNET.
-#' @param dataType It can take the values \code{'rna_seq'} or \code{'affymetrix'}.
-#' Default \code{c("rna_seq", "affymetrix")}.
+#' @param datatype It can take the values \code{'rna_seq'}, \code{'affymetrix'}, 
+#' \code{"est"} or \code{"in situ"}. 
+#' Default \code{c("rna_seq","affymetrix","est","in_situ")}.
 #' @param statistics Default \code{'fisher'}.
 #' @param cutOff Default \code{1}.
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
@@ -23,7 +24,7 @@
 #' }
 #' @export topAnatEnrichment
 
-topAnatEnrichment <- function( gene, dataType = c("rna_seq", "affymetrix"), statistic = "fisher", cutOff = 1, verbose = FALSE, warnings = FALSE ){
+topAnatEnrichment <- function( gene, datatype = c("rna_seq","affymetrix","est","in_situ"), statistic = "fisher", cutOff = 1, verbose = FALSE, warnings = FALSE ){
 
     data <- psygenetAll ( database = "ALL", verbose = verbose )
     
@@ -88,10 +89,11 @@ topAnatEnrichment <- function( gene, dataType = c("rna_seq", "affymetrix"), stat
     }
     
     #data type: rna_seq or affymetrix
-    myTopAnatData <- BgeeDB::loadTopAnatData(species = "9606", 
-                                     datatype = dataType)
     
-        
+    bgee <- Bgee$new(species = "Homo_sapiens", dataType = datatype)
+    myTopAnatData <- loadTopAnatData( bgee )
+
+
     # #ensembl for mapping genes
     # hostMart = "uswest.ensembl.org";
     # 
