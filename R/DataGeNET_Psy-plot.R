@@ -151,9 +151,9 @@ plot_psy_psychiatric <- function( search, table, layout, verbose, inc = 5 ) {
                           "Depressive disorders", 
                           "Schizophrenia spectrum and other psychotic disorders", 
                           "Cocaine use disorders", 
-                          "Substance-induced depressive disorder", 
+                          "Substance induced depressive disorder", 
                           "Cannabis use disorders",
-                          "Substance Induced-Psychosis", genes )
+                          "Substance induced psychosis", genes )
     
     colors <- diseaseNameMapping( colors )
     
