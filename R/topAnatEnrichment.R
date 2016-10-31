@@ -90,9 +90,8 @@ topAnatEnrichment <- function( gene, datatype = c("rna_seq","affymetrix","est","
     
     #data type: rna_seq or affymetrix
     
-    bgee <- Bgee$new(species = "Homo_sapiens", dataType = datatype)
-    myTopAnatData <- loadTopAnatData( bgee )
-
+    bgee <- BgeeDB::Bgee$new(species = "Homo_sapiens", dataType = datatype)
+    myTopAnatData <- BgeeDB::loadTopAnatData( bgee )
 
     # #ensembl for mapping genes
     # hostMart = "uswest.ensembl.org";
