@@ -330,10 +330,13 @@ tbl
 
 \noindent It is done by using the function \texttt{topAnatEnrichment}. This function perform the enrichment analysis using a list of genes (NCBI gene identifier or official Gene Symbol from HUGO). It contains also other arguments like the \texttt{dataType} (rna\_seq or affymetrix), \texttt{statistics}, that by default is \texttt{fisher} and the \texttt{cutOff} argument.\\
 
-<<topAnat, message=FALSE, warnng=FALSE>>=
+<<topAnat, eval=FALSE>>=
 tpAnat <- topAnatEnrichment( genesOfInterest, cutOff = 1 )
 @
 
+<<load_topAnat, echo=FALSE>>=
+load( system.file( "extdata", "topAnat.RData", package="psygenet2r" ) )
+@
 
 <<show_topAnat>>=
 head( tpAnat )
