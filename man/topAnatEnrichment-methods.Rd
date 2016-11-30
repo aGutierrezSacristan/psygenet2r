@@ -4,15 +4,19 @@
 \alias{topAnatEnrichment}
 \title{Enrichment of a user's input (genes) in anatomical terms (TopAnat).}
 \usage{
-topAnatEnrichment(gene, dataType = "rna_seq", statistic = "fisher",
-  cutOff = 1, verbose = FALSE, warnings = FALSE)
+topAnatEnrichment(gene, datatype = c("rna_seq", "affymetrix", "est",
+  "in_situ"), statistic = "fisher", cutOff = 1, verbose = FALSE,
+  warnings = FALSE)
 }
 \arguments{
 \item{gene}{Name or vector of names (that can be both code or uml) to 
 specific genes from PsyGeNET.}
 
-\item{dataType}{It can take the values \code{'rna_seq'} or \code{'affymetrix'}.
-Default \code{'rna_seq'}.}
+\item{datatype}{It can take the values \code{'rna_seq'}, \code{'affymetrix'}, 
+\code{"est"} or \code{"in situ"}. 
+Default \code{c("rna_seq","affymetrix","est","in_situ")}.}
+
+\item{statistic}{Default \code{'fisher'}.}
 
 \item{cutOff}{Default \code{1}.}
 
@@ -21,8 +25,6 @@ on-time log from the function.}
 
 \item{warnings}{By default \code{TRUE}. Change it to \code{FALSE} to not see
 the warnings.}
-
-\item{statistics}{Default \code{'fisher'}.}
 }
 \value{
 A \code{data.frame} with the enrichment results
@@ -33,7 +35,7 @@ PsyGeNET.
 }
 \examples{
 \dontrun{
-topAnatEnrichment(c("ADCY2", "AKAP13", "ANK3"), "ALL")
+topAnatEnrichment(gene=c("ADCY2", "AKAP13", "ANK3"))
 }
 }
 

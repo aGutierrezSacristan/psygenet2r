@@ -335,7 +335,7 @@ tpAnat <- topAnatEnrichment( genesOfInterest, cutOff = 1 )
 @
 
 <<load_topAnat, echo=FALSE>>=
-system.file( "extdata", "topAnat.RData", package="psygenet2r" )
+load( system.file( "extdata", "topAnat.RData", package="psygenet2r" ) )
 @
 
 <<show_topAnat>>=
