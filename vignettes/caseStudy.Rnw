@@ -69,7 +69,7 @@ p
 \end{center}
 \end{figure}\vspace{1cm}
 
-\noindent However, there is still limited understanding on the cellular and molecular mechanisms leading to psychiatric diseases, which has limited the application of this wealth of data in the clinical practice. This situation also applies to psychiatric comorbidities. Some of the factors that explain the current situation is the heterogeneity of the information about psychiatric disorders and its fragmentation into knowledge silos, and the lack of resources that collect these wealth of data, integrate them, and supply the information in an intuitive, open access manner to the community. PsyGeNET \cite{psygenet} has been developed to fill this gap. \texttt{psygenet2r} has been developed to facilitate statistical analysis of PsyGeNET data, allowing its integration with other packages available in R to develop data analysis workflows.\\
+\noindent However, there is still limited understanding on the cellular and molecular mechanisms leading to psychiatric diseases, which has limited the application of this wealth of data in the clinical practice. This situation also applies to psychiatric comorbidities. Some of the factors that explain the current situation is the heterogeneity of the information about psychiatric disorders and its fragmentation into knowledge silos, and the lack of resources that collect these wealth of data, integrate them, and supply the information in an intuitive, open access manner to the community. PsyGeNET \cite{psygenet} has been developed to fill this gap and \texttt{psygenet2r} has been developed to facilitate statistical analysis of PsyGeNET data, allowing its integration with other packages available in R to develop data analysis workflows.\\
 
 \noindent \texttt{psygenet2r} package allows to retrieve the genes associated to psychiatric diseases, or explore the association between a disease of interest and PsyGeNET diseases based on shared genes. In addition, \texttt{psygenet2r} allows the annotation of genes with psychiatric diseases based on expert-curated information. This functionality can be of interest to interpret the results of GWAS or Whole Exome Sequencing studies, in which a list of gene variants is obtained and there is a need to prioritize them based on their functional and clinical relevance. In this context, it would be of interest to know if there is information on their implication in psychiatric diseases. In this Case study we will describe how we can analyze the genes identified in a GWAS study in the context of psychiatric diseases using \texttt{psygenet2r}. For this purpose, we will use as an example the data obtained from a GWAS study on bipolar disorder published by \cite{McCarthy}. In this study, the authors analyzed the brain expression of 58 genes, previously identified in a GWAS of bipolar disorder \cite{ODZ4}, and correlated this information with structural MRI studies to identify brain regions that are abnormal in bipolar disorder. We will use this list of 58 genes from the bipolar disorder study to show the functionality of \texttt{psygenet2r} package.\\
 
@@ -81,7 +81,7 @@ p
 \item Are the genes associated to psychiatric disorders according to PysGeNET?
 \item What is the level of evidence of these associations?
 \item What is the function of the proteins encoded by these genes related to bipolar disorder?
-\item Is bipolar disorder associated to other psychiatric disorders?
+\item Is bipolar disorder similar to other psychiatric disorders based on shared genes?
 \end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -202,7 +202,7 @@ pantherGraphic( genesOfInterest, "ALL")
 
 \noindent In order to obtain the heatmap, the \texttt{plot} function can be applied to the \texttt{DataGeNET.Psy} object (\texttt{m1}). The argument type must to be set to \texttt{"heatmapGenes"}.\\
 
-\noindent As a result a heat-map is obtained with genes in the X axis and disorders in the Y axis. Heatmap cells will be coloured in green, yellow or red according to the evidence index value. Green color represents those GDAs where all the evidences reviewed by the experts support the existence of an association between the gene and the disease (Association, EI = 1); it will be yellow when there is contradictory evidence for the GDA (some publications support the association while others publications do not support it, 1 > EI > 0), and it will be red when all the evidences reviewed by the experts report that there is no association between the gene and the disease (Association, EI = 0).\\  
+\noindent As a result a heat-map is obtained with genes in the X axis and disorders in the Y axis. Heatmap cells will be coloured in green, yellow or red according to the evidence index value. Green color represents those GDAs where all the evidences reviewed by the experts support the existence of an association between the gene and the disease (EI = 1); it will be yellow when there is contradictory evidence for the GDA (some publications support the association while others publications do not support it, 1 > EI > 0), and it will be red when all the evidences reviewed by the experts report that there is no association between the gene and the disease (EI = 0).\\  
 
 \begin{landscape}
 \begin{figure}[H]
