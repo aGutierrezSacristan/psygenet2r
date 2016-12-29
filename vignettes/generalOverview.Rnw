@@ -527,7 +527,7 @@ plot( t1, name = "NPY", type = "barplot" )
 
 \noindent \texttt{JaccardIndexPsy} object is obtained when \texttt{jaccardEstimation} function is applied. The results of this object can be visualized by applying the \texttt{plot} function.\\
 
-\noindent \texttt{JaccardIndexPsy} object contains all the information about the Jaccard estimation characteristics and the results retrieved from PsyGeNET. This object contains a summary of the search, such as the number of iterations used to compute the pvalue associted to the calculated Jaccard Index (\texttt{#Boot}), the type of search (\texttt{Type}) and the number results obtained (\texttt{#Results}).\\
+\noindent \texttt{JaccardIndexPsy} object contains all the information about the Jaccard estimation characteristics and the results retrieved from PsyGeNET. This object contains a summary of the search, such as the number of iterations used to compute the pvalue associted to the calculated Jaccard Index (\texttt{\#Boot}), the type of search (\texttt{Type}) and the number results obtained (\texttt{\#Results}).\\
 
 <<jaccardObjectEx1, echo=FALSE, warning=FALSE, message=FALSE>>=
 genes_interest <- c("SLC6A4", "DRD2", "HTR1B", "PLP1", "TH", "DRD3")
