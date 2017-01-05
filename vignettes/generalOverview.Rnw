@@ -18,6 +18,7 @@
     linkcolor=blue,
     urlcolor=blue
 }
+\usepackage{multirow}
 
 \begin{document}
 
@@ -620,31 +621,30 @@ plot(ji3)
 
 \section{Summary of visualization options}
 
-\noindent \begin{minipage}{\linewidth}
-\small{
-  \centering
-  \captionof{table}{Visualization options} \label{tab:psygenet_visualization options} 
-  \begin{tabular}{|l|l|l|l|}
-    \hline
-Input Object  &  \texttt{psygenet2r} function  &  Argument Type   & Output    \\
-\hline
-\multirow{DataGeNET.Psy}  &  \multirow{geneAttrPlot} 	& category & genes asociated with each DC \\
-& &  gene     & disease concepts and DC associated with each gene \\
-& &   pie      & pie chart number of genes per DC\\
-& &   index    & barplot showing the type of association\\
-    \cline{2-4}
-&  \multirow{plot} 	& individual disease & GDA network (default type) \\
-& &  disease class     & GDCAs network \\
-& &   heatmapGenes      & EI heatmap GDCAs heatmap (gene) \\
-& &   heatmap    & EI heatmap for GDA (disease) \\
-& &   Bar-plot    & number of publications supporting GDA\\
-    \hline
-    JaccardIndexPsy & plot & / & JI Bar-plot / heatmap
-    \hline
-  \end{tabular}\par
-}
-\end{minipage}
-\\
+\begin{table}[htp]
+    \caption{Visualization options} 
+    \label{tab:psygenet_visualization options}
+    \resizebox{\textwidth}{!}{%
+        \begin{tabular}{|l|l|l|l|}
+            \hline
+            \textbf{Input Object} & \textbf{\texttt{psygenet2r} function} & \textbf{Argument Type} & \textbf{Output Generated}\\
+            \hline
+     \multirow{9}{*}{DataGeNET.Psy}  &  \multirow{4}{*}{geneAttrPlot} 	& category & genes asociated with each DC \\
+      & &  gene     & disease concepts and DC associated with each gene \\
+     & &   pie      & pie chart number of genes per DC\\
+     & &   index    & barplot showing the type of association\\
+         \cline{2-4}
+     &  \multirow{5}{*}{plot} 	& individual disease & GDA network (default type) \\
+      & &  disease class     & GDCAs network \\
+     & &   heatmapGenes      & EI heatmap GDCAs heatmap (gene) \\
+     & &   heatmap    & EI heatmap for GDA (disease) \\
+     & &   Bar-plot    & number of publications supporting GDA\\
+         \hline
+         JaccardIndexPsy & plot & / & JI Bar-plot / heatmap\\
+         \hline
+       \end{tabular}
+    }
+\end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
