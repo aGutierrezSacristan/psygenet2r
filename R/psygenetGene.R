@@ -121,7 +121,7 @@ psygenetGene <- function( gene, database = "ALL", score=c('>', 0),
         oql2 <- stringr::str_replace(
           string      = oql2,
           pattern     = "GENE_ID",
-          replacement = gene_r
+          replacement = as.character( gene_r )
         )
       } else if( class( gene_r ) == "character" ){
         oql2 <- stringr::str_replace(

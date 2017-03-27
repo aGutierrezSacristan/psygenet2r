@@ -1,0 +1,567 @@
+---
+title: "psygenet2r: An R package for querying PsyGeNET and to perform comorbidity studies in psychiatric disorders"
+author:
+- name: Alba Gutierrez-Sacristan
+  affiliation: 
+  - &grib Research Group on Integrative Biomedical Informatics, Research Programme on Biomedical Informatics (GRIB)
+  email: alba.gutierrez@upg.edu
+- name: Carles Hernandez-Ferrer
+  affiliation: 
+  - &creal Bioinformatic Researcg Group in Epidemiology, Barcelona Global Health Institue (ISGlobal)
+- name: Juan R. Gonzalez
+  affiliation: *creal
+- name: Laura I. Furlong
+  affiliation: *grib
+date: "`r doc_date()`"
+package: "`r pkg_ver('BiocStyle')`"
+abstract: >
+  Instructions on enabling _Bioconductor_ style 
+  in your _R_ markdown vignettes.
+bibliography: general_overview.bib
+csl: biomed-central.csl
+vignette: >
+  %\VignetteIndexEntry{psygenet2r: An R package for querying PsyGeNET and to perform comorbidity studies in psychiatric disorders}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+output: 
+  BiocStyle::html_document2:
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+
+The `psygenet2r` package contains functions to query PsyGeNET [@REF1], a resource on psychiatric diseases and their  genes. The `psygenet2r` package includes analysis functions to study psychiatric diseases, their genes and disease comorbidities. A special focus is made on visualization of the results, providing a variety of representation formats such as networks, heatmaps and barplots (Table \@ref{tab:viz-opt}).
+
+
+## Background
+
+During the last years there has been a growing interest in the genetics of psychiatric disorders, leading to a concomitant increase in the number of publications that report these studies [@REF2]. However, there is still limited understanding on the celular and molecular mechanisms leading to psychiatric diseases, which has limited the application of this wealth of data in the clinical practice. This situation also applies to psychiatric comorbidities. Some of the factors that explain the current situation is the heterogeneity of the information about psychiatric disorders and its fragmentation into knowledge silos, and the lack of resources that collect these wealth of data, integrate them, and supply the information in an intuitive, open access manner to the community. PsyGeNET has been developed to fill this gap. `psygenet2r` has been developed to facilitate statistical analysis of PsyGeNET data, allowing its integration with other packages available in R to develop data analysis workflows.
+
+PsyGeNET is a resource for the exploratory analysis of psychiatric diseases and their associated genes. The second release of PsyGeNET (version 2.0) contains updated information on depression, bipolar disorder, alcohol use disorders and cocaine use disorders, and has been expanded to cover other psychiatric diseases of interest: bipolar disorder, schizophrenia, substance-induced depressive disorder and psychoses and cannabis use disorder (Table \@ref{tab:psygenet-diseases}). PsyGeNET allows the exploration of the molecular basis of psychiatric disorders by providing a comprehensive set of genes associated to each disease. Moreover, it allows the analysis of the molecular mechanisms underlying psychiatric disease comorbidities.
+
+Long Name                                              | Short Name        | Acronym
+-------------------------------------------------------|-------------------|--------
+`Alcohol use disorders`                                | Alcohol UD        | AUD
+`Bipolar disorders and related disorders`              | Bipolar disorder  | BD
+`Depressive disorders`                                 | Depression        | DEP
+`Schizophrenia spectrum and other psychotic disorders` | Schizophrenia     | SCHZ
+`Cocaine use disorders`                                | Cocaine UD        | CUD
+`Substance induced depressive disorder`                | SI-Depression     | SI-DEP
+`Cannabis use disorders`                               | Cannabis UD       | CanUD
+`Substance induced psychosis`                          | SI-Psychosis      | SI-PSY
+
+: (\#tab:psygenet-diseases) Psychiatric diseases included in PsyGeNET.
+
+
+PsyGeNET database is the result of the data extracted from the literature by text mining using BeFree \cite{REF4}, followed by manual curation by domain experts. A team of 22 experts participates as curators of the database. The current version of PsyGeNET (version 2.0) contains 3,771 associations between 1,549 genes and 117 psychiatric disease concepts.
+
+With `psygenet2r` package the user is able to submit queries to PsyGeNET from R, perform a variety of analysis on the data, and visualize the results through different types of graphical representations.
+
+The tasks that can be performed with `psygenet2r` package are the following:
+
+  1. Retrieve Gene-Disease Associations (GDAs) from PsyGeNET using as query a gene or a disease (single or a set of genes/diseases) of interest
+  2. Visualize the results according to the GDAs' attributes: PsyGeNET Evidence Index, number of publications, sentences that report the GDA, source dadatabase
+  3. Visualize the results according to the disease (disease class) or gene (Panther class) attributes
+  4. Analyze the association between two diseases based on shared genes (using the Jaccard index) 
+  5. Characterizing the disease genes by molecular function using Panther classes or expression site using TopAnat / Bgee database. 
+
+In the following sections the specific functions that can be used to address each of these tasks are presented.
+
+## Installation 
+
+The package `psygenet2r` is provided through Bioconductor. To install `psygenet2r` the user must type the two following commands in an R session:
+
+```{r  eval=FALSE}
+source( "http://bioconductor.org/biocLite.R" )
+biocLite( "psygenet2r" )
+```
+
+```{r load_library, messages=FALSE}
+library( psygenet2r )
+```
+
+## `DataGeNET.Psy`
+
+`DataGeNET.Psy` object is obtained when `psygenetGene` and `psygenetDisease` functions are applied. This object is used as input for the rest of `psyGeNET2r` functions, like the `plot` function.
+
+`DataGeNET.Psy` object contains all the information about the different diseases/genes associated with the gene/disease of interested retrieved from PsyGeNET. This object contains a summary of the search, such as the search input (gene or disease), the selected database, the gene or disease identifier, the number of associations found (N. Results) and the number of unique results obtained (U. Results).
+
+```{r dataGenet1, echo=FALSE}
+t1 <- psygenetGene( gene = 4852, 
+                    database = "ALL")
+```
+
+```{r dataGenet2}
+t1
+class( t1 )
+```
+
+This object comes with a series of functions to allow users to interact with the information retrieved from PsyGeNET. These functions are `ngene`, `ndisease`, `extract` and `plot`. The first function `ngene` returns the number of retrieved genes for a given query. `ndisease` is the homologous function but for the diseases. The function `extract` returns a formatted `data.frame` with the complete set of information downloaded from PsyGeNET. Finally, the `plot` function allows the visualization of the results in a variety of ways such as gene-disease association networks or heatmaps.
+
+3 PsyGeNET and `psygenet2r`
+
+The PsyGeNET web interface can be explored by searching a specific gene or a specific disease, and `psygenet2r` package has the same options. Therefore, the starting point for `psygenet2r` are `psygenetGene` and `psygenetDisease` functions.
+
+PsyGeNET data is classified according to the database used as a source of information ("source database"). Therefore, any query run on PsyGeNET requires to specify the source database using the argument called `database`. Table \ref{tab:psygenet-databases} shows the source databases in PsyGeNET and their description. By default, the database `"ALL"` is used in `psygenet2r`. For illustrating purposes along the vignette, database `ALL} will be used in most of code snippets.
+
+Name       | Description
+-----------|------------------------------------------------------------------------------------------
+`psycur15` | Genes associated to DEP, BD, AUD and CUD between 1980 and 2013 (PsyGeNET release v1.0)
+`psycur16` | Genes associated to DEP, BD, AUD, CUD, SCHZ, S-DEP, CanUD and D-PSY between 1980 and 2015
+`ALL`      | All previous Databases
+
+: (\#tab:psygenet-databses) Source databases included in PsyGeNET
+
+# Retrieve gene-disease associations (GDAs) using `psygenet2r`
+
+## Using genes as a query
+
+`psygenet2r` package allows exploring PsyGeNET information using a specifc gene or a list of genes. It retrieves the information that is available in PsyGeNET (associated diseases, source database, PsyGeNET Evidence Index, number of publications, attributes of genes, etc) and allows to visualize the results in different  ways.
+
+### Using as a query a single gene
+
+In order to look for a single gene into PsyGeNET, we can use the `psygenetGene` function. This function retrieves PsyGeNET's information using both, the NCBI gene identifier and the official Gene Symbol from HUGO. It contains also other arguments like the database to query, the PsyGeNET evidence index (score argument).
+  
+As an example, the gene *NPY*, whose entrez id is *4852* is queried using `psygenetGene` function, and using alternatively the official HUGO Gene Symbol. In this example database `"ALL"`.
+
+```{r search_gene_1}
+t1 <- psygenetGene( gene = 4852, 
+                    database = "ALL")
+t1
+```
+
+```{r search_gene_2}
+t2 <- psygenetGene( gene = "NPY", 
+                    database = "ALL" )
+t2
+```
+
+Both cases result in an `DataGeNET.Psy` object:
+
+```{r searcg_gene_class}
+class( t1 )
+class( t2 )
+```
+
+In the particular example used, by inspecting the `DataGeNET.Psy` object, we can see that the gene *NPY* is associated to 13 different diseases in PsyGeNET (with no restriction on the PsyGeNET evidence index). 
+
+### Ploting the results of a Single Gene Query
+
+`psygenet2r` offers several options to visualize the results from PysGeNET in networks by changing the `type` argument when applying the `plot` function. A network showing the diseases (`type = "individual disease"`) or the psychiatric disorders (`type = "disease class"`) related to the gene of interest is obtained.
+
+By default, `psygenet2r` shows a network when ploting a `DataGeNET.Psy` object obtained by a gene-query. The result is a network where green nodes are diseases and the orange node is the gene of interest.
+
+```{r plot_disease}
+plot( t1, type = "individual disease" )
+```
+
+On the other hand, results can be visualized according to the 8 psychiatric disorders classes available in PsyGeNET (depression, bipolar disorder, alcohol use disorders, cocaine use disorder, bipolar disorder, schizophrenia, cannabis use disorder, substance-induced depressive disorder and psychoses) setting the `type` argument to `"disease class"`. As a result, a network with a maximum of 9 nodes is obtained (8 nodes that represent the psychiatric disorders and 1 node that represents the gene). The node's size of each psychiatric disorder is proportional to the number of disease concepts that belongs to each disease class, from the total number of diseases associated to the gene.
+
+```{r plot_psychiatric}
+plot( t1, type = "disease class" )
+```
+
+In our example, NPY is associated to four of the eight psychiatric disorders present in PsyGeNET, with an important contribution of depression.
+
+### Using as a query a list of genes
+
+In the same way, `psygenet2r` allows to query PsyGeNET given a list of genes of interest. The same function, `psygenetGene`, accepts a vector of NCBI gene identifiers or HUGO official gene symbols.
+
+To illustrate this functionality, a list of 20 genes was extracted from the article entitled *"The Genetics of Major Depression"* \cite{REF5}, where these genes are associated to depression. The vector of genes can be defined as follows:
+
+```{r search_multiple_genes}
+genesOfInterest <- c( "COMT", "CLOCK", "DRD3", "GNB3", "HTR1A",
+                      "MAOA", "HTR2A","HTR2C", "HTR6", "SLC6A4", 
+                      "ACE",  "BDNF", "DRD4", "HTR1B", "HTR2B",
+                      "HTR2C", "MTHFR", "SLC6A3", "TPH1", "SLC6A2", 
+                      "GABRA3"
+)
+```
+
+Then, the function `psygenetGene` is applied. In this case an extra argument called `verbose` was set to `TRUE`. This shows some information during the query-process, for example the message informing that there are repeated genes in the list (the gene *HTR2C* was placed twice in the list to raise this message) and the message informing that one or more of the given genes is not in PsyGeNET (in this case the gene HTR2B).
+
+```{r search_multiple_search}
+m1 <- psygenetGene(
+    gene     = genesOfInterest, 
+    database = "ALL",
+    verbose  = TRUE
+)
+```
+
+A `DataGeNET.Psy` object is obtained. In this particular example, 19 genes are present in PsyGeNET and are associated to 42 diseases, involving 212 GDAs.
+
+```{r show_multiple}
+m1
+```
+
+
+### Ploting the results of the query using a list of genes
+
+`psygenet2r` provides several options to visualize the results of these queries, such as networks, heatmaps and barplots.
+
+As for the single gene example, the default option in `psygenet2r` results is a network chart, where the green nodes represent diseases and the oranges nodes represent genes.
+
+```{r plot_psychiatric1a}
+plot( m1 )
+```
+
+It is also possible to visualize the results by grouping the diseases according to the psychiatric disorders present in PsyGeNET (depression, bipolar disorder, alcohol use disorders, cocaine use disorder, bipolar disorder, schizophrenia, cannabis use disorder, substance-induced depressive disorder and psychoses) setting the `type` argument to `"disease class"`. As a result, a psychiatric disorder genes network is obtained. The edge's size is proportional to the number of disease concepts that belongs to each disease class, from the total number of diseases associated to the gene.
+
+```{r plot_psychiatric1b, warning=FALSE}
+plot( m1, type = "disease class" )
+```
+
+`psygenet2r` package allows to visualize the GDAs attributes in a heatmap. The argument `type` must be `"heatmapGenes"` and the PsyGeNET evidence index can also be determined by the user setting the `cut-off` argument to the evidence index of interest. In this example, the cut-off is set to 0, in order to obtain all the results. If we set the cut-off to 0.5, only those associations with at least half of the publications supporting the association will be shown. In this kind of representation we can identify genes that are associated to several diseases (e.g. SLC6A4), others that are associated only to one disease (e.g. HTR6) and we can visualize the evidence index for each association.
+ 
+Note that heatmap cells can be coloured in green, yellow or red. Green cells represent those GDAs where all the evidences reviewed by the experts support the existence of an association between the gene and the disease (EI = 1); it will be yellow when there is contradictory evidence for the GDA (some publications support the association while others publications do not support it, 1 > EI > 0), and it will be red when all the evidences reviewed by the experts report that there is no association between the gene and the disease (EI = 0).
+
+```{r heatmap_disease_m}
+plot( m1, type="heatmapGenes" )
+```
+
+In this example we can see that there are 3 GDAs in red (GNB3-chronic alcoholic intoxication; HTR2A-drug psychoses and ACE-major affective disorder 2), indicating that all publications report that there is no association.
+
+
+
+An alternative graphical representation is a psychiatric disorder heatmap related to the percentage of diseases in a class to which a gene is associated. It allows to analyze if the genes that are being studied present a specific association with a subtype of disorder or if they are associated with several of them in the same psychiatric disorder class. The percentage of diseases to which a gene appear associated with each psychiatric disorder is estimated. This percentage is relative to the total number of subtypes of disorders present in PsyGeNET (33 for alcohol UD, 9 for bipolar disorder, 37 for depression, 24 for schizophrenia, 6 for cocaine UD, 3 for cannabis UD, 3 for DI-Psychosis and 2 for	SI-Depression). The resulting values are represented in a heatmap according to a blue color scale.
+
+In order to obtain this graphic, `type` must be set to `"heatmap"`. The resulting heatmap shows which are the genes that are higher or lower associated to each one of the psychiatric disorders. 
+
+```{r plot_psychiatric_heamap, warning = FALSE}
+plot( m1, type = "heatmap" )
+```
+
+As it could be expected for the genes that are used in this query, all of them are associated to depression, to a greater or lesser extent. Some of them are also associated to the other six psychiatric disorders, following a similar pattern alcohol UD and bipolar disorder.
+
+`psygenet2r` package also allows to analyze a gene list according to the function of the proteins encoded by these genes. The PANTHER Protein Class Ontology classifies proteins according to their function.
+
+The `pantherGraphic` function shows the Panther class of the proteins for each psychiatric disorder class. It provides a graphic with the results of these analysis, being the input a list of genes and the database (`ALL`, `psycur15`, `psycur16`). The input genes can be from a vector that contains the genes of interest, or from the genes obtained in the `DataGeNET.psy` object in a disease or disease-list query. A score argument can be added to filter results. It can also be done given a DataGeNET.psy object obtained by querying with a single gene.
+
+```{r panther_gene}
+genesOfInterest <- unique( genesOfInterest )
+pantherGraphic( genesOfInterest, "ALL" )
+```
+
+`psygenet2r` offers additional options to visualize the results of a query using a list of genes or from the genes obtained in the `DataGeNET.psy` object in a gene or gene-list query. Barplots and pie charts showing the gene attributes can be obtained by applying the `geneAttrPlot` function.
+
+`psygenet2r` package allows to visualize how many of our genes of interest are associated to each psychiatric disorder present in PsyGeNET and how many of them are exclusively associated to a particular psychiatric disorder. This can be done applying the `geneAttrPlot` function and setting the `type` argument to `"cateogry"`.
+
+```{r plot_diseaseBarplot}
+geneAttrPlot( m1, type = "category" )
+```
+
+As a result, a barplot is obtained. The X axis contains the psychiatric disorders, sorted alphabetically and the number of genes are represented in the Y axis. For each psychiatric disorder two bars are plotted, the blue bar represents the total number of genes for the psychiatric disorder. For those cases in which some of these genes are specific for the disorder according to PsyGeNET, a second bar coloured in orange will be displayed.
+
+Alternatively, `psygenet2r` package allows to visualize for each gene, how many disease concepts and how many psychiatric categories are associated to it. This can be done applying the `geneAttrPlot` function and setting the `type` argument to `"gene"`.
+
+```{r plot_diseaseBarplotGene}
+geneAttrPlot( m1, type = "gene" )
+```
+
+As a result, a barplot is obtained. The X axis contains the genes, sorted alphabetically and the number of cuis and psychiatric categories are represented in the Y axis. For each psychiatric disorder two bars are plotted, the purple bar represents the number of cuis and the yellow one belongs to the number of categories.
+
+In our example, the gene SLC6A4 is the one whith more associated cuis (26) and categories (6).
+
+If we are only interested in how many of our input genes are associated to each disease category, `psygenet2r` package allows to visualize it in a pie chart by applying the `geneAttrPlot` function and setting up the `type` argument to `pieChart`.
+
+```{r plot_pieChart}
+geneAttrPlot( m1, type = "pie" )
+```
+
+In our example, depression has 19 associated genes, and the majority of them are also associated to other psychiatric disorders, like bipolar disorder (18 genes) and alcohol UD (16 genes).
+
+In PsyGeNET it is important to keep track of both “positive” and the “negative” findings, and let the user make their own judgements based on the available evidence. Thus, for each GDA and each supporting publication,the association type information is provided. According to the evidence, there are two types: “Association” and “No Association” (e.g. the “negative findings”).
+
+`psygenet2r` package allows to visualize this information in a barplot. It can be done by applying the `geneAttrPlot` function and setting the `type` argument to `"index"`. As a result a barplot showing, for each psychiatric disorder, how many gene-disease association are in total (red bar), how many of them are 100% association (green bar), 100% no association (blue bar) and how many GDAs are supported by both association types (purple bar).
+
+```{r barplotIP, fig.width=8, fig.height=6}
+geneAttrPlot( m1, type = "index" )
+```
+
+In our example, the barplot shows that depression is the psychiatric disorder with more gene-disease associations (127 GDAs), and there is no negative evidence for any of the associations.
+
+### Enrichment analysis for a list of genes
+
+The R package `psygenet2r` allows to perform an enrichment analysis on a list of genes with PsyGeNET diseases. It is done by using the function `enrichedPD`. In order to illustrate this function, the previous list of 20 genes associated to depression \cite{REF5} will be used. 
+
+```{r enrichment}
+tbl <- enrichedPD( genesOfInterest, database = "ALL")
+tbl
+```
+
+The result is a table with a p-value of the enrichment of the given list of genes for each psychiatric disorder in PsyGeNET. As we can see, if we put a p-value cut-off of 0.01, these genes are enriched in 5 of the 8 psychiatric disorders, being alcohol UD (p-val ~ 9e-10) and depression (p-val ~ 6e-9), the ones with the lowest p-value.
+
+### Enrichment analysis based on anatomical terms (TopAnat) for a list of genes
+
+`psygenet2r` package allows to perform gene set enrichment test based on expression of genes in anatomical structures, importing data from the Bgee database \cite{Bastian} and importing functions from BgeeDB R package \cite{Komljenovic}.
+
+It is done by using the function `topAnatEnrichment`. This function perform the enrichment analysis using a list of genes (NCBI gene identifier or official Gene Symbol from HUGO). It contains also other arguments like the `dataType` (rna_seq or affymetrix), `statistics`, that by default is `fisher` and the `cutOff` argument.
+
+```{r topAnat, eval=FALSE}
+tpAnat <- topAnatEnrichment( genesOfInterest, cutOff = 1 )
+```
+
+```{r load_topAnat, echo=FALSE}
+load( system.file( "extdata", "topAnat.RData", package="psygenet2r" ) )
+```
+
+```{r show_topAnat}
+head( tpAnat )
+```
+
+The result is a data frame that contains the anatomical structures. Results are sorted by p-value, and FDR values are calculated.
+
+### Sentences that report a GDA
+
+`psygenet2r` package also allows to extract the sentences that report a gene-disease asssociation from the supporting publications. It is done by using two different functions, `psygenetGeneSentences` and  `extractSentences`. `psygenetGeneSentences` needs as input a gene list and a database to query in. The output of this function is a `DataGeNET.Psy` object. This object is passed to the `extractSentences` function, that also needs the disorder of interest.
+
+```{r gda_sentenceGene}
+genesOfInterest
+sss <- psygenetGeneSentences( geneList = genesOfInterest,
+                             database = "ALL")
+sss
+
+geneSentences <- extractSentences( object = sss,
+                                   disorder = "alcohol abuse")
+dim( geneSentences )
+```
+
+The result is a data frame that contains the gene symbol, gene identifier, disease name, original db, the pmid, the annotation type and the sentence.
+
+## Using diseases as a query
+
+`psygenet2r` package allows to explore PsyGeNET information searching a specifc disease or a list of diseases. As in the case of genes, it retrieves the information that is available in PsyGeNET and allows to visualize the results in several ways.
+
+### Using as a query a single disease
+
+In order to look for a single disease into PsyGeNET, `psygenet2r` has the `psygenetDisease` function. This function allows you to obtain PsyGeNET's information using both disease id or disease name, and the database as input (by default is `ALL`).
+
+If the user does not know the disease identifier, the `getUMLS` function can be used to obtain disease names and UMLS CUIs from a string query. Providing as input the term and source of interest, `getUMLs` function retrieves all the PsyGeNET concepts that contain it. As an example it is shown the query results for `depressive` term in `ALL` databases.
+
+```{r getUMLS}
+getUMLs( "depressive", database = "ALL" )
+```
+
+As an example, the disease *major affective disorder 2*, whose disease id is *umls:C1839839* is queried using `psygenetDisease` function, and using both, disease name and disease id. The argument `score` is filled with a vector which first position can be `'<'` or `'>'` to indicate if the threshold is read as lower or upper. The second argument is the threshold in itself which will always be included. This argument is also present in `psygenetGene`.
+
+The score is the PsyGeNET evidence index (EI), which ranges from 0 to 1 (`EI = 1`, when all the evidences reviewed by the experts support the existence of an association between the gene and the disease; `1 > EI > 0`, when there is contradictory evidence for the GDA and `EI = 0` when all the evidences reviewed by the experts report that there is no association between the gene and the disease).
+
+For this example database `"ALL"` and score `> 0.5` is selected:
+
+```{r search_diseaseId_1}
+d1 <- psygenetDisease( disease  = "umls:C1839839", 
+                       database = "ALL", 
+                       score    = c('>', 0.5 ) )
+d1
+```
+
+```{r search_diseaseName_1}
+d2 <- psygenetDisease( disease = "major affective disorder 2", 
+                       database = "ALL",
+                       score    = c('>', 0.5 ) )
+d2
+```
+
+Both cases result in an `DataGeNET.Psy` object, that contains the same information as in the gene query search:
+
+```{r search_gene_class}
+class( d1 )
+class( d2 )
+```
+
+### Plotting results of a Single Disease Query
+
+`psygenet2r` package offers several options to visualize the results from PysGeNET given a disease: a network showing the genes related to the disease of interest and a barplot showing how many publications report each one of the gene-disease associations. 
+
+By default, `psygenet2r` shows the GDAs network when ploting a `DataGeNET.Psy` object with a disease-query. The result is a network where, orange nodes are genes and the central and green node is the disease of interest.  
+
+```{r plot_visualizing_single_disease_search}
+plot ( d1 )
+```
+
+### Using a list of diseases as a query
+
+In the same way, `psygenet2r` allows to query PsyGeNET given a set of diseases of interest. The same function, `psygenetDisease`, accepts a vector of disease-names or disease-ids (umls code).
+
+To illustrate this functionality, two disorders has been selected: chronic schizophrenia and alcohol use disorder. The vector of diseases can be defined for example, as follows:
+
+```{r diseaseList}
+diseasesOfInterest <- c( "chronic schizophrenia","alcohol use disorder" )
+```
+
+```{r search_diseases_1}
+tt <- psygenetDisease( disease  = diseasesOfInterest,
+                       database = "ALL" )
+tt
+```
+
+```{r search_diseases_2}
+dm <- psygenetDisease( disease  = c( "umls:C0221765", "umls:C0001956" ), 
+                       database = "ALL" )
+dm
+```
+
+```{r search_diseases_3}
+tm <- psygenetDisease( disease  = c( "chronic schizophrenia","umls:C0001956" ), 
+                       database = "ALL" )
+tm
+```
+
+Three cases result in an `DataGeNET.Psy` object:
+
+```{r search_gene_class_2}
+class( tt )
+class( dm )
+class( tm )
+```
+
+This type of object contains all the information about the different genes associated with the diseases of interest retrieved from PsyGeNET. By inspecting the `DataGeNET.Psy` object we can see that, according to PsyGeNET and querying in ALL databases, the 2 disorders of interest are associated to 25 different genes in 25 different associations. 
+
+### Ploting results: Multiple Diseases
+
+`psygenet2r` provides a network graphic and a heatmap to visualize the results of search with multiple input items. 
+
+As for single disease, GDAs network is the default option in `psygenet2r`. In the resulting network chart, the green nodes represent diseases and the oranges nodes represent genes. 
+
+```{r plot_disease_tm}
+plot( tm )
+```
+
+
+Another possible option is visualize it in a heatmap. The argument `type` can be set to `"heatmap"`. 
+
+```{r heatmap_disease_tm, warning = FALSE}
+plot( tm, type = "heatmap" )
+```
+
+The result is a heatmap where the genes are located at X axis, and disordes appear at Y axis. The red rank color is related to the PsyGeNET score, being the darkest one the association with the highest score. The score is the PsyGeNET evidence index (EI), which ranges from 0 to 1 (EI=1, when all the evidences reviewed by the experts support the existence of an association between the gene and the disease; 1 > EI > 0, when there is contradictory evidence for the GDA and EI=0 when all the evidences reviewed by the experts report that there is no association between the gene and the disease). 
+
+### Barplot according to number of publications that support the GDA
+
+`psygenet2r` package allows to see how many publications support each gene-disease association. This can be visualized in a barplot by determining the gene or disease id in the `name` argument and setting `type` argument to `"barplot"`.
+
+```{r barplot_visualizing_single_disease_search, fig.width=5, fig.height=3}
+plot( d1, name = "major affective disorder 2", type = "barplot" )
+```
+
+As a result, a barplot is obtained. The X axis contains the genes related to the disease of interest, sorted by the number of pubmed ids in which we can find the gene-disease association. Alternatively, the results can be visualized for the diseases.
+
+```{r barplot_visualizing_single_gene_search, fig.width=5, fig.height=3}
+plot( t1, name = "NPY", type = "barplot" )
+```
+
+# Analyze the association between two diseases based on shared genes
+
+We can study the association between two diseases from the point of view of shared genetic contribution. More precisely, we can estimate the degree of association of two diseases by means of the number of genes that are shared between the two diseases, over the total number of disease genes. Similarity measures such as the Jaccard Index can be used to estimate disease similarity.
+
+The strategy to calculate the Jaccard Index and its p-value as follows:
+
+  1. Calculate the Jaccard Index between the pair of diseases. Let's call it *rJI*.
+  2. Randomly select a set of genes from DisGeNET for each one of the input diseases (or set of genes) and compute their Jaccard Index (*iJI*).
+  3. Calculate the p-value by dividing the count of the *iJI* higher than the real *rJI* by the number of attempts we performed the step B plus one (`nboot + 1`).
+
+## `JaccardIndexPsy` object
+
+`JaccardIndexPsy` object is obtained when `jaccardEstimation` function is applied. The results of this object can be visualized by applying the `plot` function.
+
+`JaccardIndexPsy` object contains all the information about the Jaccard estimation characteristics and the results retrieved from PsyGeNET. This object contains a summary of the search, such as the number of iterations used to compute the pvalue associted to the calculated Jaccard Index (`\#Boot`), the type of search (`Type`) and the number results obtained (`\#Results`).
+
+```{r jaccardObjectEx1, echo=FALSE, warning=FALSE, message=FALSE}
+genes_interest <- c("SLC6A4", "DRD2", "HTR1B", "PLP1", "TH", "DRD3")
+ji1 <- jaccardEstimation(genes_interest, database = "ALL")
+```
+
+```{r jaccardObjectEx2}
+ji1
+class( ji1 )
+```
+
+This object comes with a series of functions to allow users to interact with the information retrieved from PsyGeNET. These functions are `extract` and `plot`. The function `extract` returns a formatted `data.frame` with the complete set of information downloaded from PsyGeNET. The `plot` function allows the visualization of the results in a variety of ways such as barplots or heatmaps.
+
+## Using the Jaccard Index
+
+The Jaccard Index, also known as the Jaccard similarity coefficient, is a statistic used for comparing the similarity of two  sets, and is defined as the size of the intersection divided by the size of the union of the sample sets:
+
+\begin{equation*}
+J(A, B) = \frac{\mid A \cap B \mid}{\mid A \cup B \mid}
+\end{equation*}
+
+`psygenet2r` comes with functions to compute the Jaccard Index as an estimation of the similarity of two diseases based on shared genes, given information retrieved from PsyGeNET. The user can compute the Jaccard Index using the function `jaccardEstimation`. This function accepts multiple inputs: 
+
+  1. Using a list of genes of interest the function will compute the Jaccard Index between the set of genes and all the diseases in PsyGeNET.
+```{r ji_1, warnings=FALSE}
+genes_interest <- c("SLC6A4", "DRD2", "HTR1B", "PLP1", "TH", "DRD3")
+ji1 <- jaccardEstimation(genes_interest, database = "ALL")
+```
+  2. Using a list of genes of interest and a list of diseases of interest, the function computes the Jaccard Index between the set of genes and each disease:
+```{r ji_2, warnings=FALSE}
+disease_interest <- 
+  c("delirium", "bipolar i disorder", "severe depression", "cocaine dependence")
+ji2 <- jaccardEstimation(genes_interest, disease_interest, database = "ALL")
+```
+  3. With a list of diseases of interest, the function will calculate the Jaccard Index between themselves:
+```{r ji_3, warnings=FALSE}
+ji3 <- jaccardEstimation(disease_interest, database = "ALL")
+```
+
+To determine if the association between two diseases as estimated by the Jaccard Index was statistically significant, we apply a bootstrap procedure to estimate the likelihood of obtaining a Jaccard Index greater than the one obtained for the association between the diseases by chance. In other words, we sample at random gene sets of size n and p (n, p is the number of genes associated to disease 1 and 2, respectively) from a population of human disease genes obtained from DisGeNET \cite{REF3}. These random gene sets (n and p) are then used to compute the Jaccard Index for diseases 1 and 2. This procedure is repeated by default 100 times. The number of iterations used to compute the pvalue associted to the calculated Jaccard Index can be changed by the user with the `nboot` argument. Then, we calculated the number of times we obtained a Jaccard Index for the random gene sets larger than the observed value of the Jaccard Index. % We only kept disease associations for which we obtained less than 5/100 random cases an Jaccard Index value larger than the observed one.
+
+The raw results are stored in `JaccardIndexPsy` and can be obtained using the function `extract`. For example:
+
+```{r ji1_extract}
+head(extract(ji1))
+tail(extract(ji1))
+```
+
+## Plotting results: Jaccard Index
+
+The plot of the result of a `jaccardEstimation} using a singe set of genes corresponds to a bar-plot of the Jaccard Index with each disease:
+
+```{r ji1_plot, fig.width=5, fig.height=3}
+plot(ji1, cutOff = 0.1)
+```
+
+The previous bar-plot shows the Jaccard Index greater than 0.1 obtained from testing each diseases in PsyGeNET. When given a set of genes and a set of diseases, the resulting plot is equivalent:
+
+```{r ji2_plot, fig.width=5, fig.height=3}
+plot(ji2)
+```
+
+The plot resulting from more than one disease is a heat-map with the given disease as X axis and all the diseases that share genes with them placed as Y axis. The intensity of the color represents the value of the Jaccard Index between, being the darker one the major Jaccard Index.
+
+```{r ji3_plot, fig.width=5, fig.height=3}
+plot(ji3)
+```
+
+# Warnings
+
+`heatmap` type argument do not allow queries for single gene:
+
+```
+> plot( t1, type = "heatmap" )
+==> Error: For this type of chart, a multiple gene query created with
+ 'psygenetGene' is required.
+```
+
+# Summary of Visualization Options
+
+| Input Object    | `psygenet2r` function | Argument Type | Output Generated                                  |
+| ----------------|-----------------------|---------------|---------------------------------------------------|
+| `DataGeNET.Psy` | `geneAttrPlot`        | category      | genes asociated with each DC                      |
+|                 |                       | gene          | disease concepts and DC associated with each gene |
+|                 |                       | pie           | pie chart number of genes per DC                  |
+|                 |                       | index         | barplot showing the type of association           |
+|                 | `plot`                | individual disease | GDA network (default type)                   |
+|                 |                       | disease class | GDCAs network                                     |
+|                 |                       | heatmapGenes  | EI heatmap GDCAs heatmap (gene)                   |
+|                 |                       | heatmap       | EI heatmap for GDA (disease)                      |
+|                 |                       | Bar-plot      | number of publications supporting GDA             |
+| JaccardIndexPsy | `plot`                |               | JI Bar-plot / heatmap                             |
+
+: (\#tab:viz-opt) Types of plots done with `psygenet2r` R package
+
+# Bibliography
