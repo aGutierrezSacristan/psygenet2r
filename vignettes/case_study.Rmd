@@ -4,7 +4,7 @@ author:
 - name: Alba Gutierrez-Sacristan
   affiliation: 
   - &grib Research Group on Integrative Biomedical Informatics, Research Programme on Biomedical Informatics (GRIB)
-  email: alba.gutierrez@upg.edu
+  email: alba.gutierrez@upf.edu
 - name: Carles Hernandez-Ferrer
   affiliation: 
   - &creal Bioinformatic Researcg Group in Epidemiology, Barcelona Global Health Institue (ISGlobal)
@@ -33,7 +33,7 @@ output:
 Psychiatric disorders have a great impact on morbidity and mortality [@Murray2013][@Whiteford2013]. According to the World Health Organization (WHO), one of every four people will suffer mental or neurological disorders at some point in their lives [@WHO2013]. It has been suggested that most psychiatric disorders display a strong genetic component [@Issler2015][@Levinson2014][@Ripke2014]. During the last years there has been a growing research in psychiatric disorders' genetics [@Sullivan2012], and therefore the number of publications that focus on psychiatric disorders have increased steadily
 (Figure \@ref(fig:pubmed1)).
 
-```{r pubmed1, fig.cap="Psychiatric disorders in PubMed. It has been obtained querying psychiatric disorder[Title/Abstract] from 1955 to 2016.", echo=FALSE}
+```{r pubmed1, fig.cap="Psychiatric disorders in PubMed. It has been obtained querying psychiatric disorder[Title/Abstract] from 1955 to 2016.", echo=FALSE, fig.wide = TRUE}
 library(ggplot2)
 
 data.file <- system.file(
@@ -77,7 +77,7 @@ The goal of the study is to analyze a set of genes discovered by GWAS in the con
 
 ## `psygenet2r` package
 
-PsyGeNET, a knowledge resource for the exploratory analysis of psychiatric diseases and their genes, contains information on eight psychiatric disorders: depression, bipolar disorder, schizophrenia, alcohol, cocaine and cannabis use disorders, substance-induced depressive disorder and psychoses. PsyGeNET database has been developed by automatic extraction of information from the literature using the text mining tool BeFree (http://ibi.imim.es/befree/), followed by curation by experts in the domain. The current version of PsyGeNET (version 2.0) contains 3,771 associations between 1,549 genes and 117 psychiatric disease concepts. `psygenet2r` package contains functions to query and analyze PsyGeNET data, and to integrate with other information, as exemplified in this case study.
+PsyGeNET, a knowledge resource for the exploratory analysis of psychiatric diseases and their genes, contains information on eight psychiatric disorders: depression, bipolar disorder, schizophrenia, alcohol, cocaine and cannabis use disorders, substance-induced depressive disorder and psychoses. PsyGeNET database has been developed by automatic extraction of information from the literature using the text mining tool BeFree [@bravo2015extraction] (http://ibi.imim.es/befree/), followed by curation by experts in the domain. The current version of PsyGeNET (version 2.0) contains 3,771 associations between 1,549 genes and 117 psychiatric disease concepts. `psygenet2r` package contains functions to query and analyze PsyGeNET data, and to integrate with other information, as exemplified in this case study.
 
 ## Installation
 
@@ -132,7 +132,7 @@ The output is a `DataGeNET.Psy` object. It contains all the information about th
 
 In order to visualize the 48 GDAs between the 16 genes found in PsyGeNET and the 15 different disorders, `psygenet2r` provides several options. One of them is the GDA network, which can be obtained by applying the `plot` function to the `DataGeNET.Psy` object (`m1`), obtained from `psygenetGene` function (section 4.1). In the GDA network, green nodes represent diseases and orange nodes represent genes.
 
-```{r gene-disease, fig.height=8, fig.width=8, fig.cap = "Gene-Disease Association Network"}
+```{r gene-disease, fig.height=8, fig.width=8, fig.cap = "Gene-Disease Association Network", fig.wide = TRUE}
 plot( m1 )
 ```
 
@@ -140,11 +140,11 @@ As shown in Figure \@ref(fig:gene-disease), most of the genes (10) are associate
 
 In PsyGeNET it is important to keep track of both “positive” and the “negative” findings, and let the user make their own judgements based on the available evidence. We can visualize the association type (Association, No Association,Both) using heat-maps.
 
-In the example shown in the next figure (Figure \@ref{fig:gene-psy}), the gene-disease associations related to alcohol UD and depresison are all of type "Association". On the other hand, for bipolar disorder and schizophrenia there are some GDAs that have both types of associations. Finally, in the schizophrenia category it can be seen that there is one GDA with "no association" type.
+In the example shown in the next figure (Figure \@ref(fig:gene-psy)), the gene-disease associations related to alcohol UD and depresison are all of type "Association". On the other hand, for bipolar disorder and schizophrenia there are some GDAs that have both types of associations. Finally, in the schizophrenia category it can be seen that there is one GDA with "no association" type.
 
 The barplot can be obtained using the `geneAttrPlot` function and by setting the `type` argument to `"index"`.
 
-```{r gene-psy, fig.cap="Association type barplot according to psychiatric category"}
+```{r gene-psy, fig.cap="Association type barplot according to psychiatric category", fig.wide = TRUE}
 geneAttrPlot( m1, type = "index" )
 ```
 
@@ -155,11 +155,11 @@ geneAttrPlot( m1, type = "index" )
 
 `pantherGraphic` function requires as input the list of genes (`genesOfInterest` vector) and the database (for instance `"ALL"`). The output of  `pantherGraphic` function is a bar-plot with the different Panther classes in the Y-axis and the percentage of genes in the X-axis, grouped by PsyGeNET psychiatric disorders.
 
-```{r panther, fig.cap="Panther class analysis of the genes of interest.", message=FALSE, warning=FALSE}
+```{r panther, fig.cap="Panther class analysis of the genes of interest.", message=FALSE, warning=FALSE, fig.wide = TRUE}
 pantherGraphic( genesOfInterest, "ALL")
 ```
 
-The bar-plot shown in Figure \ref{panther} is obtained from the gene-list of interest. All the genes in the list that are associated with the psychiatric disease class of alcohol use disorders are signaling molecules. On the other hand, it can be observed that those genes associated with bipolar disorder, depression and schizophrenia are in a variety of Panther classes.\\
+The bar-plot shown in Figure \@ref(fig:panther) is obtained from the gene-list of interest. All the genes in the list that are associated with the psychiatric disease class of alcohol use disorders are signaling molecules. On the other hand, it can be observed that those genes associated with bipolar disorder, depression and schizophrenia are in a variety of Panther classes.
 
 ## What is the level of evidence for each GDA?
 
@@ -169,17 +169,17 @@ In order to obtain the heatmap, the `plot` function can be applied to the `DataG
 
 As a result a heat-map is obtained with genes in the X axis and disorders in the Y axis. Heatmap cells will be coloured in green, yellow or red according to the evidence index value. Green color represents those GDAs where all the evidences reviewed by the experts support the existence of an association between the gene and the disease (`EI = 1`); it will be yellow when there is contradictory evidence for the GDA (some publications support the association while others publications do not support it, `1 > EI > 0`), and it will be red when all the evidences reviewed by the experts report that there is no association between the gene and the disease (`EI = 0`).
 
-```{r gene-disease-2, fig.cap="Gene-Disease Association Heatmap"}
+```{r gene-disease-2, fig.cap="Gene-Disease Association Heatmap", fig.wide = TRUE}
 plot( m1, type="heatmapGenes")
 ```
 
-Figure \@ref{fig:gene-disease-2} shows that from the total 48 GDAs, only 4 of them have an evidence index different from 1. For example, all the publications supporting _C15orf53-schizophrenia_ association report that there is no association; for the other 3 GDAs (C15orf53-bipolar disorder, DLG2-schizophrenia and SYNE1-bipolar disorder) contradictory evidences have been found.
+Figure \@ref(fig:gene-disease-2) shows that from the total 48 GDAs, only 4 of them have an evidence index different from 1. For example, all the publications supporting _C15orf53-schizophrenia_ association report that there is no association; for the other 3 GDAs (C15orf53-bipolar disorder, DLG2-schizophrenia and SYNE1-bipolar disorder) contradictory evidences have been found.
 
 ## For the disorder of interest, how many publications support each gene-disease associations?
 
-In addition to the PsyGeNET evidence index, we can also inspect the number of publications that support a GDA. `psygenet2r` allows the visualization of this information in a bar-plot, using the `plot` function with the `disorder` argument to indicate the disease of interest, and the `type` argument set to `"barplot"`. Figure \@ref{pubmed2} shows an example, with the genes in the X-axis and the number of PMIDs in the y-axis.
+In addition to the PsyGeNET evidence index, we can also inspect the number of publications that support a GDA. `psygenet2r` allows the visualization of this information in a bar-plot, using the `plot` function with the `disorder` argument to indicate the disease of interest, and the `type` argument set to `"barplot"`. Figure \@ref(fig:pubmed2) shows an example, with the genes in the X-axis and the number of PMIDs in the y-axis.
 
-```{r pubmed2, fig.cap="Publications that report each gene association with bipolar disorder"}
+```{r pubmed2, fig.cap="Publications that report each gene association with bipolar disorder", fig.wide = TRUE}
 plot( m1, name="bipolar disorder", type="barplot")
 ```
 
@@ -238,9 +238,9 @@ xx <- jaccardEstimation( genesOfInterest,
   database = "ALL", nboot = 500 )
 ```
 
-The result from the Jaccard Index estimation can be visualized using the function `plot`. The result is a bar-plot where the p-value of each comparison between our genes and PsyGeNET's disease is shown. A `cutOff` argument can be added in order to visualize only those diseases with an statistically significant p-value:
+The result from the Jaccard Index estimation can be visualized using the function `plot`. The result is a bar-plot (Figure \@ref(fig:jacc)) where the p-value of each comparison between our genes and PsyGeNET's disease is shown. A `cutOff` argument can be added in order to visualize only those diseases with an statistically significant p-value:
 
-```{r jacc, fig.cap="Bar-plot where the Jaccard Index of each comparison between the list of genes of interest and PsyGeNET's diseases is shown."}
+```{r jacc, fig.cap="Bar-plot where the Jaccard Index of each comparison between the list of genes of interest and PsyGeNET's diseases is shown.", fig.wide = TRUE}
 plot( xx )
 ```
 
@@ -248,18 +248,18 @@ The similarity between diseases according to shared genes can be visualized usin
 
 In order see the similarity between our genes of interest and PsyGeNET's psychiatric disorder, the `type` argument of `geneAttrPlot` function is set to `category`. This will allow to see how many of the 16 genes, that appear in PsyGeNET, are associated with each psychiatric disorder.
 
-```{r bpGenes, fig.cap="Barplot: Genes associated to each of the psychiatric disorders"}
+```{r bpGenes, fig.cap="Barplot: Genes associated to each of the psychiatric disorders", fig.wide = TRUE}
 geneAttrPlot( m1, type = "category" )
 ```
 
-Figure \@ref{fig:bpGenes} clearly shows that none of our genes of interest are associated to the three disorders. There are 2 exclusively associated to bipolar disorder, 2 in the case of depression and 3 in schizophrenia. The rest of the genes appears in more than one psychiatric disorder.
+Figure \@ref(fig:bpGenes) clearly shows that none of our genes of interest are associated to the three disorders. There are 2 exclusively associated to bipolar disorder, 2 in the case of depression and 3 in schizophrenia. The rest of the genes appears in more than one psychiatric disorder.
 
 In order see which are the genes that are associated only to one psychiatric category, the `type` argument of `geneAttrPlot` function can be set to `gene`. This will allow to see how many of the CUIs and categories are associated to each one of the 16 genes. 
 
-```{r bpDis, fig.cap="Barplot: CUIs and psychiatric categories associated to each gene"}
+```{r bpDis, fig.cap="Barplot: CUIs and psychiatric categories associated to each gene", fig.wide = TRUE}
 geneAttrPlot( m1, type = "gene" )
 ```
 
-Figure \@ref{fig:bpDis} clearly shows that these genes are: *ADCY2*, *ATXN1*, *CACNA1C*, *HHAT*, *MAD1L1*, *NFIX* and *SH3PXD2A*. Yellow bar for these genes show that they are only associated with one psychiatric disorder.
+Figure \@ref(fig:bpDis) clearly shows that these genes are: *ADCY2*, *ATXN1*, *CACNA1C*, *HHAT*, *MAD1L1*, *NFIX* and *SH3PXD2A*. Yellow bar for these genes show that they are only associated with one psychiatric disorder.
 
 # Bibliography
