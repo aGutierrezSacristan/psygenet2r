@@ -13,10 +13,7 @@ author:
 - name: Laura I. Furlong
   affiliation: *grib
 date: "`r doc_date()`"
-package: "`r pkg_ver('BiocStyle')`"
-abstract: >
-  Instructions on enabling _Bioconductor_ style 
-  in your _R_ markdown vignettes.
+package: "`r pkg_ver('psygenet2r')`"
 bibliography: case_study.bib
 csl: biomed-central.csl
 vignette: >
