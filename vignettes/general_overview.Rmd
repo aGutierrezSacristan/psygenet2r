@@ -155,13 +155,13 @@ In the particular example used, by inspecting the `DataGeNET.Psy` object, we can
 
 By default, `psygenet2r` shows a network when ploting a `DataGeNET.Psy` object obtained by a gene-query. The result is a network where green nodes are diseases and the orange node is the gene of interest.
 
-```{r plot_disease, fig.width=13, fig.height=11}
+```{r plot_disease, fig.width=8, fig.height=8}
 plot( t1, type = "individual disease" )
 ```
 
 On the other hand, results can be visualized according to the 8 psychiatric disorders classes available in PsyGeNET (depression, bipolar disorder, alcohol use disorders, cocaine use disorder, bipolar disorder, schizophrenia, cannabis use disorder, substance-induced depressive disorder and psychoses) setting the `type` argument to `"disease class"`. As a result, a network with a maximum of 9 nodes is obtained (8 nodes that represent the psychiatric disorders and 1 node that represents the gene). The node's size of each psychiatric disorder is proportional to the number of disease concepts that belongs to each disease class, from the total number of diseases associated to the gene.
 
-```{r plot_psychiatric, fig.width=13, fig.height=11}
+```{r plot_psychiatric, fig.width=8, fig.height=8}
 plot( t1, type = "disease class" )
 ```
 
@@ -205,13 +205,13 @@ m1
 
 As for the single gene example, the default option in `psygenet2r` results is a network chart, where the green nodes represent diseases and the oranges nodes represent genes.
 
-```{r plot_psychiatric1a, fig.width=13, fig.height=11}
+```{r plot_psychiatric1a,  fig.height=8, fig.width=8}
 plot( m1 )
 ```
 
 It is also possible to visualize the results by grouping the diseases according to the psychiatric disorders present in PsyGeNET (depression, bipolar disorder, alcohol use disorders, cocaine use disorder, bipolar disorder, schizophrenia, cannabis use disorder, substance-induced depressive disorder and psychoses) setting the `type` argument to `"disease class"`. As a result, a psychiatric disorder genes network is obtained. The edge's size is proportional to the number of disease concepts that belongs to each disease class, from the total number of diseases associated to the gene.
 
-```{r plot_psychiatric1b, warning=FALSE, fig.width=13, fig.height=11}
+```{r plot_psychiatric1b, warning=FALSE,  fig.height=8, fig.width=8}
 plot( m1, type = "disease class" )
 ```
 
@@ -219,7 +219,7 @@ plot( m1, type = "disease class" )
  
 Note that heatmap cells can be coloured in green, yellow or red. Green cells represent those GDAs where all the evidences reviewed by the experts support the existence of an association between the gene and the disease (EI = 1); it will be yellow when there is contradictory evidence for the GDA (some publications support the association while others publications do not support it, 1 > EI > 0), and it will be red when all the evidences reviewed by the experts report that there is no association between the gene and the disease (EI = 0).
 
-```{r heatmap_disease_m, fig.width=13, fig.height=11}
+```{r heatmap_disease_m,  fig.height=8, fig.width=8}
 plot( m1, type="heatmapGenes" )
 ```
 
@@ -231,7 +231,7 @@ An alternative graphical representation is a psychiatric disorder heatmap relate
 
 In order to obtain this graphic, `type` must be set to `"heatmap"`. The resulting heatmap shows which are the genes that are higher or lower associated to each one of the psychiatric disorders. 
 
-```{r plot_psychiatric_heamap, warning = FALSE, fig.width=13, fig.height=11}
+```{r plot_psychiatric_heamap, warning = FALSE,  fig.height=8, fig.width=8}
 plot( m1, type = "heatmap" )
 ```
 
@@ -241,7 +241,7 @@ As it could be expected for the genes that are used in this query, all of them a
 
 The `pantherGraphic` function shows the Panther class of the proteins for each psychiatric disorder class. It provides a graphic with the results of these analysis, being the input a list of genes and the database (`ALL`, `psycur15`, `psycur16`). The input genes can be from a vector that contains the genes of interest, or from the genes obtained in the `DataGeNET.psy` object in a disease or disease-list query. A score argument can be added to filter results. It can also be done given a DataGeNET.psy object obtained by querying with a single gene.
 
-```{r panther_gene, fig.width=13, fig.height=11}
+```{r panther_gene,  fig.height=8, fig.width=8}
 genesOfInterest <- unique( genesOfInterest )
 pantherGraphic( genesOfInterest, "ALL" )
 ```
@@ -250,7 +250,7 @@ pantherGraphic( genesOfInterest, "ALL" )
 
 `psygenet2r` package allows to visualize how many of our genes of interest are associated to each psychiatric disorder present in PsyGeNET and how many of them are exclusively associated to a particular psychiatric disorder. This can be done applying the `geneAttrPlot` function and setting the `type` argument to `"cateogry"`.
 
-```{r plot_diseaseBarplot, fig.width=13, fig.height=11}
+```{r plot_diseaseBarplot,  fig.height=8, fig.width=8}
 geneAttrPlot( m1, type = "category" )
 ```
 
@@ -258,7 +258,7 @@ As a result, a barplot is obtained. The X axis contains the psychiatric disorder
 
 Alternatively, `psygenet2r` package allows to visualize for each gene, how many disease concepts and how many psychiatric categories are associated to it. This can be done applying the `geneAttrPlot` function and setting the `type` argument to `"gene"`.
 
-```{r plot_diseaseBarplotGene, fig.width=13, fig.height=11}
+```{r plot_diseaseBarplotGene,  fig.height=8, fig.width=8}
 geneAttrPlot( m1, type = "gene" )
 ```
 
@@ -268,7 +268,7 @@ In our example, the gene SLC6A4 is the one whith more associated cuis (26) and c
 
 If we are only interested in how many of our input genes are associated to each disease category, `psygenet2r` package allows to visualize it in a pie chart by applying the `geneAttrPlot` function and setting up the `type` argument to `pieChart`.
 
-```{r plot_pieChart, fig.width=13, fig.height=11}
+```{r plot_pieChart, fig.width=8, fig.height=8}
 geneAttrPlot( m1, type = "pie" )
 ```
 
@@ -278,7 +278,7 @@ In PsyGeNET it is important to keep track of both “positive” and the “nega
 
 `psygenet2r` package allows to visualize this information in a barplot. It can be done by applying the `geneAttrPlot` function and setting the `type` argument to `"index"`. As a result a barplot showing, for each psychiatric disorder, how many gene-disease association are in total (red bar), how many of them are 100% association (green bar), 100% no association (blue bar) and how many GDAs are supported by both association types (purple bar).
 
-```{r barplotIP, fig.width=13, fig.height=11}
+```{r barplotIP, fig.width=8, fig.height=8}
 geneAttrPlot( m1, type = "index" )
 ```
 
@@ -379,7 +379,7 @@ class( d2 )
 
 By default, `psygenet2r` shows the GDAs network when ploting a `DataGeNET.Psy` object with a disease-query. The result is a network where, orange nodes are genes and the central and green node is the disease of interest.  
 
-```{r plot_visualizing_single_disease_search, fig.width=13, fig.height=11}
+```{r plot_visualizing_single_disease_search, fig.width=8, fig.height=8}
 plot ( d1 )
 ```
 
@@ -427,14 +427,14 @@ This type of object contains all the information about the different genes assoc
 
 As for single disease, GDAs network is the default option in `psygenet2r`. In the resulting network chart, the green nodes represent diseases and the oranges nodes represent genes. 
 
-```{r plot_disease_tm, fig.width=13, fig.height=11}
+```{r plot_disease_tm }
 plot( tm )
 ```
 
 
 Another possible option is visualize it in a heatmap. The argument `type` can be set to `"heatmap"`. 
 
-```{r heatmap_disease_tm, warning = FALSE, fig.width=13, fig.height=11}
+```{r heatmap_disease_tm, warning = FALSE,  fig.wide = TRUE}
 plot( tm, type = "heatmap" )
 ```
 
@@ -444,13 +444,13 @@ The result is a heatmap where the genes are located at X axis, and disordes appe
 
 `psygenet2r` package allows to see how many publications support each gene-disease association. This can be visualized in a barplot by determining the gene or disease id in the `name` argument and setting `type` argument to `"barplot"`.
 
-```{r barplot_visualizing_single_disease_search, fig.width=13, fig.height=11}
+```{r barplot_visualizing_single_disease_search, fig.width=8, fig.height=8}
 plot( d1, name = "major affective disorder 2", type = "barplot" )
 ```
 
 As a result, a barplot is obtained. The X axis contains the genes related to the disease of interest, sorted by the number of pubmed ids in which we can find the gene-disease association. Alternatively, the results can be visualized for the diseases.
 
-```{r barplot_visualizing_single_gene_search, fig.width=13, fig.height=11}
+```{r barplot_visualizing_single_gene_search, fig.width=8, fig.height=8}
 plot( t1, name = "NPY", type = "barplot" )
 ```
 
@@ -521,19 +521,19 @@ tail(extract(ji1))
 
 The plot of the result of a `jaccardEstimation} using a singe set of genes corresponds to a bar-plot of the Jaccard Index with each disease:
 
-```{r ji1_plot, fig.width=13, fig.height=11}
+```{r ji1_plot, fig.width=8, fig.height=8}
 plot(ji1, cutOff = 0.1)
 ```
 
 The previous bar-plot shows the Jaccard Index greater than 0.1 obtained from testing each diseases in PsyGeNET. When given a set of genes and a set of diseases, the resulting plot is equivalent:
 
-```{r ji2_plot, fig.width=13, fig.height=11}
+```{r ji2_plot, fig.width=8, fig.height=8}
 plot(ji2)
 ```
 
 The plot resulting from more than one disease is a heat-map with the given disease as X axis and all the diseases that share genes with them placed as Y axis. The intensity of the color represents the value of the Jaccard Index between, being the darker one the major Jaccard Index.
 
-```{r ji3_plot, fig.width=13, fig.height=11}
+```{r ji3_plot, fig.width=8, fig.height=8}
 plot(ji3)
 ```
 
