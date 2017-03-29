@@ -30,7 +30,7 @@ output:
 Psychiatric disorders have a great impact on morbidity and mortality [@Murray2013][@Whiteford2013]. According to the World Health Organization (WHO), one of every four people will suffer mental or neurological disorders at some point in their lives [@WHO2013]. It has been suggested that most psychiatric disorders display a strong genetic component [@Issler2015][@Levinson2014][@Ripke2014]. During the last years there has been a growing research in psychiatric disorders' genetics [@Sullivan2012], and therefore the number of publications that focus on psychiatric disorders have increased steadily
 (Figure \@ref(fig:pubmed1)).
 
-```{r pubmed1, fig.cap="Psychiatric disorders in PubMed. It has been obtained querying psychiatric disorder[Title/Abstract] from 1955 to 2016.", echo=FALSE, fig.wide = TRUE}
+```{r pubmed1, fig.cap="Psychiatric disorders in PubMed. It has been obtained querying **psychiatric disorder [Title/Abstract] from 1955 to 2016**.", echo=FALSE, fig.wide = TRUE}
 library(ggplot2)
 
 data.file <- system.file(
@@ -59,7 +59,7 @@ p
 
 However, there is still limited understanding on the cellular and molecular mechanisms leading to psychiatric diseases, which has limited the application of this wealth of data in the clinical practice. This situation also applies to psychiatric comorbidities. Some of the factors that explain the current situation is the heterogeneity of the information about psychiatric disorders and its fragmentation into knowledge silos, and the lack of resources that collect these wealth of data, integrate them, and supply the information in an intuitive, open access manner to the community. PsyGeNET [@Gutierrez-Sacristan2015] has been developed to fill this gap and `psygenet2r` has been developed to facilitate statistical analysis of PsyGeNET data, allowing its integration with other packages available in R to develop data analysis workflows.
 
-`psygenet2r` package allows to retrieve the genes associated to psychiatric diseases, or explore the association between a disease of interest and PsyGeNET diseases based on shared genes. In addition, `psygenet2r` allows the annotation of genes with psychiatric diseases based on expert-curated information. This functionality can be of interest to interpret the results of GWAS or Whole Exome Sequencing studies, in which a list of gene variants is obtained and there is a need to prioritize them based on their functional and clinical relevance. In this context, it would be of interest to know if there is information on their implication in psychiatric diseases. In this Case study we will describe how we can analyze the genes identified in a GWAS study in the context of psychiatric diseases using `psygenet2r`. For this purpose, we will use as an example the data obtained from a GWAS study on bipolar disorder published by \cite{McCarthy}. In this study, the authors analyzed the brain expression of 58 genes, previously identified in a GWAS of bipolar disorder [@Sklar2011], and correlated this information with structural MRI studies to identify brain regions that are abnormal in bipolar disorder. We will use this list of 58 genes from the bipolar disorder study to show the functionality of `psygenet2r` package.
+`psygenet2r` package allows to retrieve the genes associated to psychiatric diseases, or explore the association between a disease of interest and PsyGeNET diseases based on shared genes. In addition, `psygenet2r` allows the annotation of genes with psychiatric diseases based on expert-curated information. This functionality can be of interest to interpret the results of GWAS or Whole Exome Sequencing studies, in which a list of gene variants is obtained and there is a need to prioritize them based on their functional and clinical relevance. In this context, it would be of interest to know if there is information on their implication in psychiatric diseases. In this Case study we will describe how we can analyze the genes identified in a GWAS study in the context of psychiatric diseases using `psygenet2r`. For this purpose, we will use as an example the data obtained from a GWAS study on bipolar disorder published by [@mccarthy2014whole]. In this study, the authors analyzed the brain expression of 58 genes, previously identified in a GWAS of bipolar disorder [@psychiatric2011large], and correlated this information with structural MRI studies to identify brain regions that are abnormal in bipolar disorder. We will use this list of 58 genes from the bipolar disorder study to show the functionality of `psygenet2r` package.
 
 # Objective
 
@@ -91,7 +91,7 @@ library( psygenet2r )
 
 # Questions that can be answered using `psygenet2r`
 
-The first step that has to be done before doing any analysis is saving the genes in an R vector. For this case-study the 58 genes obtained from McCarthy et al. \cite{McCarthy} are saved into a vector called `genesOfInterest`.
+The first step that has to be done before doing any analysis is saving the genes in an R vector. For this case-study the 58 genes obtained from McCarthy et al. [@mccarthy2014whole] are saved into a vector called `genesOfInterest`.
 
 Genes can be identified using the NCBI gene identifier or the Official Gene Symbol from HUGO.
 
@@ -133,7 +133,7 @@ In order to visualize the 48 GDAs between the 16 genes found in PsyGeNET and the
 plot( m1 )
 ```
 
-As shown in Figure \@ref(fig:gene-disease), most of the genes (10) are associated to bipolar disorder (umls:C0005586), in agreement with McCarthy et al. \cite{McCarthy}, but some of these genes are also associated to other disorders related to alcohol UD, depression and schizophrenia.
+As shown in Figure \@ref(fig:gene-disease), most of the genes (10) are associated to bipolar disorder (umls:C0005586), in agreement with McCarthy et al. [@mccarthy2014whole], but some of these genes are also associated to other disorders related to alcohol UD, depression and schizophrenia.
 
 In PsyGeNET it is important to keep track of both “positive” and the “negative” findings, and let the user make their own judgements based on the available evidence. We can visualize the association type (Association, No Association,Both) using heat-maps.
 
