@@ -34,4 +34,3 @@ diseasesOfInterest <- c( "Bipolar Disorder","Depressive Disorder, Major" )
 psyDisSen <- psygenetDiseaseSentences( diseaseList = diseasesOfInterest,
                                        database = "ALL" )
 }
-

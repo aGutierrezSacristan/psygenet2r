@@ -38,4 +38,3 @@ PsyGeNET.
 topAnatEnrichment(gene=c("ADCY2", "AKAP13", "ANK3"))
 }
 }
-

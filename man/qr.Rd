@@ -29,4 +29,3 @@ ngene(qr)
 ndisease(qr)
 }
 \keyword{datasets}
-

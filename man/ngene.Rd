@@ -25,8 +25,8 @@ Obtain the number of unique genes in a \code{DataGeNET.Psy}.
 \itemize{
 \item \code{DataGeNET.Psy}: Get number of genes
 }}
+
 \examples{
 data(qr)
 ngene(qr)
 }
-

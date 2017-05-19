@@ -33,4 +33,3 @@ to.
 \examples{
 d.alch <- pantherGraphic( c( "COMT", "CLOCK", "DRD3" ), "ALL" )
 }
-

@@ -23,8 +23,8 @@ Obtain the number of unique diseases in a \code{DataGeNET.Psy}.
 \itemize{
 \item \code{DataGeNET.Psy}: Get number of diseases
 }}
+
 \examples{
 data(qr)
 ndisease(qr)
 }
-

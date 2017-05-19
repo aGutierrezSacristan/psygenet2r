@@ -40,4 +40,3 @@ data(qr)
 plot(qr) # for all-disease plot
 plot(qr, type = 'disease class') # for MPI plot
 }
-

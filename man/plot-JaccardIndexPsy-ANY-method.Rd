@@ -39,4 +39,3 @@ and \code{JaccardIndexPsy} objects.
 qr <- plot(x)
 }
 }
-

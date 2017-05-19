@@ -25,4 +25,3 @@ from PsyGeNET and creates an object of type \code{DataGeNET.Psy}.
 \examples{
 umls <- getUMLs( word = "depressive", database = "ALL" )
 }
-

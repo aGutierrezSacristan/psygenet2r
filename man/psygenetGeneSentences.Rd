@@ -35,4 +35,3 @@ genesOfInterest <- c("PECR", "ADH1C", "CAST", "ERAP1", "PPP2R2B",
 psyGeneSen <- psygenetGeneSentences( geneList = genesOfInterest,
                                      database = "ALL")
 }
-
