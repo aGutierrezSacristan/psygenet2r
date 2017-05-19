@@ -48,4 +48,3 @@ psychiatric disorder cotains.
 \examples{
 ji <- jaccardEstimation( c( "COMT", "CLOCK", "DRD3" ), "umls:C0005586", "ALL" )
 }
-

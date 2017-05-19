@@ -38,4 +38,3 @@ from PsyGeNET and creates an object of type \code{DataGeNET.Psy}.
 \examples{
 d.alch <- psygenetGene( "ALDH2", "ALL" )
 }
-

@@ -32,7 +32,7 @@ databases.}
 
 \item{\code{qresult}}{\code{data.frame} with the obtained result}
 }}
+
 \seealso{
 psygenetGene, psygenetDisease, DataGeNET.Psy-methods
 }
-

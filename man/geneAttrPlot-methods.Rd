@@ -23,4 +23,3 @@ Given a set of genes or a result of \code{psygenetGene} creates four types
 of plots showing the relation of the genes with the disease's category
 in psyGeNET.
 }
-

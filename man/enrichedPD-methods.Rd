@@ -32,4 +32,3 @@ PsyGeNET.
 \examples{
 enrichedPD(c("ADCY2", "AKAP13", "ANK3"), "ALL")
 }
-
