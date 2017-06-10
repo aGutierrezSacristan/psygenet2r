@@ -19,7 +19,7 @@ disGenetCurated <- function (  ) {
         c0.Ndiseases DESC"
   
     dataTsv <- RCurl::getURLContent ( 
-        psygenet2r:::getUrlDis(), 
+        getUrlDis(), 
         readfunction  = charToRaw( oql ), 
         upload        = TRUE, 
         customrequest = "POST" 
