@@ -40,7 +40,7 @@ jaccardEstimation <- function(pDisease, sDisease, database="ALL", nboot = 100, n
   
   if(verbose) message("Query PsyGeNET for generic diseases.")
   psy <- psygenetAll ( database )
-  universe <- disGenetCurated( "CURATED" )
+  universe <- disGenetCurated()
   
   
   diseases <- getDiseasesType( pDisease, psy, verbose )
