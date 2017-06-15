@@ -8,10 +8,9 @@
 #' @param y NOT USED
 #' @param layout Function to design the location of the different nodes. By 
 #' default \code{layout.fruchterman.reingold} from \code{igraph} is used.
-#' @param type Type of the drawn chart. By default it is \code{"disease"} but 
-#' it also can be \code{"individual disease"}, \code{"disease"}, 
-#' \code{"disease class"}, \code{"barplot"}, 
-#' \code{"heatmapGenes"} or \code{"heatmap"}.
+#' @param type Type of the drawn chart. By default it is \code{"GDA network"} but 
+#' it also can be \code{"GDCA network"}, \code{"publications"}, 
+#' \code{"GDA heatmap"} or \code{"GDCA heatmap"}.
 #' @param verbose By default \code{FALSE}. If set to \code{TRUE} information
 #' on the drawing process will be shown.
 #' @param ... Passed to inner functions for different plots.
@@ -19,13 +18,13 @@
 #' @examples
 #' data(qr)
 #' plot(qr) # for all-disease plot
-#' plot(qr, type = 'disease class') # for MPI plot
+#' plot(qr, type = 'GDCA network') # for MPI plot
 #' @export plot
 setMethod( 
     f = "plot",
     signature = "DataGeNET.Psy",
     definition = function( x, y, layout = igraph::layout.fruchterman.reingold,
-                           type = "disease", verbose = FALSE, ... ) {
+                           type = "GDA network", verbose = FALSE, ... ) {
         plot_datagenet_psy( x, layout=layout, type=type, verbose=verbose, ... )
     }
     # @name plot
@@ -35,18 +34,15 @@ setMethod(
 
 #####
 plot_datagenet_psy <- function( object, layout, type, verbose, ... ) {
-    if( !type %in% c( "disease", "individual disease", "disease class", 
-                      "heatmap", "heatmapGenes", "barplot"
+    if( !type %in% c( "GDA network", "GDCA network", 
+                      "GDCA heatmap", "GDA heatmap", "publications"
                       ) ) {
         stop( "Invalid content of argument 'type'." )
     }
-    if( type == "disease" ) {
+    if( type == "GDA network" ) {
         plot_psy_disease( search = object@term, table = object@qresult, 
             layout = layout, verbose = verbose, ... )
-    } else if( type == "individual disease" ) {
-        plot_psy_disease( search = object@term, table = object@qresult, 
-            layout = layout, verbose = verbose, ... )
-    } else if( type == "disease class" ) {
+    } else if( type == "GDCA network" ) {
         plot_psy_psychiatric( search = object@term, table = object@qresult, 
             layout = layout, verbose = verbose )
 #     } else if( type == "venn" ) {
@@ -55,16 +51,16 @@ plot_datagenet_psy <- function( object, layout, type, verbose, ... ) {
 #     } else if( type == "vennA" ) {
 #         plot_psy_vennAlternative( search = object@term, table = object@qresult, 
 #             verbose = verbose )
-    }else if( type == "barplot" ) {
+    }else if( type == "publications" ) {
         plot_pmids_barplot( search = object@term, table = object@qresult, 
             class = object@type, verbose = verbose, ... )
-    }else if( type == "heatmapGenes" ) {
+    }else if( type == "GDA heatmap" ) {
         plot_psy_heatmapGenes( search = object@term, table = object@qresult, 
             verbose = verbose, ... )
 #     } else if( type == "heatmapScore" ) {
 #         plot_psy_heatmapScore( search = object@term, table = object@qresult, 
 #             verbose = verbose, ... )
-    } else if ( type == "heatmap" ) {
+    } else if ( type == "GDCA heatmap" ) {
         if( object@type == "gene" ) {
             plot_psy_heatmap( search = object@term, table = object@qresult, 
                 verbose = verbose )
@@ -74,14 +70,14 @@ plot_datagenet_psy <- function( object, layout, type, verbose, ... ) {
         }
     } else {
         stop( paste0( "Invalid 'type' value. Accepted: 'disease', ",
-        "'individual disease'  'disease class', 
-        'barplot', 'heatmapGenes' and 'heatmap'." ) )
+        "'GDA network'  'GDCA network', 
+        'publications', 'GDA heatmap' and 'GDCA heatmap'." ) )
     }
 }
 #####
 
 #####
-plot_psy_disease <- function( search, table, layout, verbose, inc = 5, 
+plot_psy_disease <- function( search, table, geneColor = "#FFFF33", diseaseColor = "#3385FF", layout, verbose, inc = 5, 
                               cutOff=FALSE ) {
     
     if(cutOff){
@@ -104,7 +100,7 @@ plot_psy_disease <- function( search, table, layout, verbose, inc = 5,
     igraph::plot.igraph( netw,
                          vertex.frame.color = "white",
                          layout             = lay,
-                         vertex.color       = ifelse( igraph::V( netw )$name %in% diseases, "#00A028", "#FF6432" ),
+                         vertex.color       = ifelse( igraph::V( netw )$name %in% diseases, diseaseColor, geneColor ),
                          vertex.label.dist  = 0,      #puts the name labels slightly off the dots
                          vertex.frame.color = 'blue', #the color of the border of the dots
                          vertex.label.color = 'black',#the color of the name labels
@@ -121,8 +117,11 @@ plot_psy_disease <- function( search, table, layout, verbose, inc = 5,
 #####
 
 #####
-plot_psy_psychiatric <- function( search, table, layout, verbose, inc = 5 ) {
-    
+plot_psy_psychiatric <- function( search, table, geneColor = "#FFFF33",
+                                  AUDcolor = "#FF3C32", BDcolor = "#FFC698", DEPcolor = "#9BE75E", 
+                                  SCHZcolor = "#1F6024", CUDcolor = "#5AB69C", 
+                                  SIDEPcolor = "#50B8D6", CanUDcolor = "#5467C3", SYPSYcolor = "#A654C3",
+                                  layout, verbose, inc = 5 ) {
 
     table <- diseaseNameMapping( table )
     
@@ -142,9 +141,9 @@ plot_psy_psychiatric <- function( search, table, layout, verbose, inc = 5 ) {
                  " of the 8 possible psychiatric disorders." )
     }
     
-    colors <- c( "#FF3C32", "#FFC698", "#9BE75E", "#1F6024", 
-                 "#5AB69C", "#50B8D6","#5467C3","#A654C3",
-                 rep( "#FF6432", length( genes ) ) )
+    colors <- c( AUDcolor, BDcolor, DEPcolor, SCHZcolor, CUDcolor, 
+                 SIDEPcolor, CanUDcolor, SYPSYcolor,
+                 rep( geneColor, length( genes ) ) )
     
     names( colors ) <- c( "Alcohol use disorders", 
                           "Bipolar disorders and related disorders", 
@@ -267,7 +266,7 @@ plot_psy_psychiatric <- function( search, table, layout, verbose, inc = 5 ) {
 #####
 
 #####
-plot_psy_heatmap <- function( search, table, verbose ) {
+plot_psy_heatmap <- function( search, table, lowColor = "#0000FF", highColor ="#004080", verbose ) {
     
     if( length(search) == 1 ) {
         stop( "For this type of chart, a multiple query created with ",
@@ -293,7 +292,7 @@ plot_psy_heatmap <- function( search, table, verbose ) {
         fill = value, geom = "tile" ) + 
         ggplot2::ylab( "Genes" ) + ggplot2::xlab( "Psychiatric Disorder" ) + 
         ggplot2::ggtitle( " ") + 
-        ggplot2::scale_fill_gradient2(low = "#0000FF", high ="#004080", 
+        ggplot2::scale_fill_gradient2(low = lowColor, high = highColor, 
         space = "rgb", guide = "colourbar")
     p <- p + ggplot2::theme( 
         plot.margin = grid::unit( x=c( 5, 15, 5,15 ), units="mm" ) , 
@@ -307,7 +306,7 @@ plot_psy_heatmap <- function( search, table, verbose ) {
 #####
 
 #####
-plot_psy_heatmapGenes <- function( search, table, verbose ) {
+plot_psy_heatmapGenes <- function( search, ei0color = "#FFFF33", eiAmbiguitycolor = "grey", ei1color = "#3385FF", table, verbose ) {
         
     if( length(search) == 1 ) {
         stop( "For this type of chart, a multiple query created with ",
@@ -320,15 +319,16 @@ plot_psy_heatmapGenes <- function( search, table, verbose ) {
     
     for(i in 1:nrow(tt)){
         if(tt$c0.Score[i] > 0 & tt$c0.Score[i] < 1){
-            tt$c0.Score[i] <- 0.5
+            tt$c0.Score[i] <- "> 0 & < 1"
         }
     }
     
     h.value = c(0, 0.5, 1) 
-    h.color = c("#f00c00", "#ff9c24", "#008006")
+    h.color = c(ei0color, eiAmbiguitycolor, ei1color)
     heatmapColors = data.frame(h.value, h.color)
     hColors <- as.character(heatmapColors$h.color)
     names(hColors) <- heatmapColors$h.value
+    
 
 
     p <- ggplot2::ggplot(data = tt, ggplot2::aes(x = c1.Gene_Symbol, y = c2.DiseaseName)) +
@@ -354,7 +354,7 @@ plot_psy_heatmapGenes <- function( search, table, verbose ) {
 #####
 
 #####
-plot_psy_heatmapDisease <- function( search, table, verbose) {
+plot_psy_heatmapDisease <- function( search, ei0color = "#FFFF33", eiAmbiguitycolor = "grey", ei1color = "#3385FF", table, verbose) {
     
     if( length(search) == 1 ) {
         stop( "For this type of chart, a multiple query created with ",
@@ -363,17 +363,16 @@ plot_psy_heatmapDisease <- function( search, table, verbose) {
     
     tt <- ( table[ , c( 1, 6, 8 ) ] )
     tt <- tt [ with ( tt , order(-c0.Score)), ]
-    #tt <- tt [ tt$c0.Score >= score,]
 
+    
     for(i in 1:nrow(tt)){
         if(tt$c0.Score[i] > 0 & tt$c0.Score[i] < 1){
-            tt$c0.Score[i] <- 0.5
+            tt$c0.Score[i] <- "> 0 & < 1"
         }
     }
     
-
-    h.value = c(0, 0.5, 1) 
-    h.color = c("#f00c00", "#ff9c24", "#008006")
+    h.value = c(0, "> 0 & < 1", 1) 
+    h.color = c(ei0color, eiAmbiguitycolor, ei1color)
     heatmapColors = data.frame(h.value, h.color)
     hColors <- as.character(heatmapColors$h.color)
     names(hColors) <- heatmapColors$h.value
@@ -396,14 +395,14 @@ plot_psy_heatmapDisease <- function( search, table, verbose) {
         ggplot2::scale_x_discrete( expand = c( 0, 0 ) ) +
         ggplot2::geom_tile(color = "white", ggplot2::aes(fill = factor(c0.Score))) + 
         ggplot2::scale_fill_manual( values = hColors)
-    
+
     return(p)
 
 }
 #####
 
 #####
-plot_pmids_barplot <- function ( table, class, name, type, search, verbose ) {
+plot_pmids_barplot <- function ( table, class, name, type, search, barColor = "grey", verbose ) {
     ## Transform input table to character
     table$c1.Gene_Symbol <- as.character(table$c1.Gene_Symbol)
     table$c1.Gene_Id <- as.character(table$c1.Gene_Id)
@@ -445,8 +444,8 @@ plot_pmids_barplot <- function ( table, class, name, type, search, verbose ) {
     #   Show diseases that have given gene
     if( ( class == "gene" & inTable$look == "gene" ) | ( class == "disease" & inTable$look == "gene" ) ) {
         orderedPubmed <- input[order( -input["c0.Number_of_Abstracts"] ), "c2.Disease_code"]
-        input$c2.Disease_code <- factor( input$c2.Disease_code, levels = as.factor( unique( orderedPubmed ) ), ordered = TRUE )
-        p <- ggplot2::ggplot(input, ggplot2::aes ( x = c2.Disease_code, y = c0.Number_of_Abstracts ), order = as.numeric(c0.Number_of_Abstracts) )
+        input$c2.Disease_code <- factor( input$c2.DiseaseName, levels = as.factor( unique( orderedPubmed ) ), ordered = TRUE )
+        p <- ggplot2::ggplot(input, ggplot2::aes ( x = c2.DiseaseName, y = c0.Number_of_Abstracts ), order = as.numeric(c0.Number_of_Abstracts) )
         x <- "diseases"
     }
     
@@ -460,7 +459,7 @@ plot_pmids_barplot <- function ( table, class, name, type, search, verbose ) {
     ## /
     
     ## Draw the plot
-    p <- p + ggplot2::geom_bar ( stat = "identity", fill = "grey" ) +
+    p <- p + ggplot2::geom_bar ( stat = "identity", fill = barColor ) +
       ggplot2::labs ( title = " ", x = x, y = "# of pmids") +
       ggplot2::theme_classic( ) + 
       ggplot2::theme( plot.margin = grid::unit ( x = c ( 5, 15, 5, 15 ), units = "mm" ),

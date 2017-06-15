@@ -10,6 +10,8 @@
 #' with a Jaccard Index of 0.
 #' @param noTitle By default \code{FALSE}. If set to true no title will be
 #' added to the plot.
+#' @param lowColor By default \code{"white"}. It can be changed to any other color. 
+#' @param highColor By default \code{"mediumorchid4"}. It can be changed to any other color. 
 #' @param verbose By default \code{FALSE}. If set to \code{TRUE} information
 #' on the drawing process will be shown.
 #' @param ... NOT USED
@@ -22,7 +24,7 @@
 #' @export plot
 setMethod( "plot",
            signature = "JaccardIndexPsy",
-           definition = function( x, y, cutOff, zero.remove = TRUE, noTitle = FALSE, verbose = FALSE, ... ) {
+           definition = function( x, y, cutOff, zero.remove = TRUE, noTitle = FALSE, lowColor = "white", highColor = "mediumorchid4", verbose = FALSE, ... ) {
    
    show.pval = FALSE
    input <- x@table
@@ -41,7 +43,7 @@ setMethod( "plot",
      m <- max( input$JaccardIndex )
      p <- ggplot2::ggplot( input, ggplot2::aes( x = Disease1, y = Disease2 ) ) + 
        ggplot2::geom_tile(ggplot2::aes(fill = JaccardIndex), colour = "white") + 
-       ggplot2::scale_fill_gradient(limits = c(0,m), low = "white",   high = "mediumorchid4", na.value = "white") +
+       ggplot2::scale_fill_gradient(limits = c(0,m), low = lowColor,   high = highColor, na.value = "white") +
        ggplot2::theme_grey(base_size = 9) + 
        ggplot2::labs( x = "input diseases",  y = "associated diseases") + 
        ggplot2::scale_x_discrete(expand = c(0, 0)) +

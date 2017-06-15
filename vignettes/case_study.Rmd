@@ -127,7 +127,7 @@ The output is a `DataGeNET.Psy` object. It contains all the information about th
 
 ## Which diseases are associated to these genes according to PsyGeNET database?
 
-In order to visualize the 48 GDAs between the 16 genes found in PsyGeNET and the 15 different disorders, `psygenet2r` provides several options. One of them is the GDA network, which can be obtained by applying the `plot` function to the `DataGeNET.Psy` object (`m1`), obtained from `psygenetGene` function (section 4.1). In the GDA network, green nodes represent diseases and orange nodes represent genes.
+In order to visualize the 48 GDAs between the 16 genes found in PsyGeNET and the 15 different disorders, `psygenet2r` provides several options. One of them is the GDA network, which can be obtained by applying the `plot` function to the `DataGeNET.Psy` object (`m1`), obtained from `psygenetGene` function (section 4.1). In the GDA network, blue nodes represent diseases and yellow nodes represent genes.
 
 ```{r gene-disease, fig.height=8, fig.width=8, fig.cap = "Gene-Disease Association Network", fig.wide = TRUE}
 plot( m1 )
@@ -139,10 +139,10 @@ In PsyGeNET it is important to keep track of both “positive” and the “nega
 
 In the example shown in the next figure (Figure \@ref(fig:gene-psy)), the gene-disease associations related to alcohol UD and depresison are all of type "Association". On the other hand, for bipolar disorder and schizophrenia there are some GDAs that have both types of associations. Finally, in the schizophrenia category it can be seen that there is one GDA with "no association" type.
 
-The barplot can be obtained using the `geneAttrPlot` function and by setting the `type` argument to `"index"`.
+The barplot can be obtained using the `geneAttrPlot` function and by setting the `type` argument to `"evidence index"`.
 
 ```{r gene-psy, fig.cap="Association type barplot according to psychiatric category", fig.wide = TRUE}
-geneAttrPlot( m1, type = "index" )
+geneAttrPlot( m1, type = "evidence index" )
 ```
 
 
@@ -162,22 +162,22 @@ The bar-plot shown in Figure \@ref(fig:panther) is obtained from the gene-list o
 
 In PsyGeNET, each GDA is ranked with the PsyGeNET evidence index, that reflects the association type for each GDA. We can use `psygenet2r` package to visualize the level of evidence in a heatmap.
 
-In order to obtain the heatmap, the `plot` function can be applied to the `DataGeNET.Psy` object (`m1`). The argument type must to be set to `"heatmapGenes"`.
+In order to obtain the heatmap, the `plot` function can be applied to the `DataGeNET.Psy` object (`m1`). The argument type must to be set to `"GDA heatmap"`.
 
 As a result a heat-map is obtained with genes in the X axis and disorders in the Y axis. Heatmap cells will be coloured in green, yellow or red according to the evidence index value. Green color represents those GDAs where all the evidences reviewed by the experts support the existence of an association between the gene and the disease (`EI = 1`); it will be yellow when there is contradictory evidence for the GDA (some publications support the association while others publications do not support it, `1 > EI > 0`), and it will be red when all the evidences reviewed by the experts report that there is no association between the gene and the disease (`EI = 0`).
 
 ```{r gene-disease-2, fig.cap="Gene-Disease Association Heatmap", fig.wide = TRUE}
-plot( m1, type="heatmapGenes")
+plot( m1, type="GDA heatmap")
 ```
 
 Figure \@ref(fig:gene-disease-2) shows that from the total 48 GDAs, only 4 of them have an evidence index different from 1. For example, all the publications supporting _C15orf53-schizophrenia_ association report that there is no association; for the other 3 GDAs (C15orf53-bipolar disorder, DLG2-schizophrenia and SYNE1-bipolar disorder) contradictory evidences have been found.
 
 ## For the disorder of interest, how many publications support each gene-disease associations?
 
-In addition to the PsyGeNET evidence index, we can also inspect the number of publications that support a GDA. `psygenet2r` allows the visualization of this information in a bar-plot, using the `plot` function with the `disorder` argument to indicate the disease of interest, and the `type` argument set to `"barplot"`. Figure \@ref(fig:pubmed2) shows an example, with the genes in the X-axis and the number of PMIDs in the y-axis.
+In addition to the PsyGeNET evidence index, we can also inspect the number of publications that support a GDA. `psygenet2r` allows the visualization of this information in a bar-plot, using the `plot` function with the `disorder` argument to indicate the disease of interest, and the `type` argument set to `"publications "`. Figure \@ref(fig:pubmed2) shows an example, with the genes in the X-axis and the number of PMIDs in the y-axis.
 
 ```{r pubmed2, fig.cap="Publications that report each gene association with bipolar disorder", fig.wide = TRUE}
-plot( m1, name="bipolar disorder", type="barplot")
+plot( m1, name="bipolar disorder", type="publications ")
 ```
 
 The results show that the CACNAC1 gene is associated with bipolar disorder in more than 50 publications, followed by ANK3 gene with around 40 publications. The rest of genes have been associated with bipolar disorder in less than 10 publications.
@@ -243,10 +243,10 @@ plot( xx )
 
 The similarity between diseases according to shared genes can be visualized using a barplot. `psygenet2r` package allows to visualize how many of our genes of interest are associated to each psychiatric disorder present in PsyGeNET and how many of them are exclusively associated to a particular psychiatric disorder.
 
-In order see the similarity between our genes of interest and PsyGeNET's psychiatric disorder, the `type` argument of `geneAttrPlot` function is set to `category`. This will allow to see how many of the 16 genes, that appear in PsyGeNET, are associated with each psychiatric disorder.
+In order see the similarity between our genes of interest and PsyGeNET's psychiatric disorder, the `type` argument of `geneAttrPlot` function is set to `disease category`. This will allow to see how many of the 16 genes, that appear in PsyGeNET, are associated with each psychiatric disorder.
 
 ```{r bpGenes, fig.cap="Barplot: Genes associated to each of the psychiatric disorders", fig.wide = TRUE}
-geneAttrPlot( m1, type = "category" )
+geneAttrPlot( m1, type = "disease category" )
 ```
 
 Figure \@ref(fig:bpGenes) clearly shows that none of our genes of interest are associated to the three disorders. There are 2 exclusively associated to bipolar disorder, 2 in the case of depression and 3 in schizophrenia. The rest of the genes appears in more than one psychiatric disorder.

@@ -10,7 +10,12 @@ geneAttrPlot(x, type = "pie", verbose = FALSE)
 \item{x}{Vector of genes of interest of \code{DataGeNET.Psy} resulting of
 \code{psyegnetDisease}.}
 
-\item{type}{(default \code{"pie"}) It can takes \code{"pie"},}
+\item{type}{Type of the drawn chart. By default it is \code{"pie"}. It can 
+takes \code{"pie"} to plot a pie chart with the number of genes for each psychiatric category, 
+\code{"disease category"} for visualizing a barplot with the total and specific number of genes for
+each psychiatric disorder, \code{"evidence index"} for a barplot showing for each psychiatric disorder
+the number of gene-disease associations according to the Evidence index
+and \code{"gene"} for visualizing a barplot with the total and specific number of diseases associated to each gene.}
 
 \item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get a
 on-time log from the function.}

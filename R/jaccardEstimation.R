@@ -35,13 +35,13 @@
 #' @export jaccardEstimation
 jaccardEstimation <- function(pDisease, sDisease, database="ALL", nboot = 100, ncores = 1, verbose = FALSE) {
   if(missing(pDisease)) {
-    stop("Argument 'pDisease' msut be set. Argument 'sDisease' is optional.")
+    stop("Argument 'pDisease' must be set. Argument 'sDisease' is optional.")
   }
   
   if(verbose) message("Query PsyGeNET for generic diseases.")
   psy <- psygenetAll ( database )
-  universe <- disGenetCurated()
-  
+  #universe <- disGenetCurated()
+  load(system.file("extdata", "disgenetCuratedUniverse.RData", package="psygenet2r"))
   
   diseases <- getDiseasesType( pDisease, psy, verbose )
   
@@ -57,7 +57,7 @@ jaccardEstimation <- function(pDisease, sDisease, database="ALL", nboot = 100, n
 
 singleInput <- function(diseases, type, universe, psy, nboot, ncores, verbose) {
   if(type != "dise") {
-    return(singleInput.genes(diseases$diseases$`gene-list`$genes, psy, universe, nboot, ncores, verbose))
+    return(singleInput.genes(diseases$diseases$geneList$genes, psy, universe, nboot, ncores, verbose))
     #stop("Jaccard Index only allows single input if 'pDiseases' is a vector of diseases (Given: ", type, ").")
   }
   if(length(diseases) <= 1){
@@ -82,8 +82,8 @@ singleInput <- function(diseases, type, universe, psy, nboot, ncores, verbose) {
 
 singleInput.genes <- function(genes, database, universe, nboot, ncores, verbose) {
   warning("Jaccard Index for all diseases in PsyGeNET will be calculated.")
-  xx <- parallel::mclapply(unique(as.character(database$c2.Disease_code)), function(dCode) {
-    disease <- database[database$c2.Disease_code == dCode, "c1.Gene_Symbol"]
+  xx <- parallel::mclapply(unique(as.character(database$c2.DiseaseName)), function(dCode) {
+    disease <- database[database$c2.DiseaseName == dCode, "c1.Gene_Symbol"]
     
     ji <- sum(genes %in% disease) * 1.0 / length(unique(c(genes, disease)))
     bb <- ji.internal(length(genes), length(disease), universe, nboot, ncores)
@@ -96,7 +96,7 @@ singleInput.genes <- function(genes, database, universe, nboot, ncores, verbose)
   rownames(xx) <- 1:nrow(xx)
   colnames(xx) <- c("Disease1", "Disease2", "NGenes1", "NGenes2", "JaccardIndex", "pval")
   
-  new("JaccardIndexPsy", table = xx, type = "gene-list - disease", nit = nboot, i1 = genes, i2 = "PsyGeNET")
+  new("JaccardIndexPsy", table = xx, type = "geneList - disease", nit = nboot, i1 = genes, i2 = "PsyGeNET")
 }
 
 multipleInput <- function(primary, typeP, secondary, typeS, universe, nboot, ncores, verbose) {
@@ -162,18 +162,18 @@ getDiseasesType <- function(pDiseases, psy, verbose = TRUE) {
         stop("4 All input diseases msut be psyquiatric disorders, diseases (cui or name) or genes.")
       }
     } else {
-      if (is.na(type) | (!is.na(type) & type == "gene-list")) {
+      if (is.na(type) | (!is.na(type) & type == "geneList")) {
         it1 <- list( name="gene list", genes=it1 )
-        type <<- "gene-list"
+        type <<- "geneList"
       } else {
         stop("5 All input diseases msut be psyquiatric disorders, diseases (cui or name) or genes.")
       }
     }
     return(it1)
   })
-  if(type == "gene-list") {
-    diseases <- list( list( name = "gene-list", genes = pDiseases ) )
-    names(diseases) <- "gene-list"
+  if(type == "geneList") {
+    diseases <- list( list( name = "geneList", genes = pDiseases ) )
+    names(diseases) <- "geneList"
   } else {
     names(diseases) <- pDiseases
   }

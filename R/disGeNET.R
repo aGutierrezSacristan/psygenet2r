@@ -14,7 +14,7 @@ disGenetCurated <- function (  ) {
         FROM
         c0
         WHERE
-        c2 = 'ALL'
+        c2 = 'CURATED'
         ORDER BY
         c0.Ndiseases DESC"
   

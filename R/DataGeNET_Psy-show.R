@@ -12,13 +12,13 @@ setMethod( "show",
       cat( " . Term:        ", object@term, "\n" )
     }
     
-    cat( " . N. Results:  ", nrow( object@qresult ), "\n" )
+    cat( " . Number of Results:  ", nrow( object@qresult ), "\n" )
     if( object@type == "gene" ) {
-      cat( " . U. Diseases: ", length( unique( object@qresult$c2.Disease_code ) ), "\n" )
-      cat( " . U. Genes:    ", length( unique( object@qresult$c1.Gene_Id ) ), "\n" )
+      cat( " . Number of unique Diseases: ", length( unique( object@qresult$c2.Disease_code ) ), "\n" )
+      cat( " . Number of unique Genes:    ", length( unique( object@qresult$c1.Gene_Id ) ), "\n" )
     } else if( object@type == "disease" ) {
-      cat( " . U. Genes:    ", length( unique( object@qresult$c1.Gene_Id ) ), "\n" )
-      cat( " . U. Diseases: ", length( unique( object@qresult$c2.Disease_Id ) ), "\n" )
+      cat( " . Number of unique Genes:    ", length( unique( object@qresult$c1.Gene_Id ) ), "\n" )
+      cat( " . Number of unique Diseases: ", length( unique( object@qresult$c2.Disease_Id ) ), "\n" )
     }
   }
 )

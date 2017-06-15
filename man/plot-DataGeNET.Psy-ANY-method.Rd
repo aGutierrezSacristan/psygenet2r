@@ -7,7 +7,7 @@
 object.}
 \usage{
 \S4method{plot}{DataGeNET.Psy,ANY}(x, y,
-  layout = igraph::layout.fruchterman.reingold, type = "disease",
+  layout = igraph::layout.fruchterman.reingold, type = "GDA network",
   verbose = FALSE, ...)
 }
 \arguments{
@@ -18,10 +18,9 @@ object.}
 \item{layout}{Function to design the location of the different nodes. By 
 default \code{layout.fruchterman.reingold} from \code{igraph} is used.}
 
-\item{type}{Type of the drawn chart. By default it is \code{"disease"} but 
-it also can be \code{"individual disease"}, \code{"disease"}, 
-\code{"disease class"}, \code{"barplot"}, 
-\code{"heatmapGenes"} or \code{"heatmap"}.}
+\item{type}{Type of the drawn chart. By default it is \code{"GDA network"} but 
+it also can be \code{"GDCA network"}, \code{"publications"}, 
+\code{"GDA heatmap"} or \code{"GDCA heatmap"}.}
 
 \item{verbose}{By default \code{FALSE}. If set to \code{TRUE} information
 on the drawing process will be shown.}
@@ -38,5 +37,5 @@ and \code{JaccardIndexPsy} objects.
 \examples{
 data(qr)
 plot(qr) # for all-disease plot
-plot(qr, type = 'disease class') # for MPI plot
+plot(qr, type = 'GDCA network') # for MPI plot
 }

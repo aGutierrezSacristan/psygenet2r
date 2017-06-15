@@ -11,7 +11,8 @@
 #' @param datatype It can take the values \code{'rna_seq'}, \code{'affymetrix'}, 
 #' \code{"est"} or \code{"in situ"}. 
 #' Default \code{c("rna_seq","affymetrix","est","in_situ")}.
-#' @param statistic Default \code{'fisher'}.
+#' @param statistic By default it is \code{"fisher"}. But it can also be changed to
+#'  \code{"ks"}, \code{"t"}, \code{"globaltest"}, \code{"sum"} or \code{"ks.ties"}. 
 #' @param cutOff Default \code{1}.
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
 #' on-time log from the function.
