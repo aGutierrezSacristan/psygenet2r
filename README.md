@@ -43,6 +43,6 @@ qg <- psygenetGene(gene = 4852,
 library(psygenet2r)
 qd <- psygenetDisease(disease = "schizophrenia", 
     database = "ALL",
-    score = c('>', 0.5) 
+    evidenceIndex = c('>', 0.5) 
 )
 ```

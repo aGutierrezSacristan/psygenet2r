@@ -31,7 +31,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction
 
-The `psygenet2r` package contains functions to query PsyGeNET [@Gutierrez-Sacristan2015], a resource on psychiatric diseases and their  genes. The `psygenet2r` package includes analysis functions to study psychiatric diseases, their genes and disease comorbidities. A special focus is made on visualization of the results, providing a variety of representation formats such as networks, heatmaps and barplots (Table \@ref(tab:viz-opt)).
+The `psygenet2r` package contains functions to query PsyGeNET [@Gutierrez-Sacristan2015], a resource on psychiatric diseases and their  genes. This can also be done using the web tool. However, the `psygenet2r` package goes a step further including analysis and visualization functions to study psychiatric diseases, their genes and disease comorbidities, as well as analyzing the tissues/anatomical structures in which the genes are expressed.  A special focus is made on visualization of the results (not web available), providing a variety of representation formats such as networks, heatmaps and barplots (Table \@ref(tab:viz-opt)).
 
 
 ## Background
@@ -121,7 +121,7 @@ Name       | Description
 
 ### Using as a query a single gene
 
-In order to look for a single gene into PsyGeNET, we can use the `psygenetGene` function. This function retrieves PsyGeNET's information using both, the NCBI gene identifier and the official Gene Symbol from HUGO. It contains also other arguments like the database to query, the PsyGeNET evidence index (score argument).
+In order to look for a single gene into PsyGeNET, we can use the `psygenetGene` function. This function retrieves PsyGeNET's information using both, the NCBI gene identifier and the official Gene Symbol from HUGO. It contains also other arguments like the database to query, the PsyGeNET evidence index (evidenceIndex argument).
   
 As an example, the gene *NPY*, whose entrez id is *4852* is queried using `psygenetGene` function, and using alternatively the official HUGO Gene Symbol. In this example database `"ALL"`.
 
@@ -236,7 +236,7 @@ As it could be expected for the genes that are used in this query, all of them a
 
 `psygenet2r` package also allows to analyze a gene list according to the function of the proteins encoded by these genes. The PANTHER Protein Class Ontology classifies proteins according to their function.
 
-The `pantherGraphic` function shows the Panther class of the proteins for each psychiatric disorder class. It provides a graphic with the results of these analysis, being the input a list of genes and the database (`ALL`, `psycur15`, `psycur16`). The input genes can be from a vector that contains the genes of interest, or from the genes obtained in the `DataGeNET.psy` object in a disease or disease-list query. A score argument can be added to filter results. It can also be done given a DataGeNET.psy object obtained by querying with a single gene.
+The `pantherGraphic` function shows the Panther class of the proteins for each psychiatric disorder class. It provides a graphic with the results of these analysis, being the input a list of genes and the database (`ALL`, `psycur15`, `psycur16`). The input genes can be from a vector that contains the genes of interest, or from the genes obtained in the `DataGeNET.psy` object in a disease or disease-list query. Given the vector with the genes of interest, this function creates a representation of the panther-class these genes belong to. The sum of the percentages of the different protein class for each specific psychiatric disease will be 100%. Note that this percentage will be relative to the number of the input genes associated with each psychiatric category. A evidenceIndex argument can be added to filter results. It can also be done given a DataGeNET.psy object obtained by querying with a single gene.
 
 ```{r panther_gene,  fig.height=8, fig.width=8}
 genesOfInterest <- unique( genesOfInterest )
@@ -344,23 +344,23 @@ If the user does not know the disease identifier, the `getUMLS` function can be 
 getUMLs( "depressive", database = "ALL" )
 ```
 
-As an example, the disease *major affective disorder 2*, whose disease id is *umls:C1839839* is queried using `psygenetDisease` function, and using both, disease name and disease id. The argument `score` is filled with a vector which first position can be `'<'` or `'>'` to indicate if the threshold is read as lower or upper. The second argument is the threshold in itself which will always be included. This argument is also present in `psygenetGene`.
+As an example, the disease *major affective disorder 2*, whose disease id is *umls:C1839839* is queried using `psygenetDisease` function, and using both, disease name and disease id. The argument `evidenceIndex` is filled with a vector which first position can be `'<'` or `'>'` to indicate if the threshold is read as lower or upper. The second argument is the threshold in itself which will always be included. This argument is also present in `psygenetGene`.
 
-The score is the PsyGeNET evidence index (EI), which ranges from 0 to 1 (`EI = 1`, when all the evidences reviewed by the experts support the existence of an association between the gene and the disease; `1 > EI > 0`, when there is contradictory evidence for the GDA and `EI = 0` when all the evidences reviewed by the experts report that there is no association between the gene and the disease).
+The the PsyGeNET evidence index (EI) ranges from 0 to 1 (`EI = 1`, when all the evidences reviewed by the experts support the existence of an association between the gene and the disease; `1 > EI > 0`, when there is contradictory evidence for the GDA and `EI = 0` when all the evidences reviewed by the experts report that there is no association between the gene and the disease).
 
-For this example database `"ALL"` and score `> 0.5` is selected:
+For this example database `"ALL"` and evidenceIndex `> 0.5` is selected:
 
 ```{r search_diseaseId_1}
 d1 <- psygenetDisease( disease  = "umls:C1839839", 
                        database = "ALL", 
-                       score    = c('>', 0.5 ) )
+                       evidenceIndex    = c('>', 0.5 ) )
 d1
 ```
 
 ```{r search_diseaseName_1}
 d2 <- psygenetDisease( disease = "major affective disorder 2", 
                        database = "ALL",
-                       score    = c('>', 0.5 ) )
+                       evidenceIndex    = c('>', 0.5 ) )
 d2
 ```
 
@@ -436,7 +436,7 @@ Another possible option is visualize it in a heatmap. The argument `type` can be
 plot( tm, type = "GDCA heatmap" )
 ```
 
-The result is a heatmap where the genes are located at Y axis, and disordes appear at X axis. The color is related to the PsyGeNET score, being the darkest one the association with the highest score. The score is the PsyGeNET evidence index (EI), which ranges from 0 to 1 (EI=1, when all the evidences reviewed by the experts support the existence of an association between the gene and the disease; 1 > EI > 0, when there is contradictory evidence for the GDA and EI=0 when all the evidences reviewed by the experts report that there is no association between the gene and the disease). 
+The result is a heatmap where the diseases are located at Y axis, and genes appear at X axis. The color is related to the PsyGeNET evidenceIndex (EI), being blue when EI = 1, yellow when EI = 0 and grey for 0>EI<1. The EI ranges from 0 to 1 (EI=1, when all the evidences reviewed by the experts support the existence of an association between the gene and the disease; 1 > EI > 0, when there is contradictory evidence for the GDA and EI=0 when all the evidences reviewed by the experts report that there is no association between the gene and the disease). 
 
 ### Barplot according to number of publications that support the GDA
 
@@ -549,16 +549,18 @@ plot(ji3)
 
 | Input Object    | `psygenet2r` function | Argument Type | Output Generated                                  |
 | ----------------|-----------------------|---------------|---------------------------------------------------|
-| `DataGeNET.Psy` | `geneAttrPlot`        | disease category      | genes asociated with each DC                      |
+| `DataGeNET.Psy` | `geneAttrPlot`        | disease category      | genes asociated with each DC              |
 |                 |                       | gene          | disease concepts and DC associated with each gene |
 |                 |                       | pie           | pie chart number of genes per DC                  |
-|                 |                       | evidence index         | barplot showing the type of association           |
-|                 | `plot`                | GDA network   | GDA network (default type)                   |
+|                 |                       | evidence index| barplot showing the type of association           |
+|                 | `plot`                | GDA network   | GDA network (default type)                        |
 |                 |                       | GDCA network  | GDCAs network                                     |
-|                 |                       | GDA heatmap   | EI heatmap GDCAs heatmap (gene)                   |
-|                 |                       | GDCA heatmap  | EI heatmap for GDA (disease)                      |
+|                 |                       | GDA heatmap   | Evidence Index heatmap for GDCAs (gene)           |
+|                 |                       | GDCA heatmap  | Heatmap for GDA (disease)                         |
 |                 |                       | publications  | number of publications supporting GDA             |
-| JaccardIndexPsy | `plot`                |               | JI Bar-plot / heatmap                             |
+| Gene vector     | `pantherGraphic`      | /             | Barplot showing the protein panther class         |
+| JaccardIndexPsy | `plot`                | /             | JI Bar-plot / heatmap                             |
+|                 |                       |               |                                                   |
 
 : (\#tab:viz-opt) Types of plots done with `psygenet2r` R package
 

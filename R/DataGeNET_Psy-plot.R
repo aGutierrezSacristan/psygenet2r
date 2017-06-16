@@ -323,7 +323,7 @@ plot_psy_heatmapGenes <- function( search, ei0color = "#FFFF33", eiAmbiguitycolo
         }
     }
     
-    h.value = c(0, 0.5, 1) 
+    h.value = c(0,"> 0 & < 1", 1) 
     h.color = c(ei0color, eiAmbiguitycolor, ei1color)
     heatmapColors = data.frame(h.value, h.color)
     hColors <- as.character(heatmapColors$h.color)
@@ -497,7 +497,7 @@ plot_psy_heatmapScore <- function( search, table, verbose, cutOff=0 ) {
 
   p <- ggplot2::qplot( x = rr$c2.PsychiatricDisorder, y = rr$c1.Gene_Symbol, data = rr, fill = rr$c0.Score, geom = "tile" ) + ggplot2::ylab( "Genes" ) + ggplot2::xlab( "Psychiatric Disorder" ) + ggplot2::ggtitle( " ") + ggplot2::scale_fill_gradient2(low = "#ffe7cf", high ="#ff8c1b", space = "rgb", guide = "colourbar")
   p <- p + ggplot2::theme( plot.margin = grid::unit( x=c( 5, 15, 5,15 ), units="mm" ) , axis.line = ggplot2::element_line(size = 0.7, color = "black"), text = ggplot2::element_text(size = 12), axis.text.x = ggplot2::element_text(angle=45, size = 12, hjust = 1), panel.background = ggplot2::element_blank())
-  p <- p + ggplot2::guides(fill=ggplot2::guide_legend(title="Score-Mean"))
+  p <- p + ggplot2::guides(fill=ggplot2::guide_legend(title="evidenceIndex-Mean"))
   p
   return(p)
 }

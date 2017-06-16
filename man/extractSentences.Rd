@@ -5,7 +5,7 @@
 \name{extractSentences}
 \alias{extractSentences}
 \alias{extractSentences,DataGeNET.Psy-method}
-\title{Method to obtain the evidences from a \code{DataGeNET.Psy} object.}
+\title{Method to obtain the sentences that support a gene-disease association from a \code{DataGeNET.Psy} object.}
 \usage{
 extractSentences(object, disorder, verbose)
 
@@ -14,18 +14,20 @@ extractSentences(object, disorder, verbose)
 \arguments{
 \item{object}{Object of class \code{DataGeNET.Psy}.}
 
-\item{disorder}{A disorder to check if any evidence exists.}
+\item{disorder}{The disorder of interest. Only those sentences supporting a gene-disease association 
+with this specific disorder will be extracted.}
 
 \item{verbose}{If set to \code{TRUE} informative messages are show.}
 }
 \value{
-A data frame showing the evidence.
+A data frame showing the sentences.
 }
 \description{
-Internally, PsyGeNET uses a series of collected evidences from public
+PsyGeNET contains a list of sentences that support a gene-disease association from public
 literature. The internal table of a \code{DataGeNET.Psy} object 
-can contains this information. The method \code{extractSentences} 
-allows to extrat this information.
+contains this information. The method \code{extractSentences} 
+allows to extract those sentences that support a gene-disease association given a \code{DataGeNET.Psy} object 
+and a disorder of interest.
 }
 \section{Methods (by class)}{
 \itemize{

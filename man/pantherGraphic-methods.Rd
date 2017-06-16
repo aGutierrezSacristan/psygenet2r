@@ -5,7 +5,7 @@
 \title{Query PsyGeNET for given genes and creates a representation in base of
 their panther-class}
 \usage{
-pantherGraphic(x, database = "ALL", score, verbose = FALSE)
+pantherGraphic(x, database = "ALL", evidenceIndex, verbose = FALSE)
 }
 \arguments{
 \item{x}{Vector of genes of interest of \code{DataGeNET.Psy} resulting of
@@ -17,7 +17,7 @@ of PsyGeNET; \code{'psycur16'} to use data validated by experts for second
 release of PsyGeNET; or \code{'ALL'} to use both databases. 
 Default \code{'ALL'}.}
 
-\item{score}{threshold to take into account a gene in the analysis}
+\item{evidenceIndex}{threshold to take into account a gene in the analysis}
 
 \item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get a
 on-time log from the function.}

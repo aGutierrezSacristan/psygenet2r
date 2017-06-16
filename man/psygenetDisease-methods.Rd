@@ -4,7 +4,7 @@
 \alias{psygenetDisease}
 \title{Query PsyGeNET for given disease(s) and generates an \code{DataGeNET.Psy}}
 \usage{
-psygenetDisease(disease, database = "ALL", score = c(">", 0),
+psygenetDisease(disease, database = "ALL", evidenceIndex = c(">", 0),
   verbose = FALSE, warnings = TRUE)
 }
 \arguments{
@@ -18,7 +18,7 @@ of PsyGeNET; \code{'psycur16'} to use data validated by experts for second
 release of PsyGeNET; or \code{'ALL'} to use both databases. 
 Default \code{'ALL'}.}
 
-\item{score}{A vector with two elements: 1) character with greather 
+\item{evidenceIndex}{A vector with two elements: 1) character with greather 
 \code{'>'} or with lower \code{'<'} meaing greather or equal and lower or
 equal; 2) the evidence index cut-off to be compared. By default: \code{c('>', 0)}.}
 

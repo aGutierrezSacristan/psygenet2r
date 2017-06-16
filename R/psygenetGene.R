@@ -14,7 +14,7 @@
 #' of PsyGeNET; \code{'psycur16'} to use data validated by experts for second 
 #' release of PsyGeNET; or \code{'ALL'} to use both databases. 
 #' Default \code{'ALL'}.
-#' @param score A vector with two elements: 1) character with greather 
+#' @param evidenceIndex A vector with two elements: 1) character with greather 
 #' \code{'>'} or with lower \code{'<'} meaing greather or equal and lower or
 #' equal; 2) the evidence index cut-off to be compared. By default: \code{c('>', 0)}.
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
@@ -25,7 +25,7 @@
 #' @examples
 #' d.alch <- psygenetGene( "ALDH2", "ALL" )
 #' @export psygenetGene
-psygenetGene <- function( gene, database = "ALL", score=c('>', 0),
+psygenetGene <- function( gene, database = "ALL", evidenceIndex=c('>', 0),
                           verbose = FALSE, warnings = TRUE ) {
   check_database( database )
   if( length( gene ) != length( unique( gene ) ) ) {
@@ -35,10 +35,10 @@ psygenetGene <- function( gene, database = "ALL", score=c('>', 0),
     )
   }
   
-  if(length(score) != 2) {
-    stop("Invalid argument 'score'. It must have two elements.")
-  } else if(!score[1] %in% c('>', '<')) {
-    stop("Invalid argument 'score'. First elemnt must be '>' or '<'.")
+  if(length(evidenceIndex) != 2) {
+    stop("Invalid argument 'evidenceIndex'. It must have two elements.")
+  } else if(!evidenceIndex[1] %in% c('>', '<')) {
+    stop("Invalid argument 'evidenceIndex'. First elemnt must be '>' or '<'.")
   }
   
   if( verbose ) {
@@ -149,10 +149,10 @@ psygenetGene <- function( gene, database = "ALL", score=c('>', 0),
     }
   }
   
-  if(score[1] == '>') {
-    result <- result[result$c0.Score>=as.numeric(score[2]),]
+  if(evidenceIndex[1] == '>') {
+    result <- result[result$c0.Score>=as.numeric(evidenceIndex[2]),]
   } else {
-    result <- result[result$c0.Score<=as.numeric(score[2]),]
+    result <- result[result$c0.Score<=as.numeric(evidenceIndex[2]),]
   }
   
   result <- new( "DataGeNET.Psy",

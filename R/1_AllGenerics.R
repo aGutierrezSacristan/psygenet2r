@@ -31,20 +31,22 @@ setGeneric ("ngene",
     function(object){standardGeneric("ngene")}
 )
 
-#' Method to obtain the evidences from a \code{DataGeNET.Psy} object.
+#' Method to obtain the sentences that support a gene-disease association from a \code{DataGeNET.Psy} object.
 #' 
-#' Internally, PsyGeNET uses a series of collected evidences from public
+#' PsyGeNET contains a list of sentences that support a gene-disease association from public
 #' literature. The internal table of a \code{DataGeNET.Psy} object 
-#' can contains this information. The method \code{extractSentences} 
-#' allows to extrat this information.
+#' contains this information. The method \code{extractSentences} 
+#' allows to extract those sentences that support a gene-disease association given a \code{DataGeNET.Psy} object 
+#' and a disorder of interest.
 #' 
 #' @name extractSentences
 # @rdname extractSentences-methods
 #' @aliases extractSentences
 #' @param object Object of class \code{DataGeNET.Psy}.
-#' @param disorder A disorder to check if any evidence exists.
+#' @param disorder The disorder of interest. Only those sentences supporting a gene-disease association 
+#' with this specific disorder will be extracted.
 #' @param verbose If set to \code{TRUE} informative messages are show.
-#' @return A data frame showing the evidence.
+#' @return A data frame showing the sentences.
 #' @examples
 #' data(qr)
 #' extractSentences(qr, "Depression")
