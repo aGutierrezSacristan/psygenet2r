@@ -150,13 +150,16 @@ In the particular example used, by inspecting the `DataGeNET.Psy` object, we can
 
 `psygenet2r` offers several options to visualize the results from PysGeNET in networks by changing the `type` argument when applying the `plot` function. A network showing the diseases (`type = "GDA network"`) or the psychiatric disorders (`type = "GDCA network"`) related to the gene of interest is obtained.
 
-By default, `psygenet2r` shows a network when ploting a `DataGeNET.Psy` object obtained by a gene-query. The result is a network where blue nodes are diseases and the yellow node is the gene of interest.
+By default, `psygenet2r` shows a network when ploting a `DataGeNET.Psy` object obtained by a gene-query. The result is a network where blue nodes are diseases and the yellow node is the gene of interest. Node colors can be changed adding the following arguments `geneColor` and `diseaseColor`. 
+
 
 ```{r plot_disease, fig.width=8, fig.height=8}
 plot( t1, type = "GDA network" )
 ```
 
 On the other hand, results can be visualized according to the 8 psychiatric disorders classes available in PsyGeNET (depression, bipolar disorder, alcohol use disorders, cocaine use disorder, bipolar disorder, schizophrenia, cannabis use disorder, substance-induced depressive disorder and psychoses) setting the `type` argument to `"GDCA network"`. As a result, a network with a maximum of 9 nodes is obtained (8 nodes that represent the psychiatric disorders and 1 node that represents the gene). The node's size of each psychiatric disorder is proportional to the number of disease concepts that belongs to each disease class, from the total number of diseases associated to the gene.
+
+Note that the node colors can be changed adding the next arguments: `AUDcolor` for alcohol use disorders node, `BDcolor` for bipolar disorders and related disorders node, `DEPcolor` for depressive disorders node, `SCHZcolor` for schizophrenia spectrum and other psychotic disorders node, `CUDcolor` for cocaine use disorders node, `SIDEPcolor` for substance induced depressive disorder node, `CanUDcolor` for cannabis use disorders node, `SYPSYcolor` for substance induced psychosis node and `geneColor` for the gene node. 
 
 ```{r plot_psychiatric, fig.width=8, fig.height=8}
 plot( t1, type = "GDCA network" )
@@ -200,7 +203,7 @@ m1
 
 `psygenet2r` provides several options to visualize the results of these queries, such as networks, heatmaps and barplots.
 
-As for the single gene example, the default option in `psygenet2r` results is a network chart, where the blue nodes represent diseases and the yellows nodes represent genes.
+As for the single gene example, the default option in `psygenet2r` results is a network chart, where the blue nodes represent diseases and the yellows nodes represent genes. Node colors can be changed adding the following arguments `geneColor` and `diseaseColor`. 
 
 ```{r plot_psychiatric1a,  fig.height=8, fig.width=8}
 plot( m1 )
@@ -208,13 +211,19 @@ plot( m1 )
 
 It is also possible to visualize the results by grouping the diseases according to the psychiatric disorders present in PsyGeNET (depression, bipolar disorder, alcohol use disorders, cocaine use disorder, bipolar disorder, schizophrenia, cannabis use disorder, substance-induced depressive disorder and psychoses) setting the `type` argument to `"GDCA network"`. As a result, a psychiatric disorder genes network is obtained. The edge's size is proportional to the number of disease concepts that belongs to each disease class, from the total number of diseases associated to the gene.
 
+Note that the node colors can be changed adding the next arguments: `AUDcolor` for alcohol use disorders node, `BDcolor` for bipolar disorders and related disorders node, `DEPcolor` for depressive disorders node, `SCHZcolor` for schizophrenia spectrum and other psychotic disorders node, `CUDcolor` for cocaine use disorders node, `SIDEPcolor` for substance induced depressive disorder node, `CanUDcolor` for cannabis use disorders node, `SYPSYcolor` for substance induced psychosis node and `geneColor` for the gene node. 
+
+
 ```{r plot_psychiatric1b, warning=FALSE,  fig.height=8, fig.width=8}
 plot( m1, type = "GDCA network" )
 ```
 
 `psygenet2r` package allows to visualize the GDAs attributes in a heatmap. The argument `type` must be `"GDA heatmap"` and the PsyGeNET evidence index can also be determined by the user setting the `cut-off` argument to the evidence index of interest. In this example, the cut-off is set to 0, in order to obtain all the results. If we set the cut-off to 0.5, only those associations with at least half of the publications supporting the association will be shown. In this kind of representation we can identify genes that are associated to several diseases (e.g. SLC6A4), others that are associated only to one disease (e.g. HTR6) and we can visualize the evidence index for each association.
  
-Note that heatmap cells can be coloured in blue, grey or yellow. Blue cells represent those GDAs where all the evidences reviewed by the experts support the existence of an association between the gene and the disease (EI = 1); it will be grey when there is contradictory evidence for the GDA (some publications support the association while others publications do not support it, 1 > EI > 0), and it will be yellow when all the evidences reviewed by the experts report that there is no association between the gene and the disease (EI = 0).
+Note that heatmap cells are coloured by default in blue, grey or yellow. Blue cells represent those GDAs where all the evidences reviewed by the experts support the existence of an association between the gene and the disease (EI = 1); it will be grey when there is contradictory evidence for the GDA (some publications support the association while others publications do not support it, 1 > EI > 0), and it will be yellow when all the evidences reviewed by the experts report that there is no association between the gene and the disease (EI = 0).
+
+The heatmap cells colors can be changed using the arguments `ei0color` for those cases in which EI = 0, `eiAmbiguitcolor` for those cases in which 1 > EI > 0 and `ei1color` for those cases in which EI = 1. 
+
 
 ```{r heatmap_disease_m,  fig.height=8, fig.width=8}
 plot( m1, type="GDA heatmap" )
@@ -226,7 +235,8 @@ In this example we can see that there are 3 GDAs in yellow (GNB3-chronic alcohol
 
 An alternative graphical representation is a psychiatric disorder heatmap related to the percentage of diseases in a class to which a gene is associated. It allows to analyze if the genes that are being studied present a specific association with a subtype of disorder or if they are associated with several of them in the same psychiatric disorder class. The percentage of diseases to which a gene appears associated with each psychiatric disorder is estimated. This percentage is relative to the total number of subtypes of disorders present in PsyGeNET (33 for alcohol UD, 9 for bipolar disorder, 37 for depression, 24 for schizophrenia, 6 for cocaine UD, 3 for cannabis UD, 3 for DI-Psychosis and 2 for	SI-Depression). The resulting values are represented in a heatmap according to a blue color scale.
 
-In order to obtain this graphic, `type` must be set to `"GDCA heatmap"`. The resulting heatmap shows which are the genes that are higher or lower associated to each one of the psychiatric disorders. 
+In order to obtain this graphic, `type` must be set to `"GDCA heatmap"`. The resulting heatmap shows which are the genes that are higher or lower associated to each one of the psychiatric disorders. Note that the heatmap colors can be defined using the arguments `highColor` (blue by default) and 'lowColor' (white by default).
+
 
 ```{r plot_psychiatric_heamap, warning = FALSE,  fig.height=8, fig.width=8}
 plot( m1, type = "GDCA heatmap" )
@@ -251,7 +261,8 @@ pantherGraphic( genesOfInterest, "ALL" )
 geneAttrPlot( m1, type = "disease category" )
 ```
 
-As a result, a barplot is obtained. The X axis contains the psychiatric disorders, sorted alphabetically and the number of genes are represented in the Y axis. For each psychiatric disorder two bars are plotted, the blue bar represents the total number of genes for the psychiatric disorder. For those cases in which some of these genes are specific for the disorder according to PsyGeNET, a second bar coloured in orange will be displayed.
+As a result, a barplot is obtained. The X axis contains the psychiatric disorders, sorted alphabetically and the number of genes are represented in the Y axis. For each psychiatric disorder two bars are plotted, the blue bar represents the total number of genes for the psychiatric disorder. For those cases in which some of these genes are specific for the disorder according to PsyGeNET, a second bar coloured in orange will be displayed. The bar colors can be changed using the arguments `totalGenesBarColor` and `uniqueGenesBarColor` respectively. 
+
 
 Alternatively, `psygenet2r` package allows to visualize for each gene, how many disease concepts and how many psychiatric categories are associated to it. This can be done applying the `geneAttrPlot` function and setting the `type` argument to `"gene"`.
 
@@ -259,11 +270,14 @@ Alternatively, `psygenet2r` package allows to visualize for each gene, how many 
 geneAttrPlot( m1, type = "gene" )
 ```
 
-As a result, a barplot is obtained. The X axis contains the genes, sorted alphabetically and the number of cuis and psychiatric categories are represented in the Y axis. For each psychiatric disorder two bars are plotted, the purple bar represents the number of cuis and the yellow one belongs to the number of categories.
+As a result, a barplot is obtained. The X axis contains the genes, sorted alphabetically and the number of cuis and psychiatric categories are represented in the Y axis. For each psychiatric disorder two bars are plotted, the purple bar represents the number of cuis and the yellow one belongs to the number of categories. The bar colors can be changed using the arguments `cuiBarColor` and `diseaseCategoryBarColor` respectively. 
+
 
 In our example, the gene SLC6A4 is the one whith more associated cuis (26) and categories (6).
 
 If we are only interested in how many of our input genes are associated to each disease category, `psygenet2r` package allows to visualize it in a pie chart by applying the `geneAttrPlot` function and setting up the `type` argument to `pie`.
+
+Note that the colors for each psychiatric category can be changed adding the next arguments: `AUDcolor` for alcohol use disorders, `BDcolor` for bipolar disorders and related disorders, `DEPcolor` for depressive disorders, `SCHZcolor` for schizophrenia spectrum and other psychotic disorders, `CUDcolor` for cocaine use disorders, `SIDEPcolor` for substance induced depressive disorder, `CanUDcolor` for cannabis use disorders and `SYPSYcolor` for substance induced psychosis. 
 
 ```{r plot_pie, fig.width=8, fig.height=8}
 geneAttrPlot( m1, type = "pie" )
@@ -375,10 +389,12 @@ class( d2 )
 
 `psygenet2r` package offers several options to visualize the results from PysGeNET given a disease: a network showing the genes related to the disease of interest and a barplot showing how many publications report each one of the gene-disease associations. 
 
-By default, `psygenet2r` shows the GDAs network when ploting a `DataGeNET.Psy` object with a disease-query. The result is a network where, yellow nodes are genes and the central and blue node is the disease of interest.  
+By default, `psygenet2r` shows the GDAs network when ploting a `DataGeNET.Psy` object with a disease-query. The result is a network where, yellow nodes are genes and the central and blue node is the disease of interest. Node colors can be changed adding the following arguments `geneColor` and `diseaseColor`. 
 
 ```{r plot_visualizing_single_disease_search, fig.width=8, fig.height=8}
-plot ( d1 )
+plot ( d1, 
+       geneColor    = "turquoise2", 
+       diseaseColor = "black")
 ```
 
 ### Using a list of diseases as a query
@@ -423,7 +439,7 @@ This type of object contains all the information about the different genes assoc
 
 `psygenet2r` provides a network graphic and a heatmap to visualize the results of search with multiple input items. 
 
-As for single disease, GDAs network is the default option in `psygenet2r`. In the resulting network chart, the blue nodes represent diseases and the yellows nodes represent genes. 
+As for single disease, GDAs network is the default option in `psygenet2r`. In the resulting network chart, the blue nodes represent diseases and the yellows nodes represent genes. Node colors can be changed adding the following arguments `geneColor` and `diseaseColor`. 
 
 ```{r plot_disease_tm }
 plot( tm )
@@ -438,18 +454,25 @@ plot( tm, type = "GDCA heatmap" )
 
 The result is a heatmap where the diseases are located at Y axis, and genes appear at X axis. The color is related to the PsyGeNET evidenceIndex (EI), being blue when EI = 1, yellow when EI = 0 and grey for 0>EI<1. The EI ranges from 0 to 1 (EI=1, when all the evidences reviewed by the experts support the existence of an association between the gene and the disease; 1 > EI > 0, when there is contradictory evidence for the GDA and EI=0 when all the evidences reviewed by the experts report that there is no association between the gene and the disease). 
 
+The heatmap cells colors can be changed using the arguments `ei0color` for those cases in which EI = 0, `eiAmbiguitcolor` for those cases in which 1 > EI > 0 and `ei1color` for those cases in which EI = 1. 
+
 ### Barplot according to number of publications that support the GDA
 
-`psygenet2r` package allows to see how many publications support each gene-disease association. This can be visualized in a barplot by determining the gene or disease id in the `name` argument and setting `type` argument to `"publications "`.
+`psygenet2r` package allows to see how many publications support each gene-disease association. This can be visualized in a barplot by determining the gene or disease id in the `name` argument and setting `type` argument to `"publications "`. The bar color can be changed using the argument `barColor` (by default grey).
 
 ```{r barplot_visualizing_single_disease_search, fig.width=8, fig.height=8}
-plot( d1, name = "major affective disorder 2", type = "publications" )
+plot( d1, 
+      name = "major affective disorder 2", 
+      type = "publications" )
 ```
 
 As a result, a barplot is obtained. The X axis contains the genes related to the disease of interest, sorted by the number of pubmed ids in which we can find the gene-disease association. Alternatively, the results can be visualized for the diseases.
 
 ```{r barplot_visualizing_single_gene_search, fig.width=8, fig.height=8}
-plot( t1, name = "NPY", type = "publications" )
+plot( t1, 
+      name     = "NPY", 
+      type     = "publications",
+      barColor = "blue")
 ```
 
 # Analyze the association between two diseases based on shared genes
@@ -523,13 +546,16 @@ The plot of the result of a `jaccardEstimation} using a singe set of genes corre
 plot(ji1, cutOff = 0.1)
 ```
 
+
 The previous bar-plot shows the Jaccard Index greater than 0.1 obtained from testing each diseases in PsyGeNET. When given a set of genes and a set of diseases, the resulting plot is equivalent:
 
 ```{r ji2_plot, fig.width=8, fig.height=8}
 plot(ji2)
 ```
 
-The plot resulting from more than one disease is a heat-map with the given disease as X axis and all the diseases that share genes with them placed as Y axis. The intensity of the color represents the value of the Jaccard Index between, being the darker one the major Jaccard Index.
+Note that the bar colors can be changed using the arguments `highColor`.
+
+The plot resulting from more than one disease is a heat-map with the given disease as X axis and all the diseases that share genes with them placed as Y axis. The intensity of the color represents the value of the Jaccard Index between, being the darker one the major Jaccard Index. Note that the heatmap colors can be defined using the arguments `highColor`  and 'lowColor'.
 
 ```{r ji3_plot, fig.width=8, fig.height=8}
 plot(ji3)

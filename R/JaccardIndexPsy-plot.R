@@ -62,7 +62,7 @@ setMethod( "plot",
          
      } else {
        p <- ggplot2::ggplot( input, ggplot2::aes ( x = Disease2, y = JaccardIndex ), order = as.numeric(JaccardIndex) ) +
-         ggplot2::geom_bar ( stat = "identity", fill = "mediumorchid4" ) +
+         ggplot2::geom_bar ( stat = "identity", fill = highColor ) +
          ggplot2::labs ( x = "associated diseases", y = "jaccard index")
      }
      p <- p + ggplot2::theme_classic( ) + 
