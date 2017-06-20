@@ -9,32 +9,51 @@
 #' @aliases geneAttrPlot
 #' @param x Vector of genes of interest of \code{DataGeNET.Psy} resulting of
 #' \code{psyegnetDisease}.
-#' @param type (default \code{"pie"}) It can takes \code{"pie"}, 
+#' @param type Type of the drawn chart. By default it is \code{"pie"}. It can 
+#' takes \code{"pie"} to plot a pie chart with the number of genes for each 
+#' psychiatric category, \code{"disease category"} for visualizing a barplot 
+#' with the total and specific number of genes for each psychiatric disorder, 
+#' \code{"evidence index"} for a barplot showing for each psychiatric disorder
+#' the number of gene-disease associations according to the Evidence index
+#' and \code{"gene"} for visualizing a barplot with the total and specific 
+#' number of diseases associated to each gene.
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
 #' on-time log from the function.
+#' @param ... (Check NOTE section) Passed to inner functions for different 
+#' plots.
 #' @return A plot for a \code{DataGeNET.Psy} in terms of the panther-class.
+#' @note The "Evidence Index" is gotten from PsyGeNET. For more information
+#' about it and its calculation, pease visit \code{psygenet.org}.
+#' Argument \code{...} can be filled with specific argument depending on 
+#' the type of plot:
+#' \tabular{llll}{
+#' \strong{Type}    \tab \strong{Argument}   \tab \strong{Color} \tab \strong{Description}\cr
+#' gene             \tab cuiBarColor             \tab Purple \tab Determines the color of the bar for diseases\cr
+#'                  \tab diseaseCategoryBarColor \tab Yellow \tab Determines the color of the bar for psychiatric categories\cr
+#' disease category \tab uniqueGenesBarColor \tab Orange \tab Determines the color of the bar for unique genes for a disease category\cr
+#'                  \tab totalGenesBarColor  \tab Blue   \tab Determines the color of the bar for total genes for a disease category
+#' }
 #' @export geneAttrPlot
-
-geneAttrPlot <- function( x, type = "pie", verbose = FALSE ){
+geneAttrPlot <- function( x, type = "pie", ..., verbose = FALSE ){
     type <- tolower( type )
     if( type == "pie") {
-        .pie_plot(x, verbose = verbose)
-    } else if( type == "category" ) {
-        .category_plot(x, verbose = verbose)
-    } else if( type == "index" ) {
-        .index_plot(x, verbose = verbose)
+        .pie_plot(x, ..., verbose = verbose)
+    } else if( type == "disease category" ) {
+        .category_plot(x, ..., verbose = verbose)
+    } else if( type == "evidence index" ) {
+        .index_plot(x, ..., verbose = verbose)
     } else if( type == "gene" ) {
-        .gene_plot(x, verbose = verbose)
+        .gene_plot(x, ..., verbose = verbose)
     }else{
 	     stop( paste0( "Invalid 'type' value. Accepted: 'pie', ",
-        "'category', 'index' and 'gene'." ) )	
+        "'disease category', 'evidence index' and 'gene'." ) )	
 	}
 
 }
 
 
 ## -------------------------------------------------------------------------- ##
-.gene_plot <- function( x, verbose ) {
+.gene_plot <- function( x, cuiBarColor = "#790080", diseaseCategoryBarColor = "#ffdb01", verbose ) {
     if( length(x@term) == 1 ) {
         stop( "For this type of chart, a multiple query created with 'psygenetGene' is required." )
     }
@@ -77,7 +96,7 @@ geneAttrPlot <- function( x, type = "pie", verbose = FALSE ){
                           stat="identity", 
                           colour = "black")
     
-    p <- p + ggplot2::scale_fill_manual(values=c("#790080", "#ffdb01"))
+    p <- p + ggplot2::scale_fill_manual(values=c(cuiBarColor, diseaseCategoryBarColor))
     p <- p + ggplot2::theme_classic( ) + ggplot2::theme( plot.margin = unit ( x = c ( 5, 15, 5, 15 ), units = "mm" ), 
                                                          axis.line = ggplot2::element_line ( size = 0.7, color = "black" ), text = ggplot2::element_text ( size = 14 ) ,
                                                          axis.text.x = ggplot2::element_text ( angle = 45, size = 10, hjust = 1 ))
@@ -142,7 +161,7 @@ geneAttrPlot <- function( x, type = "pie", verbose = FALSE ){
 }
 
 ## -------------------------------------------------------------------------- ##
-.category_plot <- function( x, verbose ) {
+.category_plot <- function( x, uniqueGenesBarColor = "#E69F00", totalGenesBarColor = "#136593", verbose ) {
     
     if( length(x@term) == 1 ) {
         stop( "For this type of chart, a multiple query created with 'psygenetGene' is required." )
@@ -189,7 +208,7 @@ geneAttrPlot <- function( x, type = "pie", verbose = FALSE ){
                           stat="identity", 
                           colour = "black")
     
-    p <- p + ggplot2::scale_fill_manual(values=c("#E69F00", "#136593"))
+    p <- p + ggplot2::scale_fill_manual(values=c( uniqueGenesBarColor, totalGenesBarColor ))
     p <- p + ggplot2::theme_classic( ) + ggplot2::theme( plot.margin = unit ( x = c ( 5, 15, 5, 15 ), units = "mm" ), 
                                                          axis.line = ggplot2::element_line ( size = 0.7, color = "black" ), text = ggplot2::element_text ( size = 14 ) ,
                                                          axis.text.x = ggplot2::element_text ( angle = 45, size = 10, hjust = 1 ))
@@ -198,7 +217,9 @@ geneAttrPlot <- function( x, type = "pie", verbose = FALSE ){
 
 
 ## -------------------------------------------------------------------------- ##
-.pie_plot <- function(x, verbose) {
+.pie_plot <- function(x, AUDcolor = "#FF3C32", BDcolor = "#FFC698", DEPcolor = "#9BE75E", 
+                      SCHZcolor = "#1F6024", CUDcolor = "#5AB69C", 
+                      SIDEPcolor = "#50B8D6", CanUDcolor = "#5467C3", SYPSYcolor = "#A654C3", verbose) {
     if( class( x ) == "DataGeNET.Psy" ) {
         #if( x@type == "gene" ) {
         table <- x@qresult
@@ -233,9 +254,11 @@ geneAttrPlot <- function( x, type = "pie", verbose = FALSE ){
                      "Cannabis UD",
                      "DI-Psychosis" 
                      )
+    
+
         
-    colors <- c( "#FF3C32", "#FFC698", "#9BE75E", "#1F6024", 
-                 "#5AB69C", "#50B8D6","#5467C3","#A654C3")
+    colors <- c(  AUDcolor, BDcolor, DEPcolor, SCHZcolor, CUDcolor, 
+                  SIDEPcolor, CanUDcolor, SYPSYcolor)
     
     names( colors ) <- setsOrder
     

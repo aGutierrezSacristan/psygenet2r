@@ -3,11 +3,11 @@
 \docType{methods}
 \name{plot,DataGeNET.Psy,ANY-method}
 \alias{plot,DataGeNET.Psy,ANY-method}
-\title{Plots the content of a \code{DataGeNET.Psy} or \code{JaccardIndexPsy} 
-object.}
+\alias{DataGeNET.Psy-plot}
+\title{Plots the content of a \code{DataGeNET.Psy} object}
 \usage{
 \S4method{plot}{DataGeNET.Psy,ANY}(x, y,
-  layout = igraph::layout.fruchterman.reingold, type = "disease",
+  layout = igraph::layout.fruchterman.reingold, type = "GDA network",
   verbose = FALSE, ...)
 }
 \arguments{
@@ -18,15 +18,17 @@ object.}
 \item{layout}{Function to design the location of the different nodes. By 
 default \code{layout.fruchterman.reingold} from \code{igraph} is used.}
 
-\item{type}{Type of the drawn chart. By default it is \code{"disease"} but 
-it also can be \code{"individual disease"}, \code{"disease"}, 
-\code{"disease class"}, \code{"barplot"}, 
-\code{"heatmapGenes"} or \code{"heatmap"}.}
+\item{type}{Type of the drawn chart. By default it is \code{"GDA network"} 
+but it also can be \code{"GDCA network"}, \code{"GDCA heatmap"}, 
+\code{"GDA heatmap"} and \code{"publications"}. The first two are network
+representations of the second two. While the last one draws a barplot
+with the number of PMIDs between genes and diseases.}
 
 \item{verbose}{By default \code{FALSE}. If set to \code{TRUE} information
 on the drawing process will be shown.}
 
-\item{...}{Passed to inner functions for different plots.}
+\item{...}{(Check NOTE section) Passed to inner functions for different 
+plots.}
 }
 \value{
 A plot for \code{DataGeNET.Psy}.
@@ -35,8 +37,33 @@ A plot for \code{DataGeNET.Psy}.
 This functions llows to create a variety of plots for \code{DataGeNEt.Psy}
 and \code{JaccardIndexPsy} objects.
 }
+\note{
+The "Evidence Index" is gotten from PsyGeNET. For more information
+about it and its calculation, pease visit \code{psygenet.org}.
+Argument \code{...} can be filled with specific argument depending on 
+the type of plot:
+\tabular{llll}{
+\strong{Type}\tab\strong{Argument}\tab \strong{Color} \tab \strong{Description}\cr
+GDA network  \tab geneColor       \tab Yellow  \tab Determines the color of the gene nodes\cr
+             \tab diseaseColor    \tab Blue    \tab Determines the color of the disease nodes\cr
+GDA heatmap  \tab highColor       \tab Blue    \tab Determines the color of the heatmap for the highest value\cr
+             \tab lowColor        \tab White   \tab Determines the color of the heatmap for the lowest value\cr
+GDCA network \tab ei0color        \tab Yellow  \tab Determines the color for those associations with evidence index 0\cr
+             \tab eiAmbiguitcolor \tab Grey    \tab Determines the color for those associations with evidence index greater than 0 and lower than 1\cr
+             \tab ei1color        \tab Blue    \tab Determines the color for those associations with evidence index 1\cr
+GDCA heatmap \tab AUDcolor        \tab #FF3C32 \tab \cr
+             \tab BDcolor         \tab #FFC698 \tab \cr
+             \tab DEPcolor        \tab #9BE75E \tab \cr
+             \tab SCHZcolor       \tab #1F6024 \tab \cr
+             \tab CUDcolor        \tab #5AB69C \tab \cr
+             \tab SIDEPcolor      \tab #50B8D6 \tab \cr
+             \tab CanUDcolor      \tab #5467C3 \tab \cr
+             \tab SYPSYcolor      \tab #A654C3 \tab \cr
+             \tab geneColor       \tab Orange  \tab
+}
+}
 \examples{
 data(qr)
 plot(qr) # for all-disease plot
-plot(qr, type = 'disease class') # for MPI plot
+plot(qr, type = 'GDCA network') # for MPI plot
 }

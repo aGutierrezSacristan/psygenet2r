@@ -4,13 +4,23 @@
 \alias{geneAttrPlot}
 \title{Ploting the relation between genes and disease-categories}
 \usage{
-geneAttrPlot(x, type = "pie", verbose = FALSE)
+geneAttrPlot(x, type = "pie", ..., verbose = FALSE)
 }
 \arguments{
 \item{x}{Vector of genes of interest of \code{DataGeNET.Psy} resulting of
 \code{psyegnetDisease}.}
 
-\item{type}{(default \code{"pie"}) It can takes \code{"pie"},}
+\item{type}{Type of the drawn chart. By default it is \code{"pie"}. It can 
+takes \code{"pie"} to plot a pie chart with the number of genes for each 
+psychiatric category, \code{"disease category"} for visualizing a barplot 
+with the total and specific number of genes for each psychiatric disorder, 
+\code{"evidence index"} for a barplot showing for each psychiatric disorder
+the number of gene-disease associations according to the Evidence index
+and \code{"gene"} for visualizing a barplot with the total and specific 
+number of diseases associated to each gene.}
+
+\item{...}{(Check NOTE section) Passed to inner functions for different 
+plots.}
 
 \item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get a
 on-time log from the function.}
@@ -22,4 +32,17 @@ A plot for a \code{DataGeNET.Psy} in terms of the panther-class.
 Given a set of genes or a result of \code{psygenetGene} creates four types
 of plots showing the relation of the genes with the disease's category
 in psyGeNET.
+}
+\note{
+The "Evidence Index" is gotten from PsyGeNET. For more information
+about it and its calculation, pease visit \code{psygenet.org}.
+Argument \code{...} can be filled with specific argument depending on 
+the type of plot:
+\tabular{llll}{
+\strong{Type}    \tab \strong{Argument}   \tab \strong{Color} \tab \strong{Description}\cr
+gene             \tab cuiBarColor             \tab Purple \tab Determines the color of the bar for diseases\cr
+                 \tab diseaseCategoryBarColor \tab Yellow \tab Determines the color of the bar for psychiatric categories\cr
+disease category \tab uniqueGenesBarColor \tab Orange \tab Determines the color of the bar for unique genes for a disease category\cr
+                 \tab totalGenesBarColor  \tab Blue   \tab Determines the color of the bar for total genes for a disease category
+}
 }

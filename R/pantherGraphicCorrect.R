@@ -15,18 +15,18 @@
 #' of PsyGeNET; \code{'psycur16'} to use data validated by experts for second 
 #' release of PsyGeNET; or \code{'ALL'} to use both databases. 
 #' Default \code{'ALL'}.
-#' @param score threshold to take into account a gene in the analysis
+#' @param evidenceIndex threshold to take into account a gene in the analysis
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
 #' on-time log from the function.
 #' @return A plot for a \code{DataGeNET.Psy} in terms of the panther-class.
 #' @examples
 #' d.alch <- pantherGraphic( c( "COMT", "CLOCK", "DRD3" ), "ALL" )
 #' @export pantherGraphic
-pantherGraphic <- function ( x, database = "ALL", score, verbose = FALSE ) {
+pantherGraphic <- function ( x, database = "ALL", evidenceIndex, verbose = FALSE ) {
   if( class( x ) == "DataGeNET.Psy" ) {
     if( x@type == "disease" ) {
-      if( !missing( score ) ) {
-        tmp_result <- x@qresult[ x@qresult$c0.Score >= score, ]
+      if( !missing( evidenceIndex ) ) {
+        tmp_result <- x@qresult[ x@qresult$c0.Score >= evidenceIndex, ]
         geneList <- as.character( tmp_result$c1.Gene_Symbol )
       } else {
         geneList <- as.character( x@qresult$c1.Gene_Symbol )
