@@ -11,11 +11,13 @@ geneAttrPlot(x, type = "pie", verbose = FALSE)
 \code{psyegnetDisease}.}
 
 \item{type}{Type of the drawn chart. By default it is \code{"pie"}. It can 
-takes \code{"pie"} to plot a pie chart with the number of genes for each psychiatric category, 
-\code{"disease category"} for visualizing a barplot with the total and specific number of genes for
-each psychiatric disorder, \code{"evidence index"} for a barplot showing for each psychiatric disorder
+takes \code{"pie"} to plot a pie chart with the number of genes for each 
+psychiatric category, \code{"disease category"} for visualizing a barplot 
+with the total and specific number of genes for each psychiatric disorder, 
+\code{"evidence index"} for a barplot showing for each psychiatric disorder
 the number of gene-disease associations according to the Evidence index
-and \code{"gene"} for visualizing a barplot with the total and specific number of diseases associated to each gene.}
+and \code{"gene"} for visualizing a barplot with the total and specific 
+number of diseases associated to each gene.}
 
 \item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get a
 on-time log from the function.}
@@ -27,4 +29,8 @@ A plot for a \code{DataGeNET.Psy} in terms of the panther-class.
 Given a set of genes or a result of \code{psygenetGene} creates four types
 of plots showing the relation of the genes with the disease's category
 in psyGeNET.
+}
+\note{
+The "Evidence Index" is gotten from PsyGeNET. For more information
+about it and its calculation, pease visit \code{psygenet.org}.
 }

@@ -24,6 +24,8 @@
 #' @return An object of class \code{DataGeNET.Psy}
 #' @examples
 #' d.sch <- psygenetDisease( "schizophrenia", "ALL" )
+#' @note The "Evidence Index" is gotten from PsyGeNET. For more information
+#' about it and its calculation, pease visit \code{psygenet.org}.
 #' @export psygenetDisease
 psygenetDisease <- function( disease, database = "ALL", evidenceIndex=c('>', 0), verbose = FALSE, warnings = TRUE ) {
   check_database( database )
@@ -168,7 +170,7 @@ psygenetDisease <- function( disease, database = "ALL", evidenceIndex=c('>', 0),
   }
   
   if( length( wDiseases ) != 0 ) {
-    diseases <- paste( paste( "   -", wDiseases ), collapse = "\n" )
+    diseases <- paste( wDiseases, collapse = ", " )
     if( warnings ) {
       warning( "One or more of the given diseases is not in PsyGeNET ( '", database, "' ):\n", diseases )
     }

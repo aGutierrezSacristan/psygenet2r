@@ -35,6 +35,10 @@ An object of class \code{DataGeNET.Psy}
 Given the name of one or multiple diseases and retrives their information 
 from PsyGeNET and creates an object of type \code{DataGeNET.Psy}.
 }
+\note{
+The "Evidence Index" is gotten from PsyGeNET. For more information
+about it and its calculation, pease visit \code{psygenet.org}.
+}
 \examples{
 d.sch <- psygenetDisease( "schizophrenia", "ALL" )
 }

@@ -175,10 +175,9 @@ To illustrate this functionality, a list of 20 genes was extracted from the arti
 
 ```{r search_multiple_genes}
 genesOfInterest <- c( "COMT", "CLOCK", "DRD3", "GNB3", "HTR1A",
-                      "MAOA", "HTR2A","HTR2C", "HTR6", "SLC6A4", 
-                      "ACE",  "BDNF", "DRD4", "HTR1B", "HTR2B",
-                      "HTR2C", "MTHFR", "SLC6A3", "TPH1", "SLC6A2", 
-                      "GABRA3"
+    "MAOA", "HTR2A","HTR2C", "HTR6", "SLC6A4", "ACE",  "BDNF", 
+    "DRD4", "HTR1B", "HTR2B", "HTR2C", "MTHFR", "SLC6A3", "TPH1", 
+    "SLC6A2", "GABRA3"
 )
 ```
 

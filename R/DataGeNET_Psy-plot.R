@@ -8,9 +8,11 @@
 #' @param y NOT USED
 #' @param layout Function to design the location of the different nodes. By 
 #' default \code{layout.fruchterman.reingold} from \code{igraph} is used.
-#' @param type Type of the drawn chart. By default it is \code{"GDA network"} but 
-#' it also can be \code{"GDCA network"}, \code{"publications"}, 
-#' \code{"GDA heatmap"} or \code{"GDCA heatmap"}.
+#' @param type Type of the drawn chart. By default it is \code{"GDA network"} 
+#' but it also can be \code{"GDCA network"}, \code{"GDCA heatmap"}, 
+#' \code{"GDA heatmap"} and \code{"publications"}. The first two are network
+#' representations of the second two. While the last one draws a barplot
+#' with the number of PMIDs between genes and diseases.
 #' @param verbose By default \code{FALSE}. If set to \code{TRUE} information
 #' on the drawing process will be shown.
 #' @param ... Passed to inner functions for different plots.
@@ -19,6 +21,8 @@
 #' data(qr)
 #' plot(qr) # for all-disease plot
 #' plot(qr, type = 'GDCA network') # for MPI plot
+#' @note The "Evidence Index" is gotten from PsyGeNET. For more information
+#' about it and its calculation, pease visit \code{psygenet.org}.
 #' @export plot
 setMethod( 
     f = "plot",

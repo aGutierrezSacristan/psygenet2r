@@ -5,7 +5,8 @@
 \name{extractSentences}
 \alias{extractSentences}
 \alias{extractSentences,DataGeNET.Psy-method}
-\title{Method to obtain the sentences that support a gene-disease association from a \code{DataGeNET.Psy} object.}
+\title{Method to obtain the sentences that support a gene-disease association 
+from a \code{DataGeNET.Psy} object.}
 \usage{
 extractSentences(object, disorder, verbose)
 
@@ -14,8 +15,12 @@ extractSentences(object, disorder, verbose)
 \arguments{
 \item{object}{Object of class \code{DataGeNET.Psy}.}
 
-\item{disorder}{The disorder of interest. Only those sentences supporting a gene-disease association 
-with this specific disorder will be extracted.}
+\item{disorder}{The disorder of interest. Only those sentences supporting 
+a gene-disease association with this specific disorder will be extracted.
+Disorder msut be providede by using "Disease Id" or "Disease Name". The 
+"Disease Id" can be provided with or mithout the "uml" tag. Example of a
+"Disease Name": "schizophrenia"; Example of a "Disease Id": "umls:C0036341",
+that is equivalent of using "C0036341".}
 
 \item{verbose}{If set to \code{TRUE} informative messages are show.}
 }
@@ -23,11 +28,12 @@ with this specific disorder will be extracted.}
 A data frame showing the sentences.
 }
 \description{
-PsyGeNET contains a list of sentences that support a gene-disease association from public
-literature. The internal table of a \code{DataGeNET.Psy} object 
-contains this information. The method \code{extractSentences} 
-allows to extract those sentences that support a gene-disease association given a \code{DataGeNET.Psy} object 
-and a disorder of interest.
+PsyGeNET contains a list of sentences that support a gene-disease 
+association from public literature. The internal table of a 
+\code{DataGeNET.Psy} object contains this information. The method 
+\code{extractSentences}  allows to extract those sentences that support a 
+gene-disease association given a \code{DataGeNET.Psy} object and a disorder 
+of interest.
 }
 \section{Methods (by class)}{
 \itemize{

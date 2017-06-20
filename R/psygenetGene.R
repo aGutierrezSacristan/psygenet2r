@@ -24,6 +24,8 @@
 #' @return An object of class \code{DataGeNET.Psy}
 #' @examples
 #' d.alch <- psygenetGene( "ALDH2", "ALL" )
+#' @note The "Evidence Index" is gotten from PsyGeNET. For more information
+#' about it and its calculation, pease visit \code{psygenet.org}.
 #' @export psygenetGene
 psygenetGene <- function( gene, database = "ALL", evidenceIndex=c('>', 0),
                           verbose = FALSE, warnings = TRUE ) {
@@ -143,7 +145,7 @@ psygenetGene <- function( gene, database = "ALL", evidenceIndex=c('>', 0),
   }
   
   if( length( wGenes ) != 0 ) {
-    genes <- paste( paste( "   -", wGenes ), collapse = "\n" )
+    genes <- paste( wGenes, collapse = ", " )
     if( warnings ) {
       warning( "One or more of the given genes is not in PsyGeNET ( '", database, "' ):\n", genes )
     }

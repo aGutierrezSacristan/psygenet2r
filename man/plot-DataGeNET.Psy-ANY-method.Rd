@@ -18,9 +18,11 @@ object.}
 \item{layout}{Function to design the location of the different nodes. By 
 default \code{layout.fruchterman.reingold} from \code{igraph} is used.}
 
-\item{type}{Type of the drawn chart. By default it is \code{"GDA network"} but 
-it also can be \code{"GDCA network"}, \code{"publications"}, 
-\code{"GDA heatmap"} or \code{"GDCA heatmap"}.}
+\item{type}{Type of the drawn chart. By default it is \code{"GDA network"} 
+but it also can be \code{"GDCA network"}, \code{"GDCA heatmap"}, 
+\code{"GDA heatmap"} and \code{"publications"}. The first two are network
+representations of the second two. While the last one draws a barplot
+with the number of PMIDs between genes and diseases.}
 
 \item{verbose}{By default \code{FALSE}. If set to \code{TRUE} information
 on the drawing process will be shown.}
@@ -33,6 +35,10 @@ A plot for \code{DataGeNET.Psy}.
 \description{
 This functions llows to create a variety of plots for \code{DataGeNEt.Psy}
 and \code{JaccardIndexPsy} objects.
+}
+\note{
+The "Evidence Index" is gotten from PsyGeNET. For more information
+about it and its calculation, pease visit \code{psygenet.org}.
 }
 \examples{
 data(qr)
