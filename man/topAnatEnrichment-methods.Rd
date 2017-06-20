@@ -18,7 +18,7 @@ Default \code{c("rna_seq","affymetrix","est","in_situ")}.}
 
 \item{statistic}{By default it is \code{"fisher"}. But it can be changed to
 \code{"ks"}, \code{"t"}, \code{"globaltest"}, \code{"sum"} or 
-\code{"ks.ties"}. All from \link[topGO]{\code{runTest}}.}
+\code{"ks.ties"}. All from \code{\link[topGO]{runTest}}.}
 
 \item{cutOff}{Default \code{1}.}
 

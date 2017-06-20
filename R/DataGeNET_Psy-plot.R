@@ -1,5 +1,4 @@
-#' Plots the content of a \code{DataGeNET.Psy} or \code{JaccardIndexPsy} 
-#' object.
+#' Plots the content of a \code{DataGeNET.Psy} object
 #' 
 #' This functions llows to create a variety of plots for \code{DataGeNEt.Psy}
 #' and \code{JaccardIndexPsy} objects.
@@ -15,7 +14,8 @@
 #' with the number of PMIDs between genes and diseases.
 #' @param verbose By default \code{FALSE}. If set to \code{TRUE} information
 #' on the drawing process will be shown.
-#' @param ... Passed to inner functions for different plots.
+#' @param ... (Check NOTE section) Passed to inner functions for different 
+#' plots.
 #' @return A plot for \code{DataGeNET.Psy}.
 #' @examples
 #' data(qr)
@@ -23,7 +23,29 @@
 #' plot(qr, type = 'GDCA network') # for MPI plot
 #' @note The "Evidence Index" is gotten from PsyGeNET. For more information
 #' about it and its calculation, pease visit \code{psygenet.org}.
+#' Argument \code{...} can be filled with specific argument depending on 
+#' the type of plot:
+#' \tabular{llll}{
+#' \strong{Type}\tab\strong{Argument}\tab \strong{Color} \tab \strong{Description}\cr
+#' GDA network  \tab geneColor       \tab Yellow  \tab Determines the color of the gene nodes\cr
+#'              \tab diseaseColor    \tab Blue    \tab Determines the color of the disease nodes\cr
+#' GDA heatmap  \tab highColor       \tab Blue    \tab Determines the color of the heatmap for the highest value\cr
+#'              \tab lowColor        \tab White   \tab Determines the color of the heatmap for the lowest value\cr
+#' GDCA network \tab ei0color        \tab Yellow  \tab Determines the color for those associations with evidence index 0\cr
+#'              \tab eiAmbiguitcolor \tab Grey    \tab Determines the color for those associations with evidence index greater than 0 and lower than 1\cr
+#'              \tab ei1color        \tab Blue    \tab Determines the color for those associations with evidence index 1\cr
+#' GDCA heatmap \tab AUDcolor        \tab #FF3C32 \tab \cr
+#'              \tab BDcolor         \tab #FFC698 \tab \cr
+#'              \tab DEPcolor        \tab #9BE75E \tab \cr
+#'              \tab SCHZcolor       \tab #1F6024 \tab \cr
+#'              \tab CUDcolor        \tab #5AB69C \tab \cr
+#'              \tab SIDEPcolor      \tab #50B8D6 \tab \cr
+#'              \tab CanUDcolor      \tab #5467C3 \tab \cr
+#'              \tab SYPSYcolor      \tab #A654C3 \tab \cr
+#'              \tab geneColor       \tab Orange  \tab
+#' }
 #' @export plot
+#' @aliases DataGeNET.Psy-plot
 setMethod( 
     f = "plot",
     signature = "DataGeNET.Psy",

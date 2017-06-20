@@ -3,6 +3,7 @@
 \docType{methods}
 \name{plot,JaccardIndexPsy,ANY-method}
 \alias{plot,JaccardIndexPsy,ANY-method}
+\alias{JaccardIndexPsy-plot}
 \title{Plot the content of a \code{JaccardIndexPsy} object.}
 \usage{
 \S4method{plot}{JaccardIndexPsy,ANY}(x, y, cutOff, zero.remove = TRUE,
@@ -22,9 +23,11 @@ with a Jaccard Index of 0.}
 \item{noTitle}{By default \code{FALSE}. If set to true no title will be
 added to the plot.}
 
-\item{lowColor}{By default \code{"white"}. It can be changed to any other color.}
+\item{lowColor}{By default \code{"white"}. It can be changed to any other 
+color.}
 
-\item{highColor}{By default \code{"mediumorchid4"}. It can be changed to any other color.}
+\item{highColor}{By default \code{"mediumorchid4"}. It can be changed to 
+any other color.}
 
 \item{verbose}{By default \code{FALSE}. If set to \code{TRUE} information
 on the drawing process will be shown.}

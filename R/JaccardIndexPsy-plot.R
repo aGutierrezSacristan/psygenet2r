@@ -10,8 +10,10 @@
 #' with a Jaccard Index of 0.
 #' @param noTitle By default \code{FALSE}. If set to true no title will be
 #' added to the plot.
-#' @param lowColor By default \code{"white"}. It can be changed to any other color. 
-#' @param highColor By default \code{"mediumorchid4"}. It can be changed to any other color. 
+#' @param lowColor By default \code{"white"}. It can be changed to any other 
+#' color. 
+#' @param highColor By default \code{"mediumorchid4"}. It can be changed to 
+#' any other color. 
 #' @param verbose By default \code{FALSE}. If set to \code{TRUE} information
 #' on the drawing process will be shown.
 #' @param ... NOT USED
@@ -22,9 +24,13 @@
 #' qr <- plot(x)
 #' }
 #' @export plot
+#' @aliases JaccardIndexPsy-plot
 setMethod( "plot",
            signature = "JaccardIndexPsy",
-           definition = function( x, y, cutOff, zero.remove = TRUE, noTitle = FALSE, lowColor = "white", highColor = "mediumorchid4", verbose = FALSE, ... ) {
+           definition = function( x, y, cutOff, zero.remove = TRUE, 
+                                  noTitle = FALSE, lowColor = "white", 
+                                  highColor = "mediumorchid4", 
+                                  verbose = FALSE, ... ) {
    
    show.pval = FALSE
    input <- x@table

@@ -19,20 +19,31 @@
 #' number of diseases associated to each gene.
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
 #' on-time log from the function.
+#' @param ... (Check NOTE section) Passed to inner functions for different 
+#' plots.
 #' @return A plot for a \code{DataGeNET.Psy} in terms of the panther-class.
 #' @note The "Evidence Index" is gotten from PsyGeNET. For more information
 #' about it and its calculation, pease visit \code{psygenet.org}.
+#' Argument \code{...} can be filled with specific argument depending on 
+#' the type of plot:
+#' \tabular{llll}{
+#' \strong{Type}    \tab \strong{Argument}   \tab \strong{Color} \tab \strong{Description}\cr
+#' gene             \tab cuiBarColor             \tab Purple \tab Determines the color of the bar for diseases\cr
+#'                  \tab diseaseCategoryBarColor \tab Yellow \tab Determines the color of the bar for psychiatric categories\cr
+#' disease category \tab uniqueGenesBarColor \tab Orange \tab Determines the color of the bar for unique genes for a disease category\cr
+#'                  \tab totalGenesBarColor  \tab Blue   \tab Determines the color of the bar for total genes for a disease category
+#' }
 #' @export geneAttrPlot
-geneAttrPlot <- function( x, type = "pie", verbose = FALSE ){
+geneAttrPlot <- function( x, type = "pie", ..., verbose = FALSE ){
     type <- tolower( type )
     if( type == "pie") {
-        .pie_plot(x, verbose = verbose)
+        .pie_plot(x, ..., verbose = verbose)
     } else if( type == "disease category" ) {
-        .category_plot(x, verbose = verbose)
+        .category_plot(x, ..., verbose = verbose)
     } else if( type == "evidence index" ) {
-        .index_plot(x, verbose = verbose)
+        .index_plot(x, ..., verbose = verbose)
     } else if( type == "gene" ) {
-        .gene_plot(x, verbose = verbose)
+        .gene_plot(x, ..., verbose = verbose)
     }else{
 	     stop( paste0( "Invalid 'type' value. Accepted: 'pie', ",
         "'disease category', 'evidence index' and 'gene'." ) )	

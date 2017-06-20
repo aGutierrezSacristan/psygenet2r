@@ -49,8 +49,8 @@ setGeneric ("ngene",
 #' @param object Object of class \code{DataGeNET.Psy}.
 #' @param disorder The disorder of interest. Only those sentences supporting 
 #' a gene-disease association with this specific disorder will be extracted.
-#' Disorder msut be providede by using "Disease Id" or "Disease Name". The 
-#' "Disease Id" can be provided with or mithout the "uml" tag. Example of a
+#' Disorder must be provided by using "Disease Id" or "Disease Name". The 
+#' "Disease Id" can be provided with or without the "uml" tag. Example of a
 #' "Disease Name": "schizophrenia"; Example of a "Disease Id": "umls:C0036341",
 #' that is equivalent of using "C0036341".
 #' @param verbose If set to \code{TRUE} informative messages are show.
