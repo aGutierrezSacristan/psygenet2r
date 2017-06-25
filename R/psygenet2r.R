@@ -22,6 +22,7 @@
 #' @import Biobase
 #' @import BiocInstaller
 #' @import labeling
+#' @import GO.db
 #' 
 #' @importFrom biomaRt useMart getBM
 #' @importFrom igraph graph.data.frame simplify vcount ecount V plot.igraph
