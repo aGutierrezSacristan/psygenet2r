@@ -4,7 +4,7 @@ author:
 - name: Alba Gutierrez-Sacristan
   affiliation: 
   - &grib Research Group on Integrative Biomedical Informatics, Research Programme on Biomedical Informatics (GRIB)
-  email: alba.gutierrez@upf.edu
+  email: alba_gutierrez@hms.harvard.edu
 - name: Carles Hernandez-Ferrer
   affiliation: 
   - &creal Bioinformatic Researcg Group in Epidemiology, Barcelona Global Health Institue (ISGlobal)
