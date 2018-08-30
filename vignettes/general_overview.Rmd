@@ -73,8 +73,9 @@ In the following sections the specific functions that can be used to address eac
 The package `psygenet2r` is provided through Bioconductor. To install `psygenet2r` the user must type the two following commands in an R session:
 
 ```{r  eval=FALSE}
-source( "http://bioconductor.org/biocLite.R" )
-biocLite( "psygenet2r" )
+if (!requireNamespace("BiocManager", quietly=TRUE))
+    install.packages("BiocManager")
+BiocManager::install( "psygenet2r" )
 ```
 
 ```{r load_library, messages=FALSE}
