@@ -111,7 +111,7 @@ Name       | Description
 `psycur16` | Genes associated to DEP, BD, AUD, CUD, SCHZ, S-DEP, CanUD and D-PSY between 1980 and 2015
 `ALL`      | All previous Databases
 
-: (\#tab:psygenet-databses) Source databases included in PsyGeNET
+: (\#tab:psygenet-databases) Source databases included in PsyGeNET
 
 # Retrieve gene-disease associations (GDAs) using `psygenet2r`
 

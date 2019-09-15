@@ -1,7 +1,7 @@
 #' \code{DataGeNET.Psy} obtained from quering PsyGeNET for gene '4852'.
 #'
 #' A dataset obtained from PsyGeNET after being queried with 
-#' \code{psygenetGene} usig the term '4852' on \code{"ALL"} databse.
+#' \code{psygenetGene} usig the term '4852' on \code{"ALL"} database.
 #'
 #' @usage data("qr")
 #' @format   The format is:

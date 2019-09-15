@@ -65,7 +65,7 @@ geneAttrPlot <- function( x, type = "pie", ..., verbose = FALSE ){
         #    stop( "Invalid 'type' of 'DatageNET' object. Expected result of 'psygenetGene'." )
         #}
     } else if( class( x ) == "character" ) {
-        x <- psygenetGene( x , databse = "ALL" )
+        x <- psygenetGene( x , database = "ALL" )
         table <- x@qresult
     }
     
@@ -117,7 +117,7 @@ geneAttrPlot <- function( x, type = "pie", ..., verbose = FALSE ){
         #    stop( "Invalid 'type' of 'DatageNET' object. Expected result of 'psygenetGene'." )
         #}
     } else if( class( x ) == "character" ) {
-        x <- psygenetGene( x , databse = "ALL" )
+        x <- psygenetGene( x , database = "ALL" )
         table <- x@qresult
     }
     
@@ -174,7 +174,7 @@ geneAttrPlot <- function( x, type = "pie", ..., verbose = FALSE ){
         #    stop( "Invalid 'type' of 'DatageNET' object. Expected result of 'psygenetGene'." )
         #}
     } else if( class( x ) == "character" ) {
-        x <- psygenetGene( x , databse = "ALL" )
+        x <- psygenetGene( x , database = "ALL" )
         table <- x@qresult
     }
     
@@ -230,7 +230,7 @@ geneAttrPlot <- function( x, type = "pie", ..., verbose = FALSE ){
         if(verbose) {
             message("Quering PsygeNET for given gene-list")
         }
-        x <- psygenetGene(x, databse = "ALL", verbose = verbose)
+        x <- psygenetGene(x, database = "ALL", verbose = verbose)
         table <- x@qresult
     }
     

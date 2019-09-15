@@ -22,7 +22,7 @@ A \code{DataGeNET.Psy} object.
 }
 \description{
 A dataset obtained from PsyGeNET after being queried with 
-\code{psygenetGene} usig the term '4852' on \code{"ALL"} databse.
+\code{psygenetGene} usig the term '4852' on \code{"ALL"} database.
 }
 \examples{
 ngene(qr)
