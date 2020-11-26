@@ -20,7 +20,6 @@
 #' @name psygenet2r
 #' 
 #' @import Biobase
-#' @import BiocInstaller
 #' @import labeling
 #' 
 #' @importFrom biomaRt useMart getBM
@@ -29,6 +28,6 @@
 #' @importFrom grid unit
 #' @importFrom reshape2 melt
 #' @importFrom stringr str_replace
-#' @importFrom RCurl getURLContent
+#' @importFrom RCurl getURL
 #' @importFrom parallel mclapply
 NULL

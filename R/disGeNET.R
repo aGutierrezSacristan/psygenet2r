@@ -18,7 +18,7 @@ disGenetCurated <- function (  ) {
         ORDER BY
         c0.Ndiseases DESC"
   
-    dataTsv <- RCurl::getURLContent ( 
+    dataTsv <- RCurl::getURL( 
         getUrlDis(), 
         readfunction  = charToRaw( oql ), 
         upload        = TRUE, 
