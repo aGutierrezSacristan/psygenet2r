@@ -81,8 +81,9 @@ PsyGeNET, a knowledge resource for the exploratory analysis of psychiatric disea
 `psygenet2r` package is provided through Bioconductor [@Gentleman2004]. To install `psygenet2r` the user must type in the two following commands in R session:
 
 ```{r bioC, eval=FALSE}
-source( "http://bioconductor.org/biocLite.R" )
-biocLite( "psyGeNET2R" )
+if (!requireNamespace("BiocManager", quietly=TRUE))
+    install.packages("BiocManager")
+BiocManager::install( "psyGeNET2R" )
 ```
 
 ```{r load_library, messages=FALSE}

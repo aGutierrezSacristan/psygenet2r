@@ -1,7 +1,7 @@
 Package: psygenet2r
 Title: psygenet2r - An R package for querying PsyGeNET and to perform
         comorbidity studies in psychiatric disorders
-Version: 1.11.1
+Version: 1.23.0
 Authors@R: c(person("Alba", "Gutierrez-Sacristan", email = "alba_gutierrez@hms.harvard.edu", role = c("aut", "cre")),
   person("Carles", "Hernandez-Ferrer", email = "carles.hernandez@isglobal.org", role = "aut"),
   person("Jaun R.", "Gonzalez", email = "juanr.gonzalez@isglobal.org", role = "aut"),
@@ -27,7 +27,7 @@ Suggests: testthat, knitr
 NeedsCompilation: no
 Packaged: 2016-09-08 06:06:04 UTC; biocbuild
 VignetteBuilder: knitr
-Maintainer: Alba Gutierrez-Sacristan <alba.gutierrez@upf.edu>
+Maintainer: Alba Gutierrez-Sacristan <a.gutierrez.sacristan@gmail.com>
 biocViews: Software, BiomedicalInformatics, Genetics, Infrastructure,
         DataImport, DataRepresentation
 RoxygenNote: 6.0.1
