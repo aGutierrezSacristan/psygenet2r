@@ -20,7 +20,6 @@
 #' @name psygenet2r
 #' 
 #' @import Biobase
-#' @import BiocManager
 #' @import labeling
 #' 
 #' @importFrom biomaRt useMart getBM

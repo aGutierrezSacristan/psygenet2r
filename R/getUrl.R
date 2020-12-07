@@ -10,14 +10,14 @@ getUrlDis <- function() {
 
 download_data <- function(oql, url = getUrlPsi()) {
     dataTsv <- tryCatch({
-        RCurl::getURLContent(
+        RCurl::getURL(
             url, 
             readfunction  = charToRaw( oql ), 
             upload        = TRUE, 
             customrequest = "POST"
         )}, 
     error=function(err) {
-        rawToChar(RCurl::getURLContent(
+        rawToChar(RCurl::getURL(
             url, 
             readfunction  = charToRaw( oql ), 
             upload        = TRUE, 
