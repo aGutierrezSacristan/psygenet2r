@@ -4,13 +4,15 @@
 \name{qr}
 \alias{qr}
 \title{\code{DataGeNET.Psy} obtained from quering PsyGeNET for gene '4852'.}
-\format{The format is:
+\format{
+The format is:
 Formal class 'DataGeNET.Psy' [package "psygenet2r"] with 5 slots
   .. type    : chr "gene"
   .. search  : chr ""
   .. database: chr "ALL"
   .. term    : chr "4852"
-  .. qresult :'data.frame'}
+  .. qresult :'data.frame'
+}
 \source{
 \url{http://psygenet.org}
 }
@@ -22,7 +24,7 @@ A \code{DataGeNET.Psy} object.
 }
 \description{
 A dataset obtained from PsyGeNET after being queried with 
-\code{psygenetGene} usig the term '4852' on \code{"ALL"} databse.
+\code{psygenetGene} usig the term '4852' on \code{"ALL"} database.
 }
 \examples{
 ngene(qr)

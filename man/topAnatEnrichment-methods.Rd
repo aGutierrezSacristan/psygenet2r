@@ -4,9 +4,14 @@
 \alias{topAnatEnrichment}
 \title{Enrichment of a user's input (genes) in anatomical terms (TopAnat).}
 \usage{
-topAnatEnrichment(gene, datatype = c("rna_seq", "affymetrix", "est",
-  "in_situ"), statistic = "fisher", cutOff = 1, verbose = FALSE,
-  warnings = FALSE)
+topAnatEnrichment(
+  gene,
+  datatype = c("rna_seq", "affymetrix", "est", "in_situ"),
+  statistic = "fisher",
+  cutOff = 1,
+  verbose = FALSE,
+  warnings = FALSE
+)
 }
 \arguments{
 \item{gene}{Name or vector of names (that can be both code or uml) to 

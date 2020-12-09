@@ -4,8 +4,14 @@
 \alias{jaccardEstimation}
 \title{Calculation of the Jaccard Index between ideseases}
 \usage{
-jaccardEstimation(pDisease, sDisease, database = "ALL", nboot = 100,
-  ncores = 1, verbose = FALSE)
+jaccardEstimation(
+  pDisease,
+  sDisease,
+  database = "ALL",
+  nboot = 100,
+  ncores = 1,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{pDisease}{vector of diseases, vector of genes, vector of main 

@@ -4,8 +4,13 @@
 \alias{psygenetGene}
 \title{Query PsyGeNET for given gene(s) and generates an \code{DataGeNET.Psy}}
 \usage{
-psygenetGene(gene, database = "ALL", evidenceIndex = c(">", 0),
-  verbose = FALSE, warnings = TRUE)
+psygenetGene(
+  gene,
+  database = "ALL",
+  evidenceIndex = c(">", 0),
+  verbose = FALSE,
+  warnings = TRUE
+)
 }
 \arguments{
 \item{gene}{Name or vector of names (that can be both code or symbol) to 

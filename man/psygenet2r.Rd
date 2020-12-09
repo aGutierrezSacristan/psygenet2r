@@ -3,7 +3,6 @@
 \docType{package}
 \name{psygenet2r}
 \alias{psygenet2r}
-\alias{psygenet2r-package}
 \title{psygenet2r: Package to query PsyGeNET database and to perform comorbidity studies}
 \description{
 psygenet2r has two categories of functions: querying functions and 

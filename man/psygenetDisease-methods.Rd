@@ -4,8 +4,13 @@
 \alias{psygenetDisease}
 \title{Query PsyGeNET for given disease(s) and generates an \code{DataGeNET.Psy}}
 \usage{
-psygenetDisease(disease, database = "ALL", evidenceIndex = c(">", 0),
-  verbose = FALSE, warnings = TRUE)
+psygenetDisease(
+  disease,
+  database = "ALL",
+  evidenceIndex = c(">", 0),
+  verbose = FALSE,
+  warnings = TRUE
+)
 }
 \arguments{
 \item{disease}{Name or vector of names (that can be both code or uml) to 

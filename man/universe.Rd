@@ -4,7 +4,9 @@
 \name{universe}
 \alias{universe}
 \title{Vector with gene universe for Jaccard Index}
-\format{An object of class \code{character} of length 8947.}
+\format{
+An object of class \code{character} of length 8947.
+}
 \source{
 \url{http://www.disgenet.org}
 }
