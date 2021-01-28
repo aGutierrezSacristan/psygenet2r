@@ -58,7 +58,7 @@ psygenetDisease <- function( disease, database = "ALL", evidenceIndex=c('>', 0),
     ON
     'http://www.psygenet.org/web/PsyGeNET'
     SELECT
-    c1 (Gene_Symbol, Gene_Id),
+    c1 (Gene_Symbol, Gene_Id, Gene_Description),
     c2 (Disease_code, Disease_Id, DiseaseName, PsychiatricDisorder),
     c0 (Score, Disease_Id, Number_of_Abstracts,Number_of_AbstractsValidated)
     FROM
