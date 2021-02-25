@@ -20,7 +20,7 @@ While BioCondutor finish updating the package, `psygenet2r` can be installed usi
 
 ```R
 library(devtools)
-install_bitbucket("ibi_group/psygenet2r")
+install_github("aGutierrezSacristan/psygenet2r")
 ```
 
 ### Querying PsyGeNET:
