@@ -177,7 +177,7 @@ Figure \@ref(fig:gene-disease-2) shows that from the total 48 GDAs, only 4 of th
 
 In addition to the PsyGeNET evidence index, we can also inspect the number of publications that support a GDA. `psygenet2r` allows the visualization of this information in a bar-plot, using the `plot` function with the `disorder` argument to indicate the disease of interest, and the `type` argument set to `"publications "`. Figure \@ref(fig:pubmed2) shows an example, with the genes in the X-axis and the number of PMIDs in the y-axis.
 
-```{r pubmed2, fig.cap="Publications that report each gene association with bipolar disorder", fig.wide = TRUE}
+```{r pubmed2, fig.cap="Publications that report each gene association with bipolar disorder", fig.wide = TRUE, eval=FALSE}
 plot( m1, name="bipolar disorder", type="publications")
 ```
 
