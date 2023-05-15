@@ -468,7 +468,7 @@ plot( d1,
 
 As a result, a barplot is obtained. The X axis contains the genes related to the disease of interest, sorted by the number of pubmed ids in which we can find the gene-disease association. Alternatively, the results can be visualized for the diseases.
 
-```{r barplot_visualizing_single_gene_search, fig.width=8, fig.height=8}
+```{r barplot_visualizing_single_gene_search, fig.width=8, fig.height=8, eval=FALSE}
 plot( t1, 
       name     = "NPY", 
       type     = "publications",
