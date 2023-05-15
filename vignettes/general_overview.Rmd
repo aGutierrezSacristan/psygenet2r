@@ -460,7 +460,7 @@ The heatmap cells colors can be changed using the arguments `ei0color` for those
 
 `psygenet2r` package allows to see how many publications support each gene-disease association. This can be visualized in a barplot by determining the gene or disease id in the `name` argument and setting `type` argument to `"publications "`. The bar color can be changed using the argument `barColor` (by default grey).
 
-```{r barplot_visualizing_single_disease_search, fig.width=8, fig.height=8}
+```{r barplot_visualizing_single_disease_search, fig.width=8, fig.height=8, eval=FALSE}
 plot( d1, 
       name = "major affective disorder 2", 
       type = "publications" )
