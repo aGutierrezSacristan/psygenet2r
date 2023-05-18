@@ -468,13 +468,6 @@ plot( d1,
 
 As a result, a barplot is obtained. The X axis contains the genes related to the disease of interest, sorted by the number of pubmed ids in which we can find the gene-disease association. Alternatively, the results can be visualized for the diseases.
 
-```{r barplot_visualizing_single_gene_search, fig.width=8, fig.height=8, eval=FALSE}
-plot( t1, 
-      name     = "NPY", 
-      type     = "publications",
-      barColor = "blue")
-```
-
 # Analyze the association between two diseases based on shared genes
 
 We can study the association between two diseases from the point of view of shared genetic contribution. More precisely, we can estimate the degree of association of two diseases by means of the number of genes that are shared between the two diseases, over the total number of disease genes. Similarity measures such as the Jaccard Index can be used to estimate disease similarity.
