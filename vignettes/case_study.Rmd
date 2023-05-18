@@ -238,7 +238,7 @@ xx <- jaccardEstimation( genesOfInterest,
 
 The result from the Jaccard Index estimation can be visualized using the function `plot`. The result is a bar-plot (Figure \@ref(fig:jacc)) where the p-value of each comparison between our genes and PsyGeNET's disease is shown. A `cutOff` argument can be added in order to visualize only those diseases with an statistically significant p-value:
 
-```{r jacc, fig.cap="Bar-plot where the Jaccard Index of each comparison between the list of genes of interest and PsyGeNET's diseases is shown.", fig.wide = TRUE}
+```{r jacc, fig.cap="Bar-plot where the Jaccard Index of each comparison between the list of genes of interest and PsyGeNET's diseases is shown.", fig.wide = TRUE, eval=FALSE}
 plot( xx )
 ```
 
