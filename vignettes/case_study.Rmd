@@ -175,11 +175,7 @@ Figure \@ref(fig:gene-disease-2) shows that from the total 48 GDAs, only 4 of th
 
 ## For the disorder of interest, how many publications support each gene-disease associations?
 
-In addition to the PsyGeNET evidence index, we can also inspect the number of publications that support a GDA. `psygenet2r` allows the visualization of this information in a bar-plot, using the `plot` function with the `disorder` argument to indicate the disease of interest, and the `type` argument set to `"publications "`. Figure \@ref(fig:pubmed2) shows an example, with the genes in the X-axis and the number of PMIDs in the y-axis.
-
-```{r pubmed2, fig.cap="Publications that report each gene association with bipolar disorder", fig.wide = TRUE, eval=FALSE}
-plot( m1, name="bipolar disorder", type="publications")
-```
+In addition to the PsyGeNET evidence index, we can also inspect the number of publications that support a GDA. `psygenet2r` allows the visualization of this information in a bar-plot, using the `plot` function with the `disorder` argument to indicate the disease of interest, and the `type` argument set to `"publications "`. 
 
 The results show that the CACNAC1 gene is associated with bipolar disorder in more than 50 publications, followed by ANK3 gene with around 40 publications. The rest of genes have been associated with bipolar disorder in less than 10 publications.
 
@@ -236,11 +232,7 @@ xx <- jaccardEstimation( genesOfInterest,
   database = "ALL", nboot = 500 )
 ```
 
-The result from the Jaccard Index estimation can be visualized using the function `plot`. The result is a bar-plot (Figure \@ref(fig:jacc)) where the p-value of each comparison between our genes and PsyGeNET's disease is shown. A `cutOff` argument can be added in order to visualize only those diseases with an statistically significant p-value:
-
-```{r jacc, fig.cap="Bar-plot where the Jaccard Index of each comparison between the list of genes of interest and PsyGeNET's diseases is shown.", fig.wide = TRUE, eval=FALSE}
-plot( xx )
-```
+The result from the Jaccard Index estimation can be visualized using the function `plot`. The result is a bar-plot where the p-value of each comparison between our genes and PsyGeNET's disease is shown. A `cutOff` argument can be added in order to visualize only those diseases with an statistically significant p-value:
 
 The similarity between diseases according to shared genes can be visualized using a barplot. `psygenet2r` package allows to visualize how many of our genes of interest are associated to each psychiatric disorder present in PsyGeNET and how many of them are exclusively associated to a particular psychiatric disorder.
 
