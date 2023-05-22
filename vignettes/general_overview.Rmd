@@ -468,7 +468,6 @@ plot( d1,
 
 As a result, a barplot is obtained. The X axis contains the genes related to the disease of interest, sorted by the number of pubmed ids in which we can find the gene-disease association. Alternatively, the results can be visualized for the diseases.
 
-
 # Analyze the association between two diseases based on shared genes
 
 We can study the association between two diseases from the point of view of shared genetic contribution. More precisely, we can estimate the degree of association of two diseases by means of the number of genes that are shared between the two diseases, over the total number of disease genes. Similarity measures such as the Jaccard Index can be used to estimate disease similarity.
@@ -534,26 +533,14 @@ tail(extract(ji1))
 
 ## Plotting results: Jaccard Index
 
-The plot of the result of a `jaccardEstimation} using a singe set of genes corresponds to a bar-plot of the Jaccard Index with each disease:
-
-```{r ji1_plot, fig.width=8, fig.height=8, eval=FALSE, warning=FALSE}
-plot(ji1, cutOff = 0.1)
-```
-
+The plot of the result of a jaccardEstimation using a singe set of genes corresponds to a bar-plot of the Jaccard Index with each disease:
 
 The previous bar-plot shows the Jaccard Index greater than 0.1 obtained from testing each diseases in PsyGeNET. When given a set of genes and a set of diseases, the resulting plot is equivalent:
-
-```{r ji2_plot, fig.width=8, fig.height=8, eval=FALSE, warning=FALSE}
-plot(ji2)
-```
 
 Note that the bar colors can be changed using the arguments `highColor`.
 
 The plot resulting from more than one disease is a heat-map with the given disease as X axis and all the diseases that share genes with them placed as Y axis. The intensity of the color represents the value of the Jaccard Index between, being the darker one the major Jaccard Index. Note that the heatmap colors can be defined using the arguments `highColor`  and 'lowColor'.
 
-```{r ji3_plot, fig.width=8, fig.height=8, eval=FALSE, warning=FALSE}
-plot(ji3)
-```
 
 # Warnings
 

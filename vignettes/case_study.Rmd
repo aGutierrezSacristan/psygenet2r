@@ -175,7 +175,7 @@ Figure \@ref(fig:gene-disease-2) shows that from the total 48 GDAs, only 4 of th
 
 ## For the disorder of interest, how many publications support each gene-disease associations?
 
-In addition to the PsyGeNET evidence index, we can also inspect the number of publications that support a GDA. `psygenet2r` allows the visualization of this information in a bar-plot, using the `plot` function with the `disorder` argument to indicate the disease of interest, and the `type` argument set to `"publications "`. 
+In addition to the PsyGeNET evidence index, we can also inspect the number of publications that support a GDA. `psygenet2r` allows the visualization of this information in a bar-plot, using the `plot` function with the `disorder` argument to indicate the disease of interest, and the `type` argument set to `"publications "`. Figure shows an example, with the genes in the X-axis and the number of PMIDs in the y-axis.
 
 The results show that the CACNAC1 gene is associated with bipolar disorder in more than 50 publications, followed by ANK3 gene with around 40 publications. The rest of genes have been associated with bipolar disorder in less than 10 publications.
 
