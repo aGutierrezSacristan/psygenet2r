@@ -23,7 +23,7 @@ Imports: stringr,
 	Biobase,
 	labeling, 
 	GO.db
-Suggests: testthat, knitr, rmarkdown
+Suggests: testthat, knitr, rmarkdown, BiocStyle
 NeedsCompilation: no
 Packaged: 2016-09-08 06:06:04 UTC; biocbuild
 VignetteBuilder: knitr
