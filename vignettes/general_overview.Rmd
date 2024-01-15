@@ -225,7 +225,7 @@ Note that heatmap cells are coloured by default in blue, grey or yellow. Blue ce
 The heatmap cells colors can be changed using the arguments `ei0color` for those cases in which EI = 0, `eiAmbiguitcolor` for those cases in which 1 > EI > 0 and `ei1color` for those cases in which EI = 1. 
 
 
-```{r heatmap_disease_m,  fig.height=8, fig.width=8}
+```{r heatmap_disease_m,  fig.height=8, fig.width=8, eval=FALSE}
 plot( m1, type="GDA heatmap" )
 ```
 
@@ -238,7 +238,7 @@ An alternative graphical representation is a psychiatric disorder heatmap relate
 In order to obtain this graphic, `type` must be set to `"GDCA heatmap"`. The resulting heatmap shows which are the genes that are higher or lower associated to each one of the psychiatric disorders. Note that the heatmap colors can be defined using the arguments `highColor` (blue by default) and 'lowColor' (white by default).
 
 
-```{r plot_psychiatric_heamap, warning = FALSE,  fig.height=8, fig.width=8}
+```{r plot_psychiatric_heamap, warning = FALSE,  fig.height=8, fig.width=8, eval=FALSE}
 plot( m1, type = "GDCA heatmap" )
 ```
 
@@ -448,7 +448,7 @@ plot( tm )
 
 Another possible option is visualize it in a heatmap. The argument `type` can be set to `"GDCA heatmap"`. 
 
-```{r heatmap_disease_tm, warning = FALSE,  fig.wide = TRUE}
+```{r heatmap_disease_tm, warning = FALSE,  fig.wide = TRUE, eval=FALSE}
 plot( tm, type = "GDCA heatmap" )
 ```
 
